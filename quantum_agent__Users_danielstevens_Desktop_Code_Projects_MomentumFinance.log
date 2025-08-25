@@ -5,9 +5,9 @@ Architecture issues detected:
 Warn-only mode: continuing with warnings
 Detected git repository at /Users/danielstevens/Desktop/Code/Projects/MomentumFinance; attempting to commit fixes
 Invoking ai_workflow_recovery.py (dry-run enforced) for /Users/danielstevens/Desktop/Code/Projects/MomentumFinance
-2025-08-25 11:50:27,327 - INFO - 🤖 AI Workflow Recovery initialized for unknown/unknown
-2025-08-25 11:50:27,327 - INFO - 🔍 Running in dry-run mode (analysis only)
-2025-08-25 11:50:27,360 - INFO - 🧠 Analyzing workflow failure with AI...
-2025-08-25 11:50:27,360 - INFO - 🎯 Match found: missing_file (confidence: 0.95)
-2025-08-25 11:50:27,360 - INFO - 🎯 Would apply fix: create_missing_file for missing_file
+2025-08-25 11:54:03,440 - INFO - 🤖 AI Workflow Recovery initialized for unknown/unknown
+2025-08-25 11:54:03,440 - INFO - 🔍 Running in dry-run mode (analysis only)
+2025-08-25 11:54:03,472 - INFO - 🧠 Analyzing workflow failure with AI...
+2025-08-25 11:54:03,473 - INFO - 🎯 Match found: missing_file (confidence: 0.95)
+2025-08-25 11:54:03,473 - INFO - 🎯 Would apply fix: create_missing_file for missing_file
 Entrypoint finished
