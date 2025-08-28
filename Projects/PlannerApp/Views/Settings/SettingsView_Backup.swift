@@ -37,15 +37,15 @@ struct SettingsView: View {
                 }
                 .listRowBackground(themeManager.currentTheme.secondaryBackgroundColor)
 
-                // Appearance Section
-                Section("Appearance") {
-                    Picker("Theme", selection: $themeManager.currentThemeName) {
+                #if os(iOS)
+                .navigationBarTitleDisplayMode(.inline)
+                #endif
                         ForEach(Theme.availableThemes, id: \.name) { theme in
-                            Text(theme.name).tag(theme.name)
-                        }
-                    }
-                    .pickerStyle(.menu)
-                    
+                    #if os(iOS)
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                    #else
+                    ToolbarItem(placement: .primaryAction) {
+                    #endif
                     Button(action: { showingThemePreview = true }) {
                         HStack {
                             Text("Theme Preview")
