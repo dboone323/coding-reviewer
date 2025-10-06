@@ -1,10 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quantum Workspace - Unified Dashboard</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Standalone (No CORS)</title>
     <style>
+    /* Copy styles from main dashboard */
       * {
         margin: 0;
         padding: 0;
@@ -467,215 +468,108 @@
         opacity: 0.5;
       }
     </style>
-  </head>
-  <body>
-    <div class="container">
-      <!-- Header -->
-      <div class="header">
-        <h1>🚀 Quantum Workspace Dashboard</h1>
-        <p class="subtitle">Unified monitoring for agents, workflows, and automation</p>
-        <div class="header-actions">
-          <button class="btn" onclick="refreshDashboard()">🔄 Refresh</button>
-          <button class="btn btn-success" onclick="generateNewData()">📊 Update Metrics</button>
-          <button class="btn" onclick="window.open('./dashboard_data.json', '_blank')">📄 View Raw Data</button>
+</head>
+<body>
+    <!-- Dashboard Header -->
+    <header class="header">
+      <div class="header-content">
+        <h1>🎯 Quantum Workspace Dashboard</h1>
+        <p class="subtitle">Real-time Monitoring & Observability</p>
+      </div>
+      <div class="header-actions">
+        <span class="timestamp">Last Update: <span id="lastUpdate">--</span></span>
+        <button class="btn btn-success" onclick="location.reload()">🔄 Refresh</button>
+      </div>
+    </header>
+
+    <!-- Status Bar -->
+    <div id="statusBar" class="status-bar">
+      <div class="status-card loading"><h4>Agents</h4><div class="status-card-value">--</div><div class="status-card-label">Loading...</div><div class="status-indicator"></div></div>
+      <div class="status-card loading"><h4>MCP Server</h4><div class="status-card-value">--</div><div class="status-card-label">Loading...</div><div class="status-indicator"></div></div>
+      <div class="status-card loading"><h4>Ollama</h4><div class="status-card-value">--</div><div class="status-card-label">Loading...</div><div class="status-indicator"></div></div>
+      <div class="status-card loading"><h4>Disk Usage</h4><div class="status-card-value">--</div><div class="status-card-label">Loading...</div><div class="status-indicator"></div></div>
+      <div class="status-card loading"><h4>Tasks</h4><div class="status-card-value">--</div><div class="status-card-label">Loading...</div><div class="status-indicator"></div></div>
+    </div>
+
+    <!-- Main Dashboard Grid -->
+    <div class="dashboard-grid">
+      <!-- Workflows Card -->
+      <div class="card">
+        <div class="card-header">
+          <h3>⚙️ Recent Workflows</h3>
+          <span class="badge" id="workflowCount">0</span>
+        </div>
+        <div class="card-content">
+          <div id="workflowList" class="loading">Loading workflows...</div>
         </div>
       </div>
 
-      <!-- System Status Bar -->
-      <div class="status-bar" id="statusBar">
-        <div class="status-card">
-          <div class="status-card-header">
-            <h4>Agents</h4>
-            <div class="status-indicator"></div>
-          </div>
-          <div class="status-card-value">--</div>
-          <div class="status-card-label">Loading...</div>
+      <!-- MCP Alerts Card -->
+      <div class="card">
+        <div class="card-header">
+          <h3>🚨 MCP Alerts (24h)</h3>
+          <span class="badge" id="alertCount">0</span>
         </div>
-        <div class="status-card">
-          <div class="status-card-header">
-            <h4>Workflows</h4>
-            <div class="status-indicator"></div>
-          </div>
-          <div class="status-card-value">--</div>
-          <div class="status-card-label">Loading...</div>
-        </div>
-        <div class="status-card">
-          <div class="status-card-header">
-            <h4>MCP Server</h4>
-            <div class="status-indicator"></div>
-          </div>
-          <div class="status-card-value">--</div>
-          <div class="status-card-label">Loading...</div>
-        </div>
-        <div class="status-card">
-          <div class="status-card-header">
-            <h4>Ollama</h4>
-            <div class="status-indicator"></div>
-          </div>
-          <div class="status-card-value">--</div>
-          <div class="status-card-label">Loading...</div>
-        </div>
-        <div class="status-card">
-          <div class="status-card-header">
-            <h4>Disk Usage</h4>
-            <div class="status-indicator"></div>
-          </div>
-          <div class="status-card-value">--</div>
-          <div class="status-card-label">Loading...</div>
-        </div>
-        <div class="status-card">
-          <div class="status-card-header">
-            <h4>Tasks</h4>
-            <div class="status-indicator"></div>
-          </div>
-          <div class="status-card-value">--</div>
-          <div class="status-card-label">Loading...</div>
+        <div class="card-content">
+          <div id="mcpAlerts" class="loading">Loading alerts...</div>
         </div>
       </div>
 
-      <!-- Main Grid -->
-      <div class="grid">
-        <!-- Agent Status -->
-        <div class="card">
-          <h3>
-            🤖 Agents
-            <span class="card-badge" id="agentCount">0</span>
-          </h3>
-          <ul class="agent-list" id="agentList">
-            <li class="loading">Loading agents</li>
-          </ul>
+      <!-- System Health Card -->
+      <div class="card">
+        <div class="card-header">
+          <h3>💊 System Health</h3>
         </div>
-
-        <!-- Workflows -->
-        <div class="card">
-          <h3>
-            ⚙️ GitHub Workflows
-            <span class="card-badge" id="workflowCount">0</span>
-          </h3>
-          <div class="workflow-list" id="workflowList">
-            <div class="loading">Loading workflows</div>
-          </div>
+        <div class="card-content">
+          <div id="systemHealth" class="loading">Loading system health...</div>
         </div>
+      </div>
 
-        <!-- MCP Alerts -->
-        <div class="card">
-          <h3>
-            🔔 MCP Alerts (24h)
-            <span class="card-badge" id="alertCount">0</span>
-          </h3>
-          <div id="mcpAlerts">
-            <div class="loading">Loading alerts</div>
-          </div>
+      <!-- Latest Metrics Card -->
+      <div class="card">
+        <div class="card-header">
+          <h3>� Daily Metrics</h3>
         </div>
-
-        <!-- System Health -->
-        <div class="card">
-          <h3>💚 System Health</h3>
-          <div id="systemHealth">
-            <div class="loading">Loading health data</div>
-          </div>
+        <div class="card-content">
+          <div id="latestMetrics" class="loading">Loading metrics...</div>
         </div>
+      </div>
 
-        <!-- Latest Metrics -->
-        <div class="card">
-          <h3>📈 Daily Metrics</h3>
-          <div id="latestMetrics">
-            <div class="loading">Loading metrics</div>
-          </div>
-        </div>
-
-        <!-- Task Summary -->
-        <div class="card">
+      <!-- Task Summary Card -->
+      <div class="card">
+        <div class="card-header">
           <h3>📋 Task Summary</h3>
-          <div id="taskSummary">
-            <div class="loading">Loading tasks</div>
-          </div>
+        </div>
+        <div class="card-content">
+          <div id="taskSummary" class="loading">Loading tasks...</div>
         </div>
       </div>
 
-      <!-- Footer -->
-      <div class="footer">
-        <p>Dashboard last updated: <strong id="lastUpdate">Loading...</strong></p>
-        <p>Data generated: <strong id="dataGenerated">--</strong></p>
-        <div class="footer-links">
-          <a href="./metrics/snapshots/" class="footer-link">View Metrics History</a>
-          <a href="./Automation/observability/" class="footer-link">Observability Scripts</a>
-          <a href="./agents/" class="footer-link">Agent Management</a>
+      <!-- Agents List (full width) -->
+      <div class="card card-full-width">
+        <div class="card-header">
+          <h3>🤖 Agent Status</h3>
+          <span class="badge" id="agentCount">0</span>
         </div>
-        <p style="margin-top: 15px; opacity: 0.8;">Quantum Workspace v2.1 • OA-06 Enhanced Dashboard</p>
+        <div class="card-content">
+          <div id="agentList" class="loading">Loading agents...</div>
+        </div>
       </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <p>Data Generated: <span id="dataGenerated">--</span></p>
+        <p style="margin-top: 5px; font-size: 0.9em; opacity: 0.8;">✅ Standalone version (embedded data, no CORS issues)</p>
+      </div>
+    </footer>
+
     <script>
-      let dashboardData = null;
+      // Embedded dashboard data (no CORS issues)
+      const dashboardData = {"generated_at":"2025-10-06T17:55:44Z","version":"2.1.0","agents":{},"agent_summary":{"total":0,"running":0,"idle":0,"stopped":0,"unresponsive":0,"health_percent":0},"workflows":[{"name":"Addressing comment on PR #72","status":"completed","conclusion":"failure","last_run":"2025-09-17T19:55:14Z","total_runs":4,"recent_failures":4},{"name":"Running Copilot","status":"completed","conclusion":"success","last_run":"2025-10-05T18:34:14Z","total_runs":6,"recent_failures":1}],"mcp":{"available":false,"alerts_24h":{"critical":0,"error":21,"warning":1,"info":1,"total":23},"last_alert_time":"1759760052.535329"},"ollama":{"available":true,"models_count":10,"models":["deepseek-v3.1:671b-cloud","gpt-oss:120b-cloud","qwen3-coder:480b-cloud","mistral:7b","llama2:7b","codellama:13b","codellama:7b","gpt-oss:20b","codellama:latest","llama2:latest"]},"system":{"disk_usage":{"percent":88,"status":"warning"},"uptime":"2 days","load_average":""},"metrics":{},"tasks":{"total_pending":0,"total_active":0,"by_agent":{}}};
 
-      // Load dashboard data
-      async function loadDashboardData() {
-        // Try multiple paths to find the data file
-        const paths = [
-          '../../dashboard_data.json', // From Tools/Automation/dashboard/ to Tools/
-          '../../../Tools/dashboard_data.json', // Absolute from root
-          './dashboard_data.json' // Same directory (fallback)
-        ];
-
-        for (const path of paths) {
-          try {
-            console.log('Attempting to load from:', path);
-            // Strong cache-busting with timestamp and random value
-            const cacheBuster = '?v=' + Date.now() + '&r=' + Math.random();
-            const response = await fetch(path + cacheBuster, {
-              cache: 'no-store',
-              headers: {
-                'Cache-Control': 'no-cache, no-store, must-revalidate',
-                'Pragma': 'no-cache',
-                'Expires': '0'
-              }
-            });
-            if (response.ok) {
-              dashboardData = await response.json();
-              console.log('✅ Successfully loaded dashboard data from:', path);
-              console.log('📊 Data summary:', {
-                generated: dashboardData.generated_at,
-                workflows: dashboardData.workflows?.length || 0,
-                disk: (dashboardData.system?.disk_usage?.percent || 0) + '%',
-                ollama: dashboardData.ollama?.available ? 'available' : 'unavailable',
-                mcp: dashboardData.mcp?.available ? 'online' : 'offline',
-                agents: Object.keys(dashboardData.agents || {}).length
-              });
-              return true;
-            }
-          } catch (error) {
-            console.warn('Failed to load from', path, ':', error.message);
-          }
-        }
-        
-        console.error('Failed to load dashboard data from all paths');
-        console.error('💡 CORS Issue Detected: Browsers block fetch() on file:// URLs');
-        console.error('📋 Solution Options:');
-        console.error('  1. Run: ./Tools/Automation/dashboard/serve_dashboard.sh');
-        console.error('  2. Or use: python3 -m http.server 8080 (from workspace root)');
-        console.error('  3. Then open: http://localhost:8080/Tools/Automation/dashboard/dashboard.html');
-        showError('⚠️ CORS Error: Dashboard must be served over HTTP. Run: ./Tools/Automation/dashboard/serve_dashboard.sh');
-        return false;
-      }
-
-      // Show error message
-      function showError(message) {
-        const statusCards = document.querySelectorAll('.status-card');
-        statusCards.forEach(card => {
-          const loading = card.querySelector('.loading');
-          if (loading) {
-            loading.innerHTML = '<div style="font-size: 0.9em;">❌ CORS Error</div><div style="font-size: 0.7em; margin-top: 5px;">Run serve_dashboard.sh</div>';
-            loading.style.color = '#e74c3c';
-          }
-        });
-        
-        document.querySelectorAll('.loading').forEach(el => {
-          el.innerHTML = '<div>❌ Data unavailable</div><div style="font-size: 0.8em; margin-top: 5px;">Serve over HTTP</div>';
-          el.style.color = '#e74c3c';
-        });
-      }
-
+      // Update Functions
       // Update status bar
       function updateStatusBar() {
         if (!dashboardData) return;
@@ -1011,30 +905,33 @@
         setTimeout(refreshDashboard, 2000);
       }
 
-      // Initialize dashboard
-      document.addEventListener('DOMContentLoaded', async function() {
-        console.log('Dashboard initializing...');
-        console.log('Current location:', window.location.href);
-        console.log('Base path:', window.location.pathname);
-        
-        await refreshDashboard();
-        
-        // Auto-refresh every 30 seconds
-        setInterval(async () => {
-          console.log('Auto-refresh triggered');
-          await refreshDashboard();
-        }, 30000);
-        
-        console.log('Dashboard initialized. Auto-refresh enabled (30s interval)');
-      });
 
-      // Handle manual refresh button
-      window.addEventListener('load', function() {
-        const refreshBtn = document.querySelector('.btn-success');
-        if (refreshBtn) {
-          refreshBtn.addEventListener('click', refreshDashboard);
-        }
+
+      // Initialize dashboard with embedded data
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('✅ Standalone dashboard initializing with embedded data...');
+        console.log('📊 Data summary:', {
+          generated: dashboardData.generated_at,
+          workflows: dashboardData.workflows?.length || 0,
+          disk: (dashboardData.system?.disk_usage?.percent || 0) + '%',
+          ollama: dashboardData.ollama?.available ? 'available' : 'unavailable',
+          mcp: dashboardData.mcp?.available ? 'online' : 'offline',
+          agents: Object.keys(dashboardData.agents || {}).length
+        });
+        
+        // Update all cards
+        updateStatusBar();
+        updateAgentList();
+        updateWorkflows();
+        updateMCPAlerts();
+        updateSystemHealth();
+        updateLatestMetrics();
+        updateTaskSummary();
+        updateTimestamps();
+        
+        console.log('✅ Dashboard initialized successfully');
+        console.log('ℹ️  To refresh data: run generate_standalone_dashboard.sh and reload page');
       });
     </script>
-  </body>
+</body>
 </html>
