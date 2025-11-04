@@ -10,6 +10,7 @@ import SwiftUI
 public class AIEnhancedCodeAnalysisService: ObservableObject {
     private let logger = Logger(subsystem: "CodingReviewer", category: "AIAnalysis")
     private let fileManager = FileManager.default
+    private let llmGenerate: ((String, String, Double) async throws -> String)?
 
     @Published public var isAnalyzing = false
     @Published public var currentAnalysisTask = ""
@@ -17,6 +18,12 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
     @Published public var aiSuggestions: [AISuggestion] = []
 
     public init() {
+        self.llmGenerate = nil
+        logger.info("AI-Enhanced Code Analysis Service initialized")
+    }
+
+    public init(llmGenerate: @escaping (String, String, Double) async throws -> String) {
+        self.llmGenerate = llmGenerate
         logger.info("AI-Enhanced Code Analysis Service initialized")
     }
 
@@ -419,11 +426,18 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
 
     // MARK: - Private Helpers
 
-    private func callOllamaModel(model: String, prompt: String, temperature _: Double = 0.5) async throws -> String {
-        // This would use the actual OllamaClient - for now, simulating the call
+    private func callOllamaModel(model: String, prompt: String, temperature: Double = 0.5) async throws -> String {
+        let mappedModel = mapToFreeModel(model)
+
+        if let llmGenerate {
+            // Prefer injected generator when provided
+            return try await llmGenerate(mappedModel, prompt, temperature)
+        }
+
+        // Fallback: invoke local ollama CLI (stdin prompt)
         let process = Process()
         process.executableURL = URL(fileURLWithPath: "/opt/homebrew/bin/ollama")
-        process.arguments = ["run", model]
+        process.arguments = ["run", mappedModel]
 
         let inputPipe = Pipe()
         let outputPipe = Pipe()
@@ -433,18 +447,25 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
 
         try process.run()
 
-        // Send prompt
         let inputData = prompt.data(using: .utf8)!
         inputPipe.fileHandleForWriting.write(inputData)
         inputPipe.fileHandleForWriting.closeFile()
 
-        // Read response
         let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
         let response = String(data: outputData, encoding: .utf8) ?? "No response"
 
         process.waitUntilExit()
-
         return response.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    private func mapToFreeModel(_ requested: String) -> String {
+        // Map cloud/premium tags to widely available free Ollama models
+        let mapping: [String: String] = [
+            "deepseek-v3.1:671b-cloud": "llama3.1:8b",
+            "qwen3-coder:480b-cloud": "qwen2.5-coder:7b",
+            "gpt-oss:120b-cloud": "mistral:7b",
+        ]
+        return mapping[requested] ?? requested
     }
 
     private func generateCodeSuggestions(_: String, language _: String, analysis: String) async throws -> [CodeImprovement] {
