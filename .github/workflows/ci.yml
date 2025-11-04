@@ -18,4 +18,6 @@ jobs:
       - name: List schemes
         run: xcodebuild -list -project CodingReviewer.xcodeproj
       - name: Build (macOS)
-        run: xcodebuild -scheme "CodingReviewer" -destination 'platform=macOS' build | xcpretty
+        run: set -o pipefail && xcodebuild -scheme "CodingReviewer" -destination 'platform=macOS' build
+      - name: Test (macOS)
+        run: set -o pipefail && xcodebuild -scheme "CodingReviewer" -destination 'platform=macOS' test
