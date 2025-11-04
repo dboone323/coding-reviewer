@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		68143F3E2EBA8E55005A747F /* SharedKit in Frameworks */ = {isa = PBXBuildFile; productRef = 68143F3D2EBA8E55005A747F /* SharedKit */; };
+		68143F402EBA8E55005A747F /* SharedTestSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 68143F3F2EBA8E55005A747F /* SharedTestSupport */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		688DD4B72E282B6F0020150F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -38,17 +43,11 @@
 		688DD4B92E282B6F0020150F /* CodingReviewerTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = CodingReviewerTests;
-			excludedPaths = (
-				Info.plist,
-			);
 			sourceTree = "<group>";
 		};
 		688DD4C32E282B6F0020150F /* CodingReviewerUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = CodingReviewerUITests;
-			excludedPaths = (
-				Info.plist,
-			);
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -58,6 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68143F3E2EBA8E55005A747F /* SharedKit in Frameworks */,
+				68143F402EBA8E55005A747F /* SharedTestSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,7 +104,7 @@
 /* Begin PBXNativeTarget section */
 		688DD4A62E282B6D0020150F /* CodingReviewer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 688DD4CA2E282B6D0020150F /* Build configuration list for PBXNativeTarget "CodingReviewer" */;
+			buildConfigurationList = 68143F412EBA8E56005A747F /* Build configuration list */;
 			buildPhases = (
 				688DD4A32E282B6D0020150F /* Sources */,
 				688DD4A42E282B6D0020150F /* Frameworks */,
@@ -118,6 +119,8 @@
 			);
 			name = CodingReviewer;
 			packageProductDependencies = (
+				68143F3D2EBA8E55005A747F /* SharedKit */,
+				68143F3F2EBA8E55005A747F /* SharedTestSupport */,
 			);
 			productName = CodingReviewer;
 			productReference = 688DD4A72E282B6D0020150F /* CodingReviewer.app */;
@@ -201,6 +204,9 @@
 			);
 			mainGroup = 688DD49E2E282B6D0020150F;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				68143F3C2EBA8E55005A747F /* XCRemoteSwiftPackageReference "shared-kit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 688DD4A82E282B6D0020150F /* Products */;
 			projectDirPath = "";
@@ -275,12 +281,31 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		68143F3A2EBA8CB3005A747F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = CodingReviewer;
+			};
+			name = Debug;
+		};
+		68143F3B2EBA8CB3005A747F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				PRODUCT_NAME = CodingReviewer;
+			};
+			name = Release;
+		};
 		688DD4C82E282B6F0020150F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BASE_CONFIGURATION_FILE = Config/Base.xcconfig;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BASE_CONFIGURATION_FILE = Config/Base.xcconfig;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -329,15 +354,15 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.DanielStevens.CodingReviewer;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				GENERATE_INFOPLIST_FILE = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.DanielStevens.CodingReviewer;
 				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
@@ -345,9 +370,9 @@
 		688DD4C92E282B6F0020150F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BASE_CONFIGURATION_FILE = Config/Base.xcconfig;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BASE_CONFIGURATION_FILE = Config/Base.xcconfig;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -387,86 +412,14 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GENERATE_INFOPLIST_FILE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.DanielStevens.CodingReviewer;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_VERSION = 6.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.DanielStevens.CodingReviewer;
-			};
-			name = Release;
-		};
-		688DD4CB2E282B6F0020150F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BASE_CONFIGURATION_FILE = Config/Base.xcconfig;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3N5528D82R;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = CodingReviewer/BaseInfo.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = com.DanielStevens.CodingReviewer;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				PRODUCT_BUNDLE_PACKAGE_TYPE = APPL;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				REGISTER_APP_GROUPS = YES;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 6.0;
-			};
-			name = Debug;
-		};
-		688DD4CC2E282B6F0020150F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BASE_CONFIGURATION_FILE = Config/Base.xcconfig;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3N5528D82R;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = CodingReviewer/BaseInfo.plist;
-				INFOPLIST_KEY_CFBundleIdentifier = "$(PRODUCT_BUNDLE_IDENTIFIER)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.DanielStevens.CodingReviewer;
-				SWIFT_VERSION = 6.0;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				PRODUCT_BUNDLE_PACKAGE_TYPE = APPL;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				REGISTER_APP_GROUPS = YES;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
@@ -552,20 +505,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		68143F412EBA8E56005A747F /* Build configuration list */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				68143F3A2EBA8CB3005A747F /* Debug */,
+				68143F3B2EBA8CB3005A747F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		688DD4A22E282B6D0020150F /* Build configuration list for PBXProject "CodingReviewer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				688DD4C82E282B6F0020150F /* Debug */,
 				688DD4C92E282B6F0020150F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		688DD4CA2E282B6F0020150F /* Build configuration list for PBXNativeTarget "CodingReviewer" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				688DD4CB2E282B6F0020150F /* Debug */,
-				688DD4CC2E282B6F0020150F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -589,6 +542,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		68143F3C2EBA8E55005A747F /* XCRemoteSwiftPackageReference "shared-kit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dboone323/shared-kit.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		68143F3D2EBA8E55005A747F /* SharedKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 68143F3C2EBA8E55005A747F /* XCRemoteSwiftPackageReference "shared-kit" */;
+			productName = SharedKit;
+		};
+		68143F3F2EBA8E55005A747F /* SharedTestSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 68143F3C2EBA8E55005A747F /* XCRemoteSwiftPackageReference "shared-kit" */;
+			productName = SharedTestSupport;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 688DD49F2E282B6D0020150F /* Project object */;
 }
