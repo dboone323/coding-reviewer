@@ -17,3 +17,5 @@ jobs:
         run: xcodebuild -resolvePackageDependencies -project CodingReviewer.xcodeproj
       - name: List schemes
         run: xcodebuild -list -project CodingReviewer.xcodeproj
+      - name: Build (macOS)
+        run: xcodebuild -scheme "CodingReviewer" -destination 'platform=macOS' build | xcpretty
