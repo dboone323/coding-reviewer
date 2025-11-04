@@ -55,6 +55,11 @@ public struct CodingReviewer: App {
         .windowStyle(.titleBar)
         .windowResizability(.contentSize)
         .defaultPosition(.center)
+
+        // Settings (Preferences)
+        Settings {
+            SettingsView()
+        }
     }
 
     public init() {

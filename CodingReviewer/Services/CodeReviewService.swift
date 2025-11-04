@@ -18,24 +18,30 @@ public class CodeReviewService: CodeReviewServiceProtocol {
 
     // Analysis engine that can be used from background threads
     private let analysisEngine = CodeAnalysisEngine()
-    private let aiService: AIEnhancedCodeAnalysisService?
+    private var aiService: AIEnhancedCodeAnalysisService?
 
     public init() {
-        // Initialize service
-        if Self.isAIEnabled {
-            // Inject Ollama HTTP generator; service will remap to free models and fallback to CLI if needed
+        // Initialize service; AI is created lazily when enabled via settings
+        self.aiService = nil
+    }
+
+    // Preference-backed AI toggle with env fallback
+    private var isAIEnabled: Bool {
+        let defaults = UserDefaults.standard
+        if defaults.object(forKey: "CR_USE_AI") != nil || defaults.object(forKey: "CR_USE_OLLAMA") != nil {
+            return defaults.bool(forKey: "CR_USE_AI") || defaults.bool(forKey: "CR_USE_OLLAMA")
+        }
+        let env = ProcessInfo.processInfo.environment
+        return env["CR_USE_OLLAMA"] == "1" || env["CR_USE_AI"] == "1"
+    }
+
+    private func ensureAIService() {
+        if aiService == nil {
             let generator: (String, String, Double) async throws -> String = { model, prompt, temp in
                 try await OllamaClient().generate(model: model, prompt: prompt, temperature: temp)
             }
-            self.aiService = AIEnhancedCodeAnalysisService(llmGenerate: generator)
-        } else {
-            self.aiService = nil
+            aiService = AIEnhancedCodeAnalysisService(llmGenerate: generator)
         }
-    }
-
-    private static var isAIEnabled: Bool {
-        let env = ProcessInfo.processInfo.environment
-        return env["CR_USE_OLLAMA"] == "1" || env["CR_USE_AI"] == "1"
     }
 
     // MARK: - ServiceProtocol Conformance
@@ -48,79 +54,70 @@ public class CodeReviewService: CodeReviewServiceProtocol {
         self.logger.info("Cleaning up CodeReviewService")
     }
 
-    public func healthCheck() async -> ServiceHealthStatus {
-        .healthy
-    }
+    public func healthCheck() async -> ServiceHealthStatus { .healthy }
 
     // MARK: - CodeReviewServiceProtocol Conformance
 
     public func analyzeCode(_ code: String, language: String, analysisType: AnalysisType) async throws -> CodeAnalysisResult {
         self.logger.info("Analyzing code - Language: \(language), Type: \(analysisType.rawValue)")
 
-        if let ai = aiService {
-            // Use AI-enhanced path; map results into existing model
-            let aiResult = try await ai.analyzeCodeWithAI(code, language: language)
-            var issues: [CodeIssue] = []
-            // Security
-            for s in aiResult.securityIssues {
-                issues.append(CodeIssue(
-                    description: s.description,
-                    severity: Self.mapSeverity(s.severity),
-                    line: nil,
-                    category: .security
-                ))
+        if isAIEnabled {
+            ensureAIService()
+            if let aiService {
+                let aiResult = try await aiService.analyzeCodeWithAI(code, language: language)
+                var issues: [CodeIssue] = []
+                for secIssue in aiResult.securityIssues {
+                    issues.append(CodeIssue(
+                        description: secIssue.description,
+                        severity: Self.mapSeverity(secIssue.severity),
+                        line: nil,
+                        category: .security
+                    ))
+                }
+                for perfIssue in aiResult.performanceIssues {
+                    let sev: IssueSeverity = (perfIssue.impact == .high ? .high : (perfIssue.impact == .medium ? .medium : .low))
+                    issues.append(CodeIssue(
+                        description: perfIssue.description,
+                        severity: sev,
+                        line: nil,
+                        category: .performance
+                    ))
+                }
+                for bestPractice in aiResult.bestPracticeViolations {
+                    issues.append(CodeIssue(
+                        description: bestPractice.violation,
+                        severity: .medium,
+                        line: nil,
+                        category: .style
+                    ))
+                }
+                let suggestions = aiResult.recommendations
+                let summary = "AI Quality: \(aiResult.qualityScore)/10 • " +
+                    "Security: \(aiResult.securityIssues.count) • " +
+                    "Performance: \(aiResult.performanceIssues.count) • " +
+                    "Style: \(aiResult.bestPracticeViolations.count)"
+                return CodeAnalysisResult(
+                    analysis: summary,
+                    issues: issues,
+                    suggestions: suggestions,
+                    language: language,
+                    analysisType: analysisType
+                )
             }
-            // Performance
-            for p in aiResult.performanceIssues {
-                let severity: IssueSeverity = (p.impact == .high ? .high : (p.impact == .medium ? .medium : .low))
-                issues.append(CodeIssue(
-                    description: p.description,
-                    severity: severity,
-                    line: nil,
-                    category: .performance
-                ))
-            }
-            // Style / Best practices
-            for b in aiResult.bestPracticeViolations {
-                issues.append(CodeIssue(
-                    description: b.violation,
-                    severity: .medium,
-                    line: nil,
-                    category: .style
-                ))
-            }
-            let suggestions = aiResult.recommendations
-            let summary = "AI Quality: \(aiResult.qualityScore)/10 • Security: \(aiResult.securityIssues.count) • Performance: \(aiResult.performanceIssues.count) • Style: \(aiResult.bestPracticeViolations.count)"
-            return CodeAnalysisResult(
-                analysis: summary,
-                issues: issues,
-                suggestions: suggestions,
-                language: language,
-                analysisType: analysisType
-            )
         }
 
-        // Perform analysis on background thread to avoid blocking UI
-        return try await Task.detached(priority: .userInitiated) {
-            let issues = self.analysisEngine.performBasicAnalysis(code: code, language: language, analysisType: analysisType)
-            let suggestions = self.analysisEngine.generateSuggestions(code: code, language: language, analysisType: analysisType)
-            let analysis = self.analysisEngine.generateAnalysisSummary(issues: issues, suggestions: suggestions, analysisType: analysisType)
-            return CodeAnalysisResult(
-                analysis: analysis,
-                issues: issues,
-                suggestions: suggestions,
-                language: language,
-                analysisType: analysisType
-            )
-        }.value
+        return try await fallbackAnalyze(code: code, language: language, analysisType: analysisType)
     }
 
     public func generateDocumentation(_ code: String, language: String, includeExamples: Bool) async throws -> DocumentationResult {
         self.logger.info("Generating documentation - Language: \(language)")
 
-        if let ai = aiService {
-            let doc = try await ai.generateDocumentationWithAI(code, documentationType: includeExamples ? .comprehensive : .inline)
-            return DocumentationResult(documentation: doc.generatedDocumentation, language: language, includesExamples: includeExamples)
+        if isAIEnabled {
+            ensureAIService()
+            if let aiService {
+                let doc = try await aiService.generateDocumentationWithAI(code, documentationType: includeExamples ? .comprehensive : .inline)
+                return DocumentationResult(documentation: doc.generatedDocumentation, language: language, includesExamples: includeExamples)
+            }
         }
 
         return try await Task.detached(priority: .userInitiated) {
@@ -136,14 +133,17 @@ public class CodeReviewService: CodeReviewServiceProtocol {
     public func generateTests(_ code: String, language: String, testFramework: String) async throws -> TestGenerationResult {
         self.logger.info("Generating tests - Language: \(language), Framework: \(testFramework)")
 
-        if let ai = aiService {
-            let aiTests = try await ai.generateTestsWithAI(code, testType: .unit)
-            return TestGenerationResult(
-                testCode: aiTests.generatedTests,
-                language: language,
-                testFramework: testFramework,
-                estimatedCoverage: Double(aiTests.estimatedCoverage)
-            )
+        if isAIEnabled {
+            ensureAIService()
+            if let aiService {
+                let aiTests = try await aiService.generateTestsWithAI(code, testType: .unit)
+                return TestGenerationResult(
+                    testCode: aiTests.generatedTests,
+                    language: language,
+                    testFramework: testFramework,
+                    estimatedCoverage: Double(aiTests.estimatedCoverage)
+                )
+            }
         }
 
         return try await Task.detached(priority: .userInitiated) {
@@ -153,8 +153,8 @@ public class CodeReviewService: CodeReviewServiceProtocol {
         }.value
     }
 
-    private static func mapSeverity(_ s: Severity) -> IssueSeverity {
-        switch s {
+    private static func mapSeverity(_ severity: Severity) -> IssueSeverity {
+        switch severity {
         case .high: .high
         case .medium: .medium
         case .low: .low
@@ -164,5 +164,22 @@ public class CodeReviewService: CodeReviewServiceProtocol {
     public func trackReviewProgress(_ reviewId: UUID) async throws {
         self.logger.info("Tracking review progress for ID: \(reviewId)")
         // Basic implementation - could be enhanced with persistence
+    }
+
+    // MARK: - Fallback helpers
+
+    private func fallbackAnalyze(code: String, language: String, analysisType: AnalysisType) async throws -> CodeAnalysisResult {
+        try await Task.detached(priority: .userInitiated) {
+            let issues = self.analysisEngine.performBasicAnalysis(code: code, language: language, analysisType: analysisType)
+            let suggestions = self.analysisEngine.generateSuggestions(code: code, language: language, analysisType: analysisType)
+            let analysis = self.analysisEngine.generateAnalysisSummary(issues: issues, suggestions: suggestions, analysisType: analysisType)
+            return CodeAnalysisResult(
+                analysis: analysis,
+                issues: issues,
+                suggestions: suggestions,
+                language: language,
+                analysisType: analysisType
+            )
+        }.value
     }
 }
