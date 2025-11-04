@@ -6,6 +6,7 @@
 //
 
 @testable import CodingReviewer
+import SwiftUI
 import XCTest
 
 final class WelcomeViewTests: XCTestCase {
@@ -25,42 +26,69 @@ final class WelcomeViewTests: XCTestCase {
     // MARK: - Initialization Tests
 
     func testInitialization() {
-        // Test basic initialization
-        XCTAssertTrue(true, "Initialization test placeholder")
+        var flag = false
+        let binding = Binding<Bool>(get: { flag }, set: { flag = $0 })
+        let view = WelcomeView(showFilePicker: binding)
+        XCTAssertNotNil(view)
+        XCTAssertFalse(flag)
     }
 
     // MARK: - Property Tests
 
     func testProperties() {
-        // Test property access and validation
-        XCTAssertTrue(true, "Property test placeholder")
+        // Presenter open action should toggle binding to true
+        var flag = false
+        let binding = Binding<Bool>(get: { flag }, set: { flag = $0 })
+        let presenter = WelcomeViewPresenter()
+        let action = presenter.openFileAction(binding: binding)
+        action()
+        XCTAssertTrue(flag)
     }
 
     // MARK: - Method Tests
 
     func testPublicMethods() {
-        // Test public method functionality
-        XCTAssertTrue(true, "Method test placeholder")
+        // Repeated action should be idempotent (still true)
+        var flag = false
+        let binding = Binding<Bool>(get: { flag }, set: { flag = $0 })
+        let presenter = WelcomeViewPresenter()
+        let action = presenter.openFileAction(binding: binding)
+        action()
+        action()
+        XCTAssertTrue(flag)
     }
 
     // MARK: - Edge Case Tests
 
     func testEdgeCases() {
-        // Test edge cases and boundary conditions
-        XCTAssertTrue(true, "Edge case test placeholder")
+        // Ensure action closure can be stored and invoked later
+        var flag = false
+        let binding = Binding<Bool>(get: { flag }, set: { flag = $0 })
+        let action = WelcomeViewPresenter().openFileAction(binding: binding)
+        let stored = action
+        stored()
+        XCTAssertTrue(flag)
     }
 
     // MARK: - Error Handling Tests
 
     func testErrorHandling() {
-        // Test error handling and validation
-        XCTAssertTrue(true, "Error handling test placeholder")
+        // No explicit errors expected; verify that toggling does not crash
+        var flag = false
+        let binding = Binding<Bool>(get: { flag }, set: { flag = $0 })
+        WelcomeViewPresenter().openFileAction(binding: binding)()
+        XCTAssertTrue(flag)
     }
 
     // MARK: - Integration Tests
 
     func testIntegration() {
-        // Test integration with other components
-        XCTAssertTrue(true, "Integration test placeholder")
+        // Integrate presenter + view wiring indirectly via binding behavior
+        var flag = false
+        let binding = Binding<Bool>(get: { flag }, set: { flag = $0 })
+        _ = WelcomeView(showFilePicker: binding)
+        // Simulate the primary action
+        WelcomeViewPresenter().openFileAction(binding: binding)()
+        XCTAssertTrue(flag)
     }
 }
