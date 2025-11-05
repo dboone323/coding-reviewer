@@ -1,6 +1,7 @@
 @testable import CodingReviewer
 import XCTest
 
+@MainActor
 final class SentimentScoringServiceTests: XCTestCase {
     func testKeywordFallbackPositiveAndNegative() {
         let keyword = KeywordSentimentScoringService()

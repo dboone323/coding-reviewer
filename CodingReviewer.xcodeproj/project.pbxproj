@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		68143F3E2EBA8E55005A747F /* SharedKit in Frameworks */ = {isa = PBXBuildFile; productRef = 68143F3D2EBA8E55005A747F /* SharedKit */; };
-		68143F402EBA8E55005A747F /* SharedTestSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 68143F3F2EBA8E55005A747F /* SharedTestSupport */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,8 +55,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68143F3E2EBA8E55005A747F /* SharedKit in Frameworks */,
-				68143F402EBA8E55005A747F /* SharedTestSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,8 +115,6 @@
 			);
 			name = CodingReviewer;
 			packageProductDependencies = (
-				68143F3D2EBA8E55005A747F /* SharedKit */,
-				68143F3F2EBA8E55005A747F /* SharedTestSupport */,
 			);
 			productName = CodingReviewer;
 			productReference = 688DD4A72E282B6D0020150F /* CodingReviewer.app */;
@@ -205,7 +199,6 @@
 			mainGroup = 688DD49E2E282B6D0020150F;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				68143F3C2EBA8E55005A747F /* XCRemoteSwiftPackageReference "shared-kit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 688DD4A82E282B6D0020150F /* Products */;
@@ -361,6 +354,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.DanielStevens.CodingReviewer;
 				SDKROOT = macosx;
+				MACOSX_DEPLOYMENT_TARGET = 26.1;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.0;
@@ -419,6 +413,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.DanielStevens.CodingReviewer;
 				SDKROOT = macosx;
+				MACOSX_DEPLOYMENT_TARGET = 26.1;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 6.0;
 			};

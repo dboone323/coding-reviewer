@@ -29,6 +29,7 @@ struct CodeAnalysisEngine {
         var issues: [CodeIssue] = []
 
         // Perform analysis based on analysis type
+        // Perform analysis based on analysis type
         switch analysisType {
         case .bugs:
             issues.append(contentsOf: self.bugDetector.detectBasicBugs(code: code, language: language))
@@ -37,6 +38,8 @@ struct CodeAnalysisEngine {
         case .security:
             issues.append(contentsOf: self.securityAnalyzer.detectSecurityIssues(code: code, language: language))
         case .style:
+            issues.append(contentsOf: self.styleAnalyzer.detectStyleIssues(code: code, language: language))
+        case .maintainability:
             issues.append(contentsOf: self.styleAnalyzer.detectStyleIssues(code: code, language: language))
         case .comprehensive:
             issues.append(contentsOf: self.bugDetector.detectBasicBugs(code: code, language: language))

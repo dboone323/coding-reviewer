@@ -1,6 +1,7 @@
 @testable import CodingReviewer
 import XCTest
 
+@MainActor
 final class AIServiceModelMappingTests: XCTestCase {
     func testMapsCloudModelTagsToFreeOllamaModels() async throws {
         var models: [String] = []

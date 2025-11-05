@@ -31,6 +31,9 @@ struct AnalysisSummaryGenerator {
         case .style:
             suggestions.append("Follow consistent naming conventions")
             suggestions.append("Add comprehensive documentation")
+        case .maintainability:
+            suggestions.append("Improve code readability and maintainability")
+            suggestions.append("Reduce code complexity and cyclomatic complexity")
         case .comprehensive:
             suggestions.append("Consider implementing unit tests")
             suggestions.append("Add comprehensive error handling")

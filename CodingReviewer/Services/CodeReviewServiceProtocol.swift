@@ -44,6 +44,7 @@ public enum AnalysisType: String, Codable, CaseIterable, Sendable {
     case performance = "Performance"
     case security = "Security"
     case style = "Style"
+    case maintainability = "Maintainability"
     case comprehensive = "Comprehensive"
 }
 

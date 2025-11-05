@@ -8,6 +8,7 @@
 @testable import CodingReviewer
 import XCTest
 
+@MainActor
 final class AboutViewTests: XCTestCase {
 
     // MARK: - Setup & Teardown

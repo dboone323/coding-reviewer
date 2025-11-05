@@ -1,3 +1,11 @@
+class OllamaClient {
+    func generate(model: String, prompt: String, temperature: Double) async throws -> String {
+        // Stub implementation
+        return "Stub response from OllamaClient" 
+    }
+}
+
+
 //
 //  CodeReviewService.swift
 //  CodingReviewer

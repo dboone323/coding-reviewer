@@ -8,6 +8,7 @@
 @testable import CodingReviewer
 import XCTest
 
+@MainActor
 final class AIEnhancedCodeAnalysisServiceTests: XCTestCase {
 
     // MARK: - Setup & Teardown
