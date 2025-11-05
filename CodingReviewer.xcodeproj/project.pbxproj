@@ -544,12 +544,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		68143F3C2EBA8E55005A747F /* XCRemoteSwiftPackageReference "shared-kit" */ = {
+		2D8E8FE32B8E8FE32B8E8FE32B8E8FE3 /* XCRemoteSwiftPackageReference "dboone323/shared-kit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/dboone323/shared-kit.git";
+			repositoryURL = "file:///Users/danielstevens/Desktop/github-projects/shared-kit";
 			requirement = {
-				kind = exactVersion;
-				version = 1.0.0;
+				kind = branch;
+				name = "main";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
