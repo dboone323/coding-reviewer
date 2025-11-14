@@ -11,7 +11,7 @@ if [[ -f "${SETUP_PATH}" ]]; then
     source "${SETUP_PATH}"
 fi
 
-export PROJECT_DIR="${PROJECT_DIR:-${WORKSPACE_ROOT}/CodingReviewer}"
+export PROJECT_DIR="${PROJECT_DIR:-${WORKSPACE_ROOT}/Projects/CodingReviewer}"
 export PROJECT_DISPLAY_NAME="CodingReviewer"
 export PROJECT_TYPE="macOS App"
 export PROJECT_FEATURE_SUMMARY="Automated code review workflows"
