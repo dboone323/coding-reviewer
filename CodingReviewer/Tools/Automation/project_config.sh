@@ -5,10 +5,15 @@ export ENABLE_AUTO_BUILD=true
 export ENABLE_AI_ENHANCEMENT=true
 export ENABLE_AUTO_TEST=true
 export PROJECT_NAME="CodingReviewer"
-export PROJECT_DIR="/Users/danielstevens/Desktop/Quantum-workspace/Projects/CodingReviewer/CodingReviewer"
+SETUP_PATH="$(git rev-parse --show-toplevel 2>/dev/null)/scripts/setup_paths.sh"
+if [[ -f "${SETUP_PATH}" ]]; then
+    # shellcheck disable=SC1090
+    source "${SETUP_PATH}"
+fi
+
+export PROJECT_DIR="${PROJECT_DIR:-${WORKSPACE_ROOT}/Projects/CodingReviewer/CodingReviewer}"
 export PROJECT_DISPLAY_NAME="CodingReviewer App"
 export PROJECT_TYPE="macOS App"
 export PROJECT_FEATURE_SUMMARY="Automated code review workflows"
 
 echo "✅ CodingReviewer app configuration loaded"
-
