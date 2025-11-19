@@ -24,7 +24,7 @@ The MCP kit provides a lightweight interface to the centralized MCP server runni
 This verifies:
 
 - MCP server is running (http://127.0.0.1:5005)
-- Ollama is accessible (http://localhost:11434)
+- Ollama is accessible (http://127.0.0.1:11434) – can be overridden with `OLLAMA_ENDPOINT`
 
 ### 2. Use MCP Client
 
@@ -115,7 +115,7 @@ ollama serve
 
 1. Check Ollama status: `ollama list`
 2. Start Ollama: `ollama serve`
-3. Verify endpoint: `curl http://localhost:11434/api/tags`
+3. Verify endpoint: `curl ${OLLAMA_ENDPOINT:-http://127.0.0.1:11434}/api/tags`
 
 ## Documentation
 

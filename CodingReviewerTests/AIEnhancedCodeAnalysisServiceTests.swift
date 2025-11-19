@@ -11,18 +11,6 @@ import XCTest
 @MainActor
 final class AIEnhancedCodeAnalysisServiceTests: XCTestCase {
 
-    // MARK: - Setup & Teardown
-
-    override func setUp() {
-        super.setUp()
-        // Setup test environment
-    }
-
-    override func tearDown() {
-        // Cleanup test environment
-        super.tearDown()
-    }
-
     // MARK: - Initialization Tests
 
     func testInitialization() {

@@ -1509,7 +1509,7 @@ func testPerformanceOnLargeCodebase() {
 let password = "secret"
 
 // ✅ Use obviously fake test data
-let password = "test_password_123"
+let password = "EXAMPLE_PASSWORD"
 ```
 
 ## 4. Swift Best Practices Violations
@@ -1639,7 +1639,7 @@ class SecurityAnalysisServiceTests: XCTestCase {
     func test_detectSecurityIssues_swiftPasswordInUserDefaults_returnsHighSeverityIssue() {
         // Given
         let code = """
-            let password = "test_password"
+            let password = "EXAMPLE_PASSWORD"
             UserDefaults.standard.set(password, forKey: "user_password")
             """
 

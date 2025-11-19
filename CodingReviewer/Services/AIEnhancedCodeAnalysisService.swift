@@ -463,7 +463,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         let mapping: [String: String] = [
             "deepseek-v3.1:671b-cloud": "llama3.1:8b",
             "qwen3-coder:480b-cloud": "qwen2.5-coder:7b",
-            "gpt-oss:120b-cloud": "mistral:7b",
+            "gpt-oss:120b-cloud": "mistral:7b"
         ]
         return mapping[requested] ?? requested
     }

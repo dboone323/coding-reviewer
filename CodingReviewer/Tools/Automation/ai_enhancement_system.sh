@@ -19,4 +19,3 @@ find_repo_root() {
 
 REPO_ROOT="$(find_repo_root)"
 exec "${REPO_ROOT}/Tools/Automation/ai_enhancement_system.sh" "$@"
-

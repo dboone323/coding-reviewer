@@ -12,33 +12,33 @@ public struct SentimentScore {
 public final class KeywordSentimentScoringService {
     private let positiveKeywords = ["love", "excellent", "amazing", "wonderful", "great", "good", "awesome", "fantastic", "brilliant", "perfect"]
     private let negativeKeywords = ["terrible", "broken", "awful", "crash", "bad", "horrible", "worst", "hate", "disgusting", "pathetic"]
-    
+
     public init() {}
-    
+
     public func scoreSync(text: String) -> SentimentScore {
         let lowerText = text.lowercased()
         var positiveCount = 0
         var negativeCount = 0
-        
+
         for keyword in positiveKeywords {
             if lowerText.contains(keyword) {
                 positiveCount += 1
             }
         }
-        
+
         for keyword in negativeKeywords {
             if lowerText.contains(keyword) {
                 negativeCount += 1
             }
         }
-        
+
         let totalKeywords = positiveCount + negativeCount
         if totalKeywords == 0 {
             return SentimentScore(label: "neutral", score: 0.0)
         }
-        
+
         let score = Double(positiveCount - negativeCount) / Double(totalKeywords)
-        
+
         if score > 0 {
             return SentimentScore(label: "positive", score: score)
         } else if score < 0 {

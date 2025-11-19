@@ -106,7 +106,6 @@ final class TestGeneratorTests: XCTestCase {
         """
 
         let testCode = """
-        import XCTest
         @testable import YourApp
 
         class CalculatorTests: XCTestCase {
