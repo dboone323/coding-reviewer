@@ -20,15 +20,13 @@ struct StyleAnalysisService {
         if language == "Swift" {
             // Check for long lines (Swift only)
             let lines = code.components(separatedBy: .newlines)
-            for (index, line) in lines.enumerated() {
-                if line.count > 120 {
-                    issues.append(CodeIssue(
-                        description: "Line \(index + 1) is too long (\(line.count) characters). Maximum allowed is 120 characters.",
-                        severity: .low,
-                        line: index + 1,
-                        category: .style
-                    ))
-                }
+            for (index, line) in lines.enumerated() where line.count > 120 {
+                issues.append(CodeIssue(
+                    description: "Line \(index + 1) is too long (\(line.count) characters). Maximum allowed is 120 characters.",
+                    severity: .low,
+                    line: index + 1,
+                    category: .style
+                ))
             }
 
             // Check for missing documentation (Swift only)

@@ -31,9 +31,8 @@ struct PerformanceAnalysisService {
             ]
 
             // Check multiline patterns on entire code
-            for (pattern, description, severity) in multilinePatterns {
-                if let _ = code.range(of: pattern, options: .regularExpression) {
-                    let fullDescription = "Performance issue: \(description) can be optimized"
+            for (pattern, description, severity) in multilinePatterns where code.range(of: pattern, options: .regularExpression) != nil {
+                let fullDescription = "Performance issue: \(description) can be optimized"
                     if !addedDescriptions.contains(fullDescription) {
                         let issue = CodeIssue(
                             description: fullDescription,
@@ -50,10 +49,8 @@ struct PerformanceAnalysisService {
             // Check line-by-line patterns
             let lines = code.components(separatedBy: .newlines)
             for (lineIndex, line) in lines.enumerated() {
-                for (pattern, description, severity) in linePatterns {
-                    // Use case-sensitive regex matching
-                    if let _ = line.range(of: pattern, options: .regularExpression) {
-                        let fullDescription = "Performance issue: \(description) can be optimized"
+                for (pattern, description, severity) in linePatterns where line.range(of: pattern, options: .regularExpression) != nil {
+                    let fullDescription = "Performance issue: \(description) can be optimized"
                         if !addedDescriptions.contains(fullDescription) {
                             let issue = CodeIssue(
                                 description: fullDescription,
@@ -97,7 +94,7 @@ struct PerformanceAnalysisService {
             // Check entire code for multiline patterns
             for (pattern, description, severity) in patterns {
                 let multilinePattern = "(?s)" + pattern // (?s) makes . match newlines
-                if let _ = code.range(of: multilinePattern, options: .regularExpression) {
+                if code.range(of: multilinePattern, options: .regularExpression) != nil {
                     let fullDescription = "Performance issue: \(description) can be optimized"
                     if !addedDescriptions.contains(fullDescription) {
                         let issue = CodeIssue(

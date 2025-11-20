@@ -296,12 +296,10 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
 
         // Then there should be no empty sections
         let lines = summary.components(separatedBy: "\n")
-        for line in lines {
-            if line.hasPrefix("##") {
-                // Next line should not be empty if there's content
-                if let index = lines.firstIndex(of: line), index + 1 < lines.count {
-                    XCTAssertFalse(lines[index + 1].isEmpty || lines[index + 1].hasPrefix("##"))
-                }
+        for line in lines where line.hasPrefix("##") {
+            // Next line should not be empty if there's content
+            if let index = lines.firstIndex(of: line), index + 1 < lines.count {
+                XCTAssertFalse(lines[index + 1].isEmpty || lines[index + 1].hasPrefix("##"))
             }
         }
     }

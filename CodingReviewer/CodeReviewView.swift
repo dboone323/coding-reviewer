@@ -30,19 +30,19 @@ public struct CodeReviewView: View {
 
                 switch currentView {
                 case .analysis:
-                    Button(action: { Task { await onAnalyze() } }) {
+                    Button(action: { Task { await onAnalyze() } }, label: {
                         Label("Analyze", systemImage: "play.fill")
-                    }
+                    })
                     .disabled(isAnalyzing || codeContent.isEmpty)
                 case .documentation:
-                    Button(action: { Task { await onGenerateDocumentation() } }) {
+                    Button(action: { Task { await onGenerateDocumentation() } }, label: {
                         Label("Generate Docs", systemImage: "doc.text")
-                    }
+                    })
                     .disabled(isAnalyzing || codeContent.isEmpty)
                 case .tests:
-                    Button(action: { Task { await onGenerateTests() } }) {
+                    Button(action: { Task { await onGenerateTests() } }, label: {
                         Label("Generate Tests", systemImage: "testtube.2")
-                    }
+                    })
                     .disabled(isAnalyzing || codeContent.isEmpty)
                 }
             }

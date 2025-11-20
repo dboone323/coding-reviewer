@@ -22,42 +22,36 @@ struct BugDetectionService {
         // Check for common bug patterns
         if language == "Swift" || language == "JavaScript" {
             // Check for TODO comments - create separate issues for each
-            for (index, line) in lines.enumerated() {
-                if line.contains("TODO") {
-                    issues.append(CodeIssue(
-                        description: "TODO comment found - this should be addressed",
-                        severity: .medium,
-                        line: index + 1,
-                        category: .bug
-                    ))
-                }
+            for (index, line) in lines.enumerated() where line.contains("TODO") {
+                issues.append(CodeIssue(
+                    description: "TODO comment found - this should be addressed",
+                    severity: .medium,
+                    line: index + 1,
+                    category: .bug
+                ))
             }
 
             // Check for FIXME comments - create separate issues for each
-            for (index, line) in lines.enumerated() {
-                if line.contains("FIXME") {
-                    issues.append(CodeIssue(
-                        description: "FIXME comment found - this should be addressed",
-                        severity: .medium,
-                        line: index + 1,
-                        category: .bug
-                    ))
-                }
+            for (index, line) in lines.enumerated() where line.contains("FIXME") {
+                issues.append(CodeIssue(
+                    description: "FIXME comment found - this should be addressed",
+                    severity: .medium,
+                    line: index + 1,
+                    category: .bug
+                ))
             }
         }
 
         if language == "Swift" {
             // Check for print statements
-            for (index, line) in lines.enumerated() {
-                if line.contains("print(") {
-                    issues.append(CodeIssue(
-                        description: "Debug print statements found in production code",
-                        severity: .low,
-                        line: index + 1,
-                        category: .bug
-                    ))
-                    break // Only report once
-                }
+            for (index, line) in lines.enumerated() where line.contains("print(") {
+                issues.append(CodeIssue(
+                    description: "Debug print statements found in production code",
+                    severity: .low,
+                    line: index + 1,
+                    category: .bug
+                ))
+                break // Only report once
             }
 
             // Check for force unwrap

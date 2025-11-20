@@ -20,16 +20,12 @@ public final class KeywordSentimentScoringService {
         var positiveCount = 0
         var negativeCount = 0
 
-        for keyword in positiveKeywords {
-            if lowerText.contains(keyword) {
-                positiveCount += 1
-            }
+        for keyword in positiveKeywords where lowerText.contains(keyword) {
+            positiveCount += 1
         }
 
-        for keyword in negativeKeywords {
-            if lowerText.contains(keyword) {
-                negativeCount += 1
-            }
+        for keyword in negativeKeywords where lowerText.contains(keyword) {
+            negativeCount += 1
         }
 
         let totalKeywords = positiveCount + negativeCount

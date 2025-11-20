@@ -331,50 +331,48 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
 
         var fileAnalyses: [FileReviewAnalysis] = []
 
-        for filePath in files.prefix(10) { // Limit to avoid overwhelming the AI
-            if fileManager.fileExists(atPath: filePath) {
-                do {
-                    let content = try String(contentsOfFile: filePath, encoding: .utf8)
-                    let fileName = URL(fileURLWithPath: filePath).lastPathComponent
+        for filePath in files.prefix(10) where fileManager.fileExists(atPath: filePath) { // Limit to avoid overwhelming the AI
+            do {
+                let content = try String(contentsOfFile: filePath, encoding: .utf8)
+                let fileName = URL(fileURLWithPath: filePath).lastPathComponent
 
-                    let reviewPrompt = """
-                    Perform a \(reviewType.description) code review for this Swift file:
+                let reviewPrompt = """
+                Perform a \(reviewType.description) code review for this Swift file:
 
-                    File: \(fileName)
-                    Code:
-                    \(String(content.prefix(2000))) // First 2000 chars
+                File: \(fileName)
+                Code:
+                \(String(content.prefix(2000))) // First 2000 chars
 
-                    Review criteria:
-                    1. Code quality and style
-                    2. Architecture and design patterns
-                    3. Performance considerations
-                    4. Security implications
-                    5. Error handling
-                    6. Testing needs
-                    7. Documentation quality
+                Review criteria:
+                1. Code quality and style
+                2. Architecture and design patterns
+                3. Performance considerations
+                4. Security implications
+                5. Error handling
+                6. Testing needs
+                7. Documentation quality
 
-                    Provide specific, actionable feedback with line-level suggestions where possible.
-                    Rate the overall file quality (1-10) and highlight top 3 improvements.
-                    """
+                Provide specific, actionable feedback with line-level suggestions where possible.
+                Rate the overall file quality (1-10) and highlight top 3 improvements.
+                """
 
-                    let reviewResponse = try await callOllamaModel(
-                        model: "deepseek-v3.1:671b-cloud",
-                        prompt: reviewPrompt,
-                        temperature: 0.3
-                    )
+                let reviewResponse = try await callOllamaModel(
+                    model: "deepseek-v3.1:671b-cloud",
+                    prompt: reviewPrompt,
+                    temperature: 0.3
+                )
 
-                    fileAnalyses.append(FileReviewAnalysis(
-                        fileName: fileName,
-                        filePath: filePath,
-                        reviewComments: reviewResponse,
-                        qualityRating: extractQualityRating(from: reviewResponse),
-                        topImprovements: extractTopImprovements(from: reviewResponse),
-                        reviewTimestamp: Date()
-                    ))
+                fileAnalyses.append(FileReviewAnalysis(
+                    fileName: fileName,
+                    filePath: filePath,
+                    reviewComments: reviewResponse,
+                    qualityRating: extractQualityRating(from: reviewResponse),
+                    topImprovements: extractTopImprovements(from: reviewResponse),
+                    reviewTimestamp: Date()
+                ))
 
-                } catch {
-                    logger.error("Failed to review file \(filePath): \(error.localizedDescription)")
-                }
+            } catch {
+                logger.error("Failed to review file \(filePath): \(error.localizedDescription)")
             }
         }
 
@@ -562,15 +560,13 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         let lines = analysis.components(separatedBy: .newlines)
 
         return lines.compactMap { line in
-            for keyword in securityKeywords {
-                if line.lowercased().contains(keyword) {
-                    return SecurityIssue(
-                        type: keyword.capitalized,
-                        severity: line.lowercased().contains("critical") || line.lowercased().contains("high") ? .high : .medium,
-                        description: line,
-                        recommendation: "Address security concern"
-                    )
-                }
+            for keyword in securityKeywords where line.lowercased().contains(keyword) {
+                return SecurityIssue(
+                    type: keyword.capitalized,
+                    severity: line.lowercased().contains("critical") || line.lowercased().contains("high") ? .high : .medium,
+                    description: line,
+                    recommendation: "Address security concern"
+                )
             }
             return nil
         }
@@ -581,15 +577,13 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         let lines = analysis.components(separatedBy: .newlines)
 
         return lines.compactMap { line in
-            for keyword in performanceKeywords {
-                if line.lowercased().contains(keyword) {
-                    return PerformanceIssue(
-                        type: "Performance Concern",
-                        impact: line.lowercased().contains("critical") ? .high : .medium,
-                        description: line,
-                        suggestion: "Optimize for better performance"
-                    )
-                }
+            for keyword in performanceKeywords where line.lowercased().contains(keyword) {
+                return PerformanceIssue(
+                    type: "Performance Concern",
+                    impact: line.lowercased().contains("critical") ? .high : .medium,
+                    description: line,
+                    suggestion: "Optimize for better performance"
+                )
             }
             return nil
         }
@@ -600,14 +594,12 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         let lines = analysis.components(separatedBy: .newlines)
 
         return lines.compactMap { line in
-            for keyword in practiceKeywords {
-                if line.lowercased().contains(keyword) {
-                    return BestPracticeViolation(
-                        rule: "Code Convention",
-                        violation: line,
-                        suggestion: "Follow Swift best practices"
-                    )
-                }
+            for keyword in practiceKeywords where line.lowercased().contains(keyword) {
+                return BestPracticeViolation(
+                    rule: "Code Convention",
+                    violation: line,
+                    suggestion: "Follow Swift best practices"
+                )
             }
             return nil
         }
