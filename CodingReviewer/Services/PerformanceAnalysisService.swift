@@ -44,7 +44,7 @@ struct PerformanceAnalysisService {
                         addedDescriptions.insert(fullDescription)
                     }
                 }
-            }
+
 
             // Check line-by-line patterns
             let lines = code.components(separatedBy: .newlines)
@@ -63,7 +63,7 @@ struct PerformanceAnalysisService {
                         }
                     }
                 }
-            }
+
 
             // Check for multiple chained array operations (suggesting flatMap optimization)
             // Look for patterns like .filter { ... }.map { ... } on separate lines or same line
