@@ -29,6 +29,10 @@ public struct ContentView: View {
     @State private var showFilePicker = false
     @State private var selectedAnalysisType: AnalysisType = .comprehensive
     @State private var currentView: ContentViewType = .analysis
+    @State private var showError = false
+    @State private var errorMessage = ""
+    @State private var showSavePanel = false
+    @State private var reviewToSave: ReviewData?
 
     public var body: some View {
         NavigationSplitView {
@@ -71,6 +75,22 @@ public struct ContentView: View {
         .onAppear {
             logger.info("ContentView appeared")
         }
+        .alert("Error", isPresented: $showError) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(errorMessage)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("SaveReviewNotification"))) { _ in
+            prepareForSave()
+        }
+        .fileExporter(
+            isPresented: $showSavePanel,
+            document: JSONFileDocument(reviewData: reviewToSave),
+            contentType: .json,
+            defaultFilename: "CodeReview_\(Date().formatted(date: .numeric, time: .omitted)).json"
+        ) { result in
+            handleSaveResult(result)
+        }
     }
 
     private func handleFileSelection(_ result: Result<[URL], Error>) {
@@ -82,7 +102,8 @@ public struct ContentView: View {
             }
         case let .failure(error):
             logger.error("File selection failed: \(error.localizedDescription)")
-            // TODO: Handle error properly
+            errorMessage = "Failed to select file: \(error.localizedDescription)"
+            showError = true
         }
     }
 
@@ -93,7 +114,8 @@ public struct ContentView: View {
             logger.info("Loaded file content from: \(url.lastPathComponent)")
         } catch {
             logger.error("Failed to load file content: \(error.localizedDescription)")
-            // TODO: Handle error properly
+            errorMessage = "Failed to load file: \(error.localizedDescription)"
+            showError = true
         }
     }
 
@@ -114,7 +136,8 @@ public struct ContentView: View {
             logger.info("Code analysis completed successfully")
         } catch {
             logger.error("Code analysis failed: \(error.localizedDescription)")
-            // TODO: Handle error properly
+            errorMessage = "Analysis failed: \(error.localizedDescription)"
+            showError = true
         }
     }
 
@@ -131,7 +154,8 @@ public struct ContentView: View {
             logger.info("Documentation generation completed successfully")
         } catch {
             logger.error("Documentation generation failed: \(error.localizedDescription)")
-            // TODO: Handle error properly
+            errorMessage = "Documentation generation failed: \(error.localizedDescription)"
+            showError = true
         }
     }
 
@@ -148,8 +172,63 @@ public struct ContentView: View {
             logger.info("Test generation completed successfully")
         } catch {
             logger.error("Test generation failed: \(error.localizedDescription)")
-            // TODO: Handle error properly
+            errorMessage = "Test generation failed: \(error.localizedDescription)"
+            showError = true
         }
+    }
+
+    private func prepareForSave() {
+        guard let analysis = analysisResult else {
+            errorMessage = "No analysis to save. Please analyze a file first."
+            showError = true
+            return
+        }
+        
+        reviewToSave = ReviewData(
+            fileName: selectedFileURL?.lastPathComponent ?? "Unknown",
+            code: codeContent,
+            analysis: analysis,
+            timestamp: Date()
+        )
+        showSavePanel = true
+    }
+
+    private func handleSaveResult(_ result: Result<URL, Error>) {
+        switch result {
+        case .success(let url):
+            logger.info("Review saved successfully to: \(url.path)")
+        case .failure(let error):
+            logger.error("Failed to save review: \(error.localizedDescription)")
+            errorMessage = "Failed to save review: \(error.localizedDescription)"
+            showError = true
+        }
+    }
+}
+
+struct ReviewData: Codable {
+    let fileName: String
+    let code: String
+    let analysis: CodeAnalysisResult
+    let timestamp: Date
+}
+
+struct JSONFileDocument: FileDocument {
+    static var readableContentTypes: [UTType] { [.json] }
+    
+    var reviewData: ReviewData?
+    
+    init(reviewData: ReviewData?) {
+        self.reviewData = reviewData
+    }
+    
+    init(configuration: ReadConfiguration) throws {
+        let data = try configuration.file.regularFileContents
+        self.reviewData = try JSONDecoder().decode(ReviewData.self, from: data!)
+    }
+    
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        let data = try JSONEncoder().encode(reviewData)
+        return FileWrapper(regularFileWithContents: data)
     }
 }
 

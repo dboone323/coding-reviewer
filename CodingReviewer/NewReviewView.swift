@@ -24,7 +24,11 @@ struct NewReviewView: View {
 
                 Section {
                     Button("Create Review") {
-                        // TODO: Implement review creation logic
+                        // In a real app, this would create a project configuration
+                        // For now, we'll just log the action and dismiss
+                        print("Creating review for project: \(projectName)")
+                        print("Repository: \(repositoryURL)")
+                        print("Branch: \(branchName)")
                         dismiss()
                     }
                     .disabled(projectName.isEmpty || repositoryURL.isEmpty)

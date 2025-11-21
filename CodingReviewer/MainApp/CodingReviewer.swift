@@ -68,7 +68,6 @@ public struct CodingReviewer: App {
 
     private func saveCurrentReview() {
         logger.info("Save review action triggered")
-        // TODO: Implement actual save functionality
-        // This would typically save the current review state to disk or database
+        NotificationCenter.default.post(name: Notification.Name("SaveReviewNotification"), object: nil)
     }
 }

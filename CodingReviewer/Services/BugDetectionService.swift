@@ -16,6 +16,11 @@ struct BugDetectionService {
     ///   - language: The programming language of the code
     /// - Returns: Array of detected code issues
     func detectBasicBugs(code: String, language: String) -> [CodeIssue] {
+        // Validation
+        guard !code.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return []
+        }
+
         var issues: [CodeIssue] = []
         let lines = code.components(separatedBy: .newlines)
 
@@ -35,7 +40,7 @@ struct BugDetectionService {
             for (index, line) in lines.enumerated() where line.contains("FIXME") {
                 issues.append(CodeIssue(
                     description: "FIXME comment found - this should be addressed",
-                    severity: .medium,
+                    severity: .high, // FIXME is usually higher severity than TODO
                     line: index + 1,
                     category: .bug
                 ))
@@ -45,30 +50,41 @@ struct BugDetectionService {
         if language == "Swift" {
             // Check for print statements
             for (index, line) in lines.enumerated() where line.contains("print(") {
-                issues.append(CodeIssue(
-                    description: "Debug print statements found in production code",
-                    severity: .low,
-                    line: index + 1,
-                    category: .bug
-                ))
-                break // Only report once
-            }
-
-            // Check for force unwrap
-            for (index, line) in lines.enumerated() {
-                if line.contains("!"), !line.contains("!="), !line.contains("?!") {
+                let trimmed = line.trimmingCharacters(in: .whitespaces)
+                if !trimmed.hasPrefix("//") {
                     issues.append(CodeIssue(
-                        description: "Force unwrapping detected - consider safe unwrapping",
-                        severity: .medium,
+                        description: "Debug print statements found in production code",
+                        severity: .low,
                         line: index + 1,
                         category: .bug
                     ))
                     break // Only report once
                 }
             }
-        }
 
-        // Remove JavaScript-specific logic to match test expectations
+            // Check for force unwrap
+            for (index, line) in lines.enumerated() {
+                let trimmed = line.trimmingCharacters(in: .whitespaces)
+                // Ignore comments
+                guard !trimmed.hasPrefix("//") else { continue }
+                
+                // Simple heuristic to ignore string literals would be complex without a parser,
+                // but we can improve the check to be slightly more robust
+                if line.contains("!") && !line.contains("!=") && !line.contains("?!") {
+                    // Check if it's likely a force unwrap (end of word or before dot)
+                    // This is still a heuristic
+                    if line.contains("!)") || line.contains("!.") || line.contains("! ") || line.hasSuffix("!") {
+                         issues.append(CodeIssue(
+                            description: "Force unwrapping detected - consider safe unwrapping",
+                            severity: .medium,
+                            line: index + 1,
+                            category: .bug
+                        ))
+                        break // Only report once
+                    }
+                }
+            }
+        }
 
         return issues
     }

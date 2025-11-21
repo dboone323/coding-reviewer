@@ -77,7 +77,7 @@ final class BugDetectionServiceTests: XCTestCase {
 
         // Then FIXME issue should be detected
         XCTAssertEqual(issues.count, 1)
-        XCTAssertEqual(issues[0].severity, .medium)
+        XCTAssertEqual(issues[0].severity, .high)
         XCTAssertEqual(issues[0].category, .bug)
         XCTAssertTrue(issues[0].description.contains("FIXME"))
     }
