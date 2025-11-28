@@ -29,6 +29,20 @@ final class CodingReviewerUITests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
 
+    @MainActor
+    func testScreenshot() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        // Take a screenshot
+        let screenshot = XCUIScreen.main.screenshot()
+        let attachment = XCTAttachment(screenshot: screenshot)
+        attachment.lifetime = .keepAlways
+        add(attachment)
+        
+        XCTAssertNotNil(screenshot)
+    }
+
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
             // This measures how long it takes to launch your application.
