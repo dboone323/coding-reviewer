@@ -9,6 +9,17 @@ struct SettingsView: View {
             Section("AI & Agents") {
                 Toggle("Use AI‑enhanced analysis (Ollama)", isOn: $useAI)
 
+                if useAI {
+                    Picker("Model", selection: Binding(
+                        get: { AIModelManager.shared.selectedModelId },
+                        set: { AIModelManager.shared.selectModel(id: $0) }
+                    )) {
+                        ForEach(AIModelManager.shared.availableModels) { model in
+                            Text(model.name).tag(model.id)
+                        }
+                    }
+                }
+
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Requires local Ollama with free models:")
                         .font(.footnote)
