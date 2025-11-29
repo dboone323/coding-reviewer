@@ -7,7 +7,7 @@
 
 import UserNotifications
 
-class NotificationManager {
+final class NotificationManager: Sendable {
     static let shared = NotificationManager()
     
     func requestAuthorization() {

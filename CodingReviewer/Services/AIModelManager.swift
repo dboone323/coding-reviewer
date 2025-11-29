@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 class AIModelManager: ObservableObject {
     static let shared = AIModelManager()
     

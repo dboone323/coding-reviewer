@@ -18,17 +18,3 @@ struct CustomRule: Codable, Identifiable {
     // Optional: Suggestion for fix
     let suggestion: String?
 }
-
-enum IssueSeverity: String, Codable {
-    case high
-    case medium
-    case low
-}
-
-enum IssueCategory: String, Codable {
-    case security
-    case style
-    case bug
-    case performance
-    case maintainability
-}

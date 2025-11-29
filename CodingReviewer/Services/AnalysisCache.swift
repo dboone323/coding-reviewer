@@ -7,7 +7,7 @@
 
 import Foundation
 
-class AnalysisCache {
+final class AnalysisCache: @unchecked Sendable {
     static let shared = AnalysisCache()
     private let cache = NSCache<NSString, CacheEntry>()
     
