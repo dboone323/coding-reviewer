@@ -14,11 +14,11 @@ protocol GitProvider {
 
 class GitIntegrationService {
     private var provider: GitProvider?
-    
+
     func configure(provider: GitProvider) {
         self.provider = provider
     }
-    
+
     func fetchPR(id: String) async throws -> String {
         guard let provider = provider else { throw GitError.notConfigured }
         return try await provider.fetchPullRequest(id: id)
@@ -34,16 +34,16 @@ enum GitError: Error {
 // Mock GitHub Implementation
 class GitHubProvider: GitProvider {
     private let token: String
-    
+
     init(token: String) {
         self.token = token
     }
-    
+
     func fetchPullRequest(id: String) async throws -> String {
         // Call GitHub API
         return "Mock PR Content"
     }
-    
+
     func postComment(prId: String, file: String, line: Int, comment: String) async throws {
         // Post to GitHub API
     }

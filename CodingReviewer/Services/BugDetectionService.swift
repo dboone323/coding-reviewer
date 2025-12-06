@@ -67,7 +67,7 @@ struct BugDetectionService {
                 let trimmed = line.trimmingCharacters(in: .whitespaces)
                 // Ignore comments
                 guard !trimmed.hasPrefix("//") else { continue }
-                
+
                 // Simple heuristic to ignore string literals would be complex without a parser,
                 // but we can improve the check to be slightly more robust
                 if line.contains("!") && !line.contains("!=") && !line.contains("?!") {

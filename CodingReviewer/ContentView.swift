@@ -183,7 +183,7 @@ public struct ContentView: View {
             showError = true
             return
         }
-        
+
         reviewToSave = ReviewData(
             fileName: selectedFileURL?.lastPathComponent ?? "Unknown",
             code: codeContent,
@@ -214,18 +214,18 @@ struct ReviewData: Codable {
 
 struct JSONFileDocument: FileDocument {
     static var readableContentTypes: [UTType] { [.json] }
-    
+
     var reviewData: ReviewData?
-    
+
     init(reviewData: ReviewData?) {
         self.reviewData = reviewData
     }
-    
+
     init(configuration: ReadConfiguration) throws {
         let data = try configuration.file.regularFileContents
         self.reviewData = try JSONDecoder().decode(ReviewData.self, from: data!)
     }
-    
+
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
         let data = try JSONEncoder().encode(reviewData)
         return FileWrapper(regularFileWithContents: data)

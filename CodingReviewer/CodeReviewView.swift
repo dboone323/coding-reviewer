@@ -36,7 +36,7 @@ public struct CodeReviewView: View {
                         Toggle("Live", isOn: $isLiveAnalysisEnabled)
                             .toggleStyle(.switch)
                             .controlSize(.small)
-                        
+
                         Button(action: { Task { await onAnalyze() } }, label: {
                             Label("Analyze", systemImage: "play.fill")
                         })
@@ -94,10 +94,10 @@ public struct CodeReviewView: View {
             }
         }
     }
-    
+
     private func applyFix(_ issue: CodeIssue) {
         guard let fix = issue.suggestedFix, let line = issue.line else { return }
-        
+
         var lines = codeContent.components(separatedBy: .newlines)
         if line > 0 && line <= lines.count {
             lines[line - 1] = fix
@@ -112,7 +112,7 @@ public struct ResultsPanel: View {
     let documentationResult: DocumentationResult?
     let testResult: TestGenerationResult?
     let isAnalyzing: Bool
-    var onApplyFix: ((CodeIssue) -> Void)? = nil
+    var onApplyFix: ((CodeIssue) -> Void)?
 
     private var presenter: ResultsPanelPresenter {
         ResultsPanelPresenter(currentView: currentView, isAnalyzing: isAnalyzing)

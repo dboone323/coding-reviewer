@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct AnalysisResultsView: View {
     let result: CodeAnalysisResult
-    var onApplyFix: ((CodeIssue) -> Void)? = nil
+    var onApplyFix: ((CodeIssue) -> Void)?
     private var viewModel: AnalysisResultsViewModel { AnalysisResultsViewModel(result: result) }
 
     public var body: some View {

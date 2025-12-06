@@ -14,7 +14,7 @@ struct CustomRule: Codable, Identifiable {
     let language: String
     let severity: IssueSeverity
     let category: IssueCategory
-    
+
     // Optional: Suggestion for fix
     let suggestion: String?
 }

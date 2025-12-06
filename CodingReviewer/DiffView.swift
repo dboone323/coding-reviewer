@@ -10,7 +10,7 @@ import SwiftUI
 struct DiffView: View {
     let original: String
     let modified: String
-    
+
     var body: some View {
         HSplitView {
             VStack {
@@ -19,7 +19,7 @@ struct DiffView: View {
                 TextEditor(text: .constant(original))
                     .font(.monospaced(.body)())
             }
-            
+
             VStack {
                 Text("Modified")
                     .font(.headline)

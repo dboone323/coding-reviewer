@@ -7,10 +7,10 @@ import Foundation
 
 struct JavaScriptAnalyzer: LanguageAnalyzer {
     let language = "JavaScript"
-    
+
     func detectSecurityIssues(code: String) -> [CodeIssue] {
         var issues: [CodeIssue] = []
-        
+
         // Eval
         let evalMatches = PatternMatcher.findMatches(pattern: "eval\\(", in: code)
         for match in evalMatches {
@@ -21,7 +21,7 @@ struct JavaScriptAnalyzer: LanguageAnalyzer {
                 category: .security
             ))
         }
-        
+
         // innerHTML
         let innerHTMLMatches = PatternMatcher.findMatches(pattern: "\\.innerHTML\\s*=", in: code)
         for match in innerHTMLMatches {
@@ -32,13 +32,13 @@ struct JavaScriptAnalyzer: LanguageAnalyzer {
                 category: .security
             ))
         }
-        
+
         return issues
     }
-    
+
     func detectStyleIssues(code: String) -> [CodeIssue] {
         var issues: [CodeIssue] = []
-        
+
         // Console.log
         let consoleMatches = PatternMatcher.findMatches(pattern: "console\\.log\\(", in: code)
         for match in consoleMatches {
@@ -49,10 +49,10 @@ struct JavaScriptAnalyzer: LanguageAnalyzer {
                 category: .style
             ))
         }
-        
+
         return issues
     }
-    
+
     func detectBugs(code: String) -> [CodeIssue] {
         return []
     }

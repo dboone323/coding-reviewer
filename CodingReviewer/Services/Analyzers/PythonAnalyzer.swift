@@ -7,10 +7,10 @@ import Foundation
 
 struct PythonAnalyzer: LanguageAnalyzer {
     let language = "Python"
-    
+
     func detectSecurityIssues(code: String) -> [CodeIssue] {
         var issues: [CodeIssue] = []
-        
+
         // Exec
         let execMatches = PatternMatcher.findMatches(pattern: "exec\\(", in: code)
         for match in execMatches {
@@ -21,7 +21,7 @@ struct PythonAnalyzer: LanguageAnalyzer {
                 category: .security
             ))
         }
-        
+
         // Subprocess with shell=True
         let shellMatches = PatternMatcher.findMatches(pattern: "subprocess\\..*shell\\s*=\\s*True", in: code)
         for match in shellMatches {
@@ -32,14 +32,14 @@ struct PythonAnalyzer: LanguageAnalyzer {
                 category: .security
             ))
         }
-        
+
         return issues
     }
-    
+
     func detectStyleIssues(code: String) -> [CodeIssue] {
         return []
     }
-    
+
     func detectBugs(code: String) -> [CodeIssue] {
         return []
     }

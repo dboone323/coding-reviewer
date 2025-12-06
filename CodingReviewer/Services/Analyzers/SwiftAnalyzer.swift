@@ -7,10 +7,10 @@ import Foundation
 
 struct SwiftAnalyzer: LanguageAnalyzer {
     let language = "Swift"
-    
+
     func detectSecurityIssues(code: String) -> [CodeIssue] {
         var issues: [CodeIssue] = []
-        
+
         // UserDefaults + Password
         let passwordMatches = PatternMatcher.findMatches(pattern: "UserDefaults.*password", in: code)
         for match in passwordMatches {
@@ -21,7 +21,7 @@ struct SwiftAnalyzer: LanguageAnalyzer {
                 category: .security
             ))
         }
-        
+
         // Force Unwrapping
         let forceUnwrapMatches = PatternMatcher.findMatches(pattern: "[a-zA-Z0-9_]+\\s*!", in: code)
         // Filter out != and checks
@@ -35,14 +35,14 @@ struct SwiftAnalyzer: LanguageAnalyzer {
                 ))
             }
         }
-        
+
         return issues
     }
-    
+
     func detectStyleIssues(code: String) -> [CodeIssue] {
         var issues: [CodeIssue] = []
         let lines = code.components(separatedBy: .newlines)
-        
+
         for (index, lineContent) in lines.enumerated() {
             // Check for use of print()
             if lineContent.contains("print(") && !lineContent.trimmingCharacters(in: .whitespaces).hasPrefix("//") {
@@ -55,7 +55,7 @@ struct SwiftAnalyzer: LanguageAnalyzer {
                     suggestedFix: fix
                 ))
             }
-            
+
             // Check for TODOs
             if lineContent.contains("TODO:") {
                 issues.append(CodeIssue(
@@ -66,10 +66,10 @@ struct SwiftAnalyzer: LanguageAnalyzer {
                 ))
             }
         }
-        
+
         return issues
     }
-    
+
     func detectBugs(code: String) -> [CodeIssue] {
         var issues: [CodeIssue] = []
         // DONE: Add bug checks

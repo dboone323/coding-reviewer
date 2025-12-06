@@ -10,13 +10,13 @@ import Foundation
 struct CodeSmellDetector {
     func detectSmells(code: String, language: String) -> [CodeIssue] {
         var issues: [CodeIssue] = []
-        
+
         // Long Method Detection (Basic heuristic: indentation + length)
         // This is a simplified check. Real AST parsing would be better.
         let lines = code.components(separatedBy: .newlines)
         var currentMethodLength = 0
         var methodStartLine = 0
-        
+
         for (index, line) in lines.enumerated() {
             if line.contains("func ") || line.contains("def ") || line.contains("function ") {
                 if currentMethodLength > 50 {
@@ -33,7 +33,7 @@ struct CodeSmellDetector {
                 currentMethodLength += 1
             }
         }
-        
+
         // Check last method
         if currentMethodLength > 50 {
              issues.append(CodeIssue(
@@ -43,9 +43,9 @@ struct CodeSmellDetector {
                 category: .maintainability
             ))
         }
-        
+
         // DONE: Add more smell detectors (Large Class, Long Parameter List, etc.)
-        
+
         return issues
     }
 }

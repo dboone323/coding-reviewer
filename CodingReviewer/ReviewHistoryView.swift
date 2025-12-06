@@ -15,12 +15,12 @@ struct ReviewHistoryView: View {
         let date: Date
         let issuesCount: Int
     }
-    
+
     let history: [ReviewItem] = [
         ReviewItem(fileName: "AppDelegate.swift", date: Date(), issuesCount: 3),
         ReviewItem(fileName: "ContentView.swift", date: Date().addingTimeInterval(-86400), issuesCount: 0)
     ]
-    
+
     var body: some View {
         List(history) { item in
             HStack {

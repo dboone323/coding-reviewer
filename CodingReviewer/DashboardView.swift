@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DashboardView: View {
     @Binding var showFilePicker: Bool
-    
+
     var body: some View {
         VStack(spacing: 20) {
             Text("CodingReviewer Dashboard")
@@ -17,22 +17,22 @@ struct DashboardView: View {
                 .fontWeight(.bold)
                 .accessibilityLabel("CodingReviewer Dashboard")
                 .accessibilityAddTraits(.isHeader)
-            
+
             HStack(spacing: 20) {
                 DashboardCard(title: "Analyze Code", icon: "magnifyingglass", color: .blue) {
                     showFilePicker = true
                 }
-                
+
                 DashboardCard(title: "Review History", icon: "clock", color: .orange) {
                     // Navigate to history
                 }
-                
+
                 DashboardCard(title: "Settings", icon: "gear", color: .gray) {
                     // Open settings
                 }
             }
             .padding()
-            
+
             RecentFilesList()
         }
         .padding()
@@ -44,7 +44,7 @@ struct DashboardCard: View {
     let icon: String
     let color: Color
     let action: () -> Void
-    
+
     var body: some View {
         Button(action: action) {
             VStack {
@@ -71,7 +71,7 @@ struct RecentFilesList: View {
         VStack(alignment: .leading) {
             Text("Recent Files")
                 .font(.headline)
-            
+
             List {
                 Text("No recent files")
                     .foregroundColor(.secondary)

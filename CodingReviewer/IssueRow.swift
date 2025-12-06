@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct IssueRow: View {
     let issue: CodeIssue
-    var onFix: (() -> Void)? = nil
+    var onFix: (() -> Void)?
     private var presenter: IssueRowPresenter { IssueRowPresenter(issue: issue) }
 
     public var body: some View {
@@ -39,7 +39,7 @@ public struct IssueRow: View {
                     Text(issue.severity.rawValue.capitalized)
                         .font(.caption)
                         .foregroundColor(presenter.severityColor)
-                    
+
                     if issue.suggestedFix != nil {
                         Spacer()
                         Button(action: { onFix?() }) {

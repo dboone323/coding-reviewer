@@ -16,13 +16,13 @@ final class PluginManager: @unchecked Sendable {
     static let shared = PluginManager()
     private var plugins: [ReviewerPlugin] = []
     private let lock = NSLock()
-    
+
     func register(_ plugin: ReviewerPlugin) {
         lock.lock()
         defer { lock.unlock() }
         plugins.append(plugin)
     }
-    
+
     func runPlugins(code: String) -> [CodeIssue] {
         lock.lock()
         let currentPlugins = plugins
