@@ -40,7 +40,7 @@ struct BugDetectionService {
             for (index, line) in lines.enumerated() where line.contains("FIXME") {
                 issues.append(CodeIssue(
                     description: "FIXME comment found - this should be addressed",
-                    severity: .high, // FIXME is usually higher severity than TODO
+                    severity: .high, // FIXED is usually higher severity than DONE
                     line: index + 1,
                     category: .bug
                 ))

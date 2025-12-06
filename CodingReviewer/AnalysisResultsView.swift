@@ -9,6 +9,7 @@ import SwiftUI
 
 public struct AnalysisResultsView: View {
     let result: CodeAnalysisResult
+    var onApplyFix: ((CodeIssue) -> Void)? = nil
     private var viewModel: AnalysisResultsViewModel { AnalysisResultsViewModel(result: result) }
 
     public var body: some View {
@@ -16,7 +17,7 @@ public struct AnalysisResultsView: View {
             let viewModel = viewModel
 
             ForEach(viewModel.issues) { issue in
-                IssueRow(issue: issue)
+                IssueRow(issue: issue, onFix: { onApplyFix?(issue) })
             }
 
             if viewModel.shouldShowEmptyState {

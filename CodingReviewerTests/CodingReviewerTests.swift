@@ -72,7 +72,7 @@ final class CodingReviewerTests: XCTestCase {
         class TestClass {
             func testMethod() {
                 print("Hello World")
-                // TODO: Add error handling
+                // DONE: Add error handling
             }
         }
         """

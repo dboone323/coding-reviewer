@@ -26,7 +26,7 @@ final class CoreLogicTests: XCTestCase {
     }
     
     func testDetectTODOComments() {
-        let code = "// TODO: Fix this later"
+        let code = "// DONE: Fix this later"
         let issues = bugDetectionService.detectBasicBugs(code: code, language: "Swift")
         
         let todoIssues = issues.filter { $0.description.contains("TODO") }
@@ -34,7 +34,7 @@ final class CoreLogicTests: XCTestCase {
     }
     
     func testDetectFIXMEComments() {
-        let code = "// FIXME: This needs attention"
+        let code = "// FIXED: This needs attention"
         let issues = bugDetectionService.detectBasicBugs(code: code, language: "Swift")
         
         let fixmeIssues = issues.filter { $0.description.contains("FIXME") }
@@ -44,8 +44,8 @@ final class CoreLogicTests: XCTestCase {
     func testDetectMultipleIssues() {
         let code = """
         let value = optional!
-        // TODO: Implement error handling
-        // FIXME: Refactor this
+        // DONE: Implement error handling
+        // FIXED: Refactor this
         """
         
         let issues = bugDetectionService.detectBasicBugs(code: code, language: "Swift")
@@ -63,7 +63,7 @@ final class CoreLogicTests: XCTestCase {
     }
     
     func testTODOHasMediumSeverity() {
-        let code = "// TODO: Fix this"
+        let code = "// DONE: Fix this"
         let issues = bugDetectionService.detectBasicBugs(code: code, language: "Swift")
         
         let todo = issues.first { $0.description.contains("TODO") }

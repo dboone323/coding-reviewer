@@ -15,6 +15,8 @@ struct DashboardView: View {
             Text("CodingReviewer Dashboard")
                 .font(.largeTitle)
                 .fontWeight(.bold)
+                .accessibilityLabel("CodingReviewer Dashboard")
+                .accessibilityAddTraits(.isHeader)
             
             HStack(spacing: 20) {
                 DashboardCard(title: "Analyze Code", icon: "magnifyingglass", color: .blue) {
@@ -59,6 +61,8 @@ struct DashboardCard: View {
             .shadow(radius: 2)
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(title)
+        .accessibilityHint("Double tap to \(title.lowercased())")
     }
 }
 
@@ -73,6 +77,7 @@ struct RecentFilesList: View {
                     .foregroundColor(.secondary)
             }
             .frame(height: 200)
+            .accessibilityLabel("Recent files list")
         }
     }
 }

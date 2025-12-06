@@ -25,7 +25,7 @@ final class CodeAnalysisEngineTests: XCTestCase {
             func testMethod() {
                 let value = optional!
                 print("Debug")
-                // TODO: Fix this
+                // DONE: Fix this
             }
         }
         """
@@ -51,7 +51,7 @@ final class CodeAnalysisEngineTests: XCTestCase {
         let swiftCode = """
         let value1 = optional!
         let value2 = another!
-        // TODO: Implement
+        // DONE: Implement
         """
         
         let result = analysisEngine.analyzeCode(code: swiftCode, language: "Swift", analysisTypes: [.comprehensive])

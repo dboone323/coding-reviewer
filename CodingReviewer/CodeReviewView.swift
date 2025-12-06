@@ -14,6 +14,7 @@ public struct CodeReviewView: View {
     @Binding var documentationResult: DocumentationResult?
     @Binding var testResult: TestGenerationResult?
     @Binding var isAnalyzing: Bool
+    @State private var isLiveAnalysisEnabled = false
     let selectedAnalysisType: AnalysisType
     let currentView: ContentViewType
     let onAnalyze: () async -> Void
@@ -26,23 +27,36 @@ public struct CodeReviewView: View {
             HStack {
                 Text(fileURL.lastPathComponent)
                     .font(.headline)
+                    .accessibilityLabel("File: \(fileURL.lastPathComponent)")
                 Spacer()
 
                 switch currentView {
                 case .analysis:
-                    Button(action: { Task { await onAnalyze() } }, label: {
-                        Label("Analyze", systemImage: "play.fill")
-                    })
-                    .disabled(isAnalyzing || codeContent.isEmpty)
+                    HStack {
+                        Toggle("Live", isOn: $isLiveAnalysisEnabled)
+                            .toggleStyle(.switch)
+                            .controlSize(.small)
+                        
+                        Button(action: { Task { await onAnalyze() } }, label: {
+                            Label("Analyze", systemImage: "play.fill")
+                        })
+                        .accessibilityLabel("Analyze Code")
+                        .accessibilityHint("Run code analysis on this file")
+                        .disabled(isAnalyzing || codeContent.isEmpty)
+                    }
                 case .documentation:
                     Button(action: { Task { await onGenerateDocumentation() } }, label: {
                         Label("Generate Docs", systemImage: "doc.text")
                     })
+                    .accessibilityLabel("Generate Documentation")
+                    .accessibilityHint("Generate documentation for this code")
                     .disabled(isAnalyzing || codeContent.isEmpty)
                 case .tests:
                     Button(action: { Task { await onGenerateTests() } }, label: {
                         Label("Generate Tests", systemImage: "testtube.2")
                     })
+                    .accessibilityLabel("Generate Tests")
+                    .accessibilityHint("Generate unit tests for this code")
                     .disabled(isAnalyzing || codeContent.isEmpty)
                 }
             }
@@ -59,6 +73,13 @@ public struct CodeReviewView: View {
                         .padding()
                 }
                 .frame(minWidth: 400)
+                .task(id: codeContent) {
+                    guard isLiveAnalysisEnabled, !codeContent.isEmpty else { return }
+                    try? await Task.sleep(nanoseconds: 500_000_000) // 0.5s debounce
+                    if !Task.isCancelled {
+                        await onAnalyze()
+                    }
+                }
 
                 // Results panel
                 ResultsPanel(
@@ -66,10 +87,21 @@ public struct CodeReviewView: View {
                     analysisResult: analysisResult,
                     documentationResult: documentationResult,
                     testResult: testResult,
-                    isAnalyzing: isAnalyzing
+                    isAnalyzing: isAnalyzing,
+                    onApplyFix: { issue in applyFix(issue) }
                 )
                 .frame(minWidth: 300)
             }
+        }
+    }
+    
+    private func applyFix(_ issue: CodeIssue) {
+        guard let fix = issue.suggestedFix, let line = issue.line else { return }
+        
+        var lines = codeContent.components(separatedBy: .newlines)
+        if line > 0 && line <= lines.count {
+            lines[line - 1] = fix
+            codeContent = lines.joined(separator: "\n")
         }
     }
 }
@@ -80,6 +112,7 @@ public struct ResultsPanel: View {
     let documentationResult: DocumentationResult?
     let testResult: TestGenerationResult?
     let isAnalyzing: Bool
+    var onApplyFix: ((CodeIssue) -> Void)? = nil
 
     private var presenter: ResultsPanelPresenter {
         ResultsPanelPresenter(currentView: currentView, isAnalyzing: isAnalyzing)
@@ -107,7 +140,7 @@ public struct ResultsPanel: View {
                     switch currentView {
                     case .analysis:
                         if let result = analysisResult {
-                            AnalysisResultsView(result: result)
+                            AnalysisResultsView(result: result, onApplyFix: onApplyFix)
                         } else if let message = presenter.emptyStateMessage(hasResult: analysisResult != nil) {
                             Text(message)
                                 .foregroundColor(.secondary)

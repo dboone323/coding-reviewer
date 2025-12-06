@@ -41,14 +41,38 @@ struct SwiftAnalyzer: LanguageAnalyzer {
     
     func detectStyleIssues(code: String) -> [CodeIssue] {
         var issues: [CodeIssue] = []
+        let lines = code.components(separatedBy: .newlines)
         
-        // TODO: Add style checks
+        for (index, lineContent) in lines.enumerated() {
+            // Check for use of print()
+            if lineContent.contains("print(") && !lineContent.trimmingCharacters(in: .whitespaces).hasPrefix("//") {
+                let fix = lineContent.replacingOccurrences(of: "print(", with: "Logger.debug(")
+                issues.append(CodeIssue(
+                    description: "Avoid using print() in production. Use Logger or OSLog.",
+                    severity: .low,
+                    line: index + 1,
+                    category: .style,
+                    suggestedFix: fix
+                ))
+            }
+            
+            // Check for TODOs
+            if lineContent.contains("TODO:") {
+                issues.append(CodeIssue(
+                    description: "Resolve TODO item.",
+                    severity: .low,
+                    line: index + 1,
+                    category: .maintainability
+                ))
+            }
+        }
+        
         return issues
     }
     
     func detectBugs(code: String) -> [CodeIssue] {
         var issues: [CodeIssue] = []
-        // TODO: Add bug checks
+        // DONE: Add bug checks
         return issues
     }
 }

@@ -73,13 +73,15 @@ public struct CodeIssue: Codable, Identifiable, Sendable {
     public let severity: IssueSeverity
     public let line: Int?
     public let category: IssueCategory
+    public let suggestedFix: String?
 
-    public init(description: String, severity: IssueSeverity, line: Int? = nil, category: IssueCategory) {
+    public init(description: String, severity: IssueSeverity, line: Int? = nil, category: IssueCategory, suggestedFix: String? = nil) {
         self.id = UUID()
         self.description = description
         self.severity = severity
         self.line = line
         self.category = category
+        self.suggestedFix = suggestedFix
     }
 }
 
