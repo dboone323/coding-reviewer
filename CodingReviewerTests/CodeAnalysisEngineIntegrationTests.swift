@@ -26,7 +26,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
     func testAnalyzeCode_FullAnalysis_SwiftCode() {
         // Given Swift code with multiple types of issues
         let code = """
-        // DONE: Fix this later
+        // TODO: Fix this later
         class Calculator {
             func add(_ a: Int, _ b: Int) -> Int {
                 print("Debug: adding numbers") // Debug print
@@ -76,7 +76,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
     func testAnalyzeCode_FullAnalysis_JavaScriptCode() {
         // Given JavaScript code with security and other issues
         let code = """
-        // DONE: Implement security check
+        // TODO: Implement security check
         function processUserInput(input) {
             console.log("Processing: " + input); // Debug log
 
@@ -132,7 +132,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
     func testAnalyzeCode_SelectiveAnalysisTypes() {
         // Given code with multiple issue types
         let code = """
-        // DONE: Fix later
+        // TODO: Fix later
         function test() {
             eval("dangerous code"); // Security issue
             console.log("debug"); // Debug statement
@@ -162,7 +162,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
     func testAnalyzeCode_EmptyAnalysisTypes() {
         // Given code with issues
-        let code = "// DONE: Fix this"
+        let code = "// TODO: Fix this"
 
         // When analyzing with empty analysis types
         let result = analysisEngine.analyzeCode(code: code, language: "Swift", analysisTypes: [])
@@ -177,7 +177,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
     func testAnalyzeCode_ResultStructure() {
         // Given simple code with one issue
-        let code = "// DONE: Fix this"
+        let code = "// TODO: Fix this"
 
         // When analyzing
         let result = analysisEngine.analyzeCode(code: code, language: "Swift", analysisTypes: [AnalysisType.bugs])
@@ -189,14 +189,14 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
         let issue = result.issues.first!
         XCTAssertEqual(issue.category, IssueCategory.bug)
-        XCTAssertEqual(issue.severity, IssueSeverity.medium) // DONE: is typically medium severity
+        XCTAssertEqual(issue.severity, IssueSeverity.medium) // TODO: is typically medium severity
         XCTAssertTrue(issue.description.contains("TODO"))
         XCTAssertEqual(issue.line, 1)
     }
 
     func testAnalyzeCode_MultipleIssuesSameLine() {
         // Given code with multiple issues on same line
-        let code = "let x = value! // DONE: Fix force unwrap"
+        let code = "let x = value! // TODO: Fix force unwrap"
 
         // When analyzing
         let result = analysisEngine.analyzeCode(code: code, language: "Swift", analysisTypes: [AnalysisType.bugs])
@@ -298,7 +298,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
         do {
             // Given comprehensive test code with issues for all service types
             let code = """
-            // DONE: Complete implementation
+            // TODO: Complete implementation
             import Foundation
 
             class TestClass {
@@ -391,7 +391,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
     func testAnalyzeCode_PartialServiceFailure() {
         // Given code where some services might fail but others succeed
         let code = """
-        // DONE: Fix this
+        // TODO: Fix this
         let x = 1
         """
 

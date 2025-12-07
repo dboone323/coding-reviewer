@@ -44,7 +44,7 @@ final class BugDetectionServiceTests: XCTestCase {
         // Given code with TODO comment
         let code = """
         class Calculator {
-            // DONE: Implement error handling
+            // TODO: Implement error handling
             func add(_ a: Int, _ b: Int) -> Int {
                 return a + b
             }
@@ -65,7 +65,7 @@ final class BugDetectionServiceTests: XCTestCase {
         // Given code with FIXME comment
         let code = """
         class Calculator {
-            // FIXED: This method needs refactoring
+            // FIXME: This method needs refactoring
             func add(_ a: Int, _ b: Int) -> Int {
                 return a + b
             }
@@ -158,7 +158,7 @@ final class BugDetectionServiceTests: XCTestCase {
         // Given code with multiple issues
         let code = """
         class Calculator {
-            // DONE: Add validation
+            // TODO: Add validation
             func add(_ a: Int?, _ b: Int?) -> Int {
                 print("Debug: adding numbers")
                 return a! + b!
@@ -209,8 +209,8 @@ final class BugDetectionServiceTests: XCTestCase {
     func testCodeIssue_UniqueIDs() {
         // Given code with multiple issues of the same type
         let code = """
-        // DONE: First task
-        // DONE: Second task
+        // TODO: First task
+        // TODO: Second task
         """
 
         // When analyzing for bugs
@@ -224,7 +224,7 @@ final class BugDetectionServiceTests: XCTestCase {
     func testCodeIssue_NoLineNumbers() {
         // Given code with issues
         let code = """
-        // DONE: Add implementation
+        // TODO: Add implementation
         print("debug")
         """
 
@@ -233,7 +233,7 @@ final class BugDetectionServiceTests: XCTestCase {
 
         // Then line numbers should be tracked
         XCTAssertEqual(issues.count, 2)
-        XCTAssertEqual(issues[0].line, 1) // DONE: comment on line 1
+        XCTAssertEqual(issues[0].line, 1) // TODO comment on line 1
         XCTAssertEqual(issues[1].line, 2) // print statement on line 2
     }
 }
