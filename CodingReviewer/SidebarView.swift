@@ -35,11 +35,14 @@ public struct SidebarView: View {
                     Label("Open File", systemImage: "doc")
                 }
                 .buttonStyle(.borderless)
+                .accessibilityLabel("Open File")
+                .accessibilityHint("Browse for a code file to review")
 
                 if selectedFileURL != nil {
                     Text(selectedFileURL!.lastPathComponent)
                         .font(.caption)
                         .foregroundColor(.secondary)
+                        .accessibilityLabel("Selected file: \(selectedFileURL!.lastPathComponent)")
                 }
             }
 
@@ -50,6 +53,8 @@ public struct SidebarView: View {
                     }
                 }
                 .pickerStyle(.menu)
+                .accessibilityLabel("Analysis Type")
+                .accessibilityHint("Select the type of code analysis")
             }
 
             Section("Tools") {
@@ -57,16 +62,22 @@ public struct SidebarView: View {
                     Label("Code Analysis", systemImage: "magnifyingglass")
                 }
                 .buttonStyle(.borderless)
+                .accessibilityLabel("Code Analysis")
+                .accessibilityHint("Analyze code for issues and improvements")
 
                 Button(action: presenter.setViewAction(binding: $currentView, target: .documentation)) {
                     Label("Documentation", systemImage: "doc.text")
                 }
                 .buttonStyle(.borderless)
+                .accessibilityLabel("Documentation")
+                .accessibilityHint("Generate documentation for code")
 
                 Button(action: presenter.setViewAction(binding: $currentView, target: .tests)) {
                     Label("Generate Tests", systemImage: "testtube.2")
                 }
                 .buttonStyle(.borderless)
+                .accessibilityLabel("Generate Tests")
+                .accessibilityHint("Generate unit tests for code")
             }
 
             Section("Settings") {
@@ -74,10 +85,13 @@ public struct SidebarView: View {
                     Label("Preferences", systemImage: "gear")
                 }
                 .buttonStyle(.borderless)
+                .accessibilityLabel("Preferences")
+                .accessibilityHint("Open application preferences")
             }
         }
         .listStyle(.sidebar)
         .frame(minWidth: 200)
+        .accessibilityLabel("Navigation Sidebar")
     }
 }
 

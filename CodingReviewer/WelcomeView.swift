@@ -21,6 +21,7 @@ public struct WelcomeView: View {
             Image(systemName: "doc.text.magnifyingglass")
                 .font(.system(size: 64))
                 .foregroundColor(.secondary)
+                .accessibilityHidden(true)
 
             Text("Welcome to CodingReviewer")
                 .font(.title)
@@ -41,8 +42,12 @@ public struct WelcomeView: View {
                     .cornerRadius(8)
             }
             .buttonStyle(.borderless)
+            .accessibilityLabel("Open Code File")
+            .accessibilityHint("Opens a file picker to select code for review")
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Welcome Screen")
     }
 }
 
