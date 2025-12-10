@@ -21,11 +21,11 @@ public struct WelcomeView: View {
             Image(systemName: "doc.text.magnifyingglass")
                 .font(.system(size: 64))
                 .foregroundColor(.secondary)
-                .accessibilityHidden(true)
 
             Text("Welcome to CodingReviewer")
                 .font(.title)
                 .fontWeight(.bold)
+                .accessibilityAddTraits(.isHeader)
 
             Text("Analyze and review your code with AI-powered insights")
                 .font(.body)
@@ -43,11 +43,9 @@ public struct WelcomeView: View {
             }
             .buttonStyle(.borderless)
             .accessibilityLabel("Open Code File")
-            .accessibilityHint("Opens a file picker to select code for review")
+            .accessibilityHint("Open a file to begin code analysis")
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .accessibilityElement(children: .contain)
-        .accessibilityLabel("Welcome Screen")
     }
 }
 

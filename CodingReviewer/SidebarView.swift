@@ -36,13 +36,12 @@ public struct SidebarView: View {
                 }
                 .buttonStyle(.borderless)
                 .accessibilityLabel("Open File")
-                .accessibilityHint("Browse for a code file to review")
+                .accessibilityHint("Select a code file to analyze")
 
                 if selectedFileURL != nil {
                     Text(selectedFileURL!.lastPathComponent)
                         .font(.caption)
                         .foregroundColor(.secondary)
-                        .accessibilityLabel("Selected file: \(selectedFileURL!.lastPathComponent)")
                 }
             }
 
@@ -53,8 +52,6 @@ public struct SidebarView: View {
                     }
                 }
                 .pickerStyle(.menu)
-                .accessibilityLabel("Analysis Type")
-                .accessibilityHint("Select the type of code analysis")
             }
 
             Section("Tools") {
@@ -63,21 +60,21 @@ public struct SidebarView: View {
                 }
                 .buttonStyle(.borderless)
                 .accessibilityLabel("Code Analysis")
-                .accessibilityHint("Analyze code for issues and improvements")
+                .accessibilityHint("Run code analysis on the selected file")
 
                 Button(action: presenter.setViewAction(binding: $currentView, target: .documentation)) {
                     Label("Documentation", systemImage: "doc.text")
                 }
                 .buttonStyle(.borderless)
                 .accessibilityLabel("Documentation")
-                .accessibilityHint("Generate documentation for code")
+                .accessibilityHint("Generate documentation for the selected file")
 
                 Button(action: presenter.setViewAction(binding: $currentView, target: .tests)) {
                     Label("Generate Tests", systemImage: "testtube.2")
                 }
                 .buttonStyle(.borderless)
                 .accessibilityLabel("Generate Tests")
-                .accessibilityHint("Generate unit tests for code")
+                .accessibilityHint("Generate unit tests for the selected file")
             }
 
             Section("Settings") {
@@ -91,7 +88,6 @@ public struct SidebarView: View {
         }
         .listStyle(.sidebar)
         .frame(minWidth: 200)
-        .accessibilityLabel("Navigation Sidebar")
     }
 }
 

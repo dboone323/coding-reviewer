@@ -8,8 +8,8 @@ struct SettingsView: View {
         Form {
             Section("AI & Agents") {
                 Toggle("Use AI‑enhanced analysis (Ollama)", isOn: $useAI)
-                    .accessibilityLabel("Enable AI-enhanced analysis")
-                    .accessibilityHint("Uses Ollama for AI-powered code review")
+                    .accessibilityLabel("Enable AI analysis")
+                    .accessibilityHint("Toggle to enable or disable AI-powered code analysis")
 
                 if useAI {
                     Picker("Model", selection: Binding(
@@ -20,7 +20,6 @@ struct SettingsView: View {
                             Text(model.name).tag(model.id)
                         }
                     }
-                    .accessibilityLabel("AI Model Selection")
                 }
 
                 VStack(alignment: .leading, spacing: 4) {
@@ -31,8 +30,6 @@ struct SettingsView: View {
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
-                .accessibilityElement(children: .combine)
-                .accessibilityLabel("Requires local Ollama with free models: llama3.1:8b, qwen2.5-coder:7b, mistral:7b")
 
                 HStack {
                     Text("Ollama Status:")
@@ -42,19 +39,16 @@ struct SettingsView: View {
                         .foregroundStyle(ollamaStatus.contains("✓") ? .green : .secondary)
                 }
                 .accessibilityElement(children: .combine)
-                .accessibilityLabel("Ollama Status: \(ollamaStatus)")
+                .accessibilityLabel("Ollama status: \(ollamaStatus)")
             }
 
             Section("About") {
                 LabeledContent("Version", value: "1.0.0")
-                    .accessibilityLabel("Version 1.0.0")
                 LabeledContent("AI Mode", value: useAI ? "Enabled" : "Disabled")
-                    .accessibilityLabel("AI Mode: \(useAI ? "Enabled" : "Disabled")")
             }
         }
         .padding(16)
         .frame(minWidth: 480, minHeight: 300)
-        .accessibilityLabel("Settings")
         .onAppear {
             checkOllamaStatus()
         }
