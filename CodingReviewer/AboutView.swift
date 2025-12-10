@@ -13,7 +13,6 @@ struct AboutView: View {
             Image(systemName: "doc.text.magnifyingglass")
                 .font(.system(size: 64))
                 .foregroundColor(.blue)
-                .accessibilityHidden(true)
 
             Text("CodingReviewer")
                 .font(.title)
@@ -36,8 +35,6 @@ struct AboutView: View {
         }
         .padding(40)
         .frame(width: 300, height: 250)
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("About CodingReviewer. Version 1.0.0. An AI-powered code review assistant. Copyright 2025 Quantum Workspace.")
     }
 }
 
