@@ -5,7 +5,6 @@
 //  Service for detecting basic bugs and code issues
 //
 
-import CodingReviewer
 import Foundation
 
 /// Service responsible for detecting basic bugs in code

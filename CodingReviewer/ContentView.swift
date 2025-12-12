@@ -222,8 +222,10 @@ struct JSONFileDocument: FileDocument {
     }
 
     init(configuration: ReadConfiguration) throws {
-        let data = try configuration.file.regularFileContents
-        self.reviewData = try JSONDecoder().decode(ReviewData.self, from: data!)
+        guard let data = configuration.file.regularFileContents else {
+            throw CocoaError(.fileReadCorruptFile)
+        }
+        self.reviewData = try JSONDecoder().decode(ReviewData.self, from: data)
     }
 
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {

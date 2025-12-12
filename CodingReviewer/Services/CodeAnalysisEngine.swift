@@ -5,7 +5,6 @@
 //  Main analysis engine that orchestrates all analysis services
 //
 
-import CodingReviewer
 import Foundation
 
 /// Main analysis engine that coordinates all code analysis services
@@ -124,6 +123,10 @@ struct CodeAnalysisEngine {
         for analysisType in analysisTypes {
             let serviceIssues = self.performBasicAnalysis(code: code, language: language, analysisType: analysisType)
             allIssues.append(contentsOf: serviceIssues)
+            
+            // Generate suggestions for each analysis type
+            let typeSuggestions = self.generateSuggestions(code: code, language: language, analysisType: analysisType)
+            allSuggestions.append(contentsOf: typeSuggestions)
         }
 
         // Generate summary analysis text

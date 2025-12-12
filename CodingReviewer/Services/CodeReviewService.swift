@@ -127,7 +127,7 @@ public class CodeReviewService: CodeReviewServiceProtocol {
             }
         }
 
-        return try await Task.detached(priority: .userInitiated) {
+        return await Task.detached(priority: .userInitiated) {
             let documentation = self.analysisEngine.generateBasicDocumentation(
                 code: code,
                 language: language,
@@ -153,7 +153,7 @@ public class CodeReviewService: CodeReviewServiceProtocol {
             }
         }
 
-        return try await Task.detached(priority: .userInitiated) {
+        return await Task.detached(priority: .userInitiated) {
             let testCode = self.analysisEngine.generateBasicTests(code: code, language: language, testFramework: testFramework)
             let estimatedCoverage = self.analysisEngine.estimateTestCoverage(code: code, testCode: testCode)
             return TestGenerationResult(testCode: testCode, language: language, testFramework: testFramework, estimatedCoverage: estimatedCoverage)
@@ -176,7 +176,7 @@ public class CodeReviewService: CodeReviewServiceProtocol {
     // MARK: - Fallback helpers
 
     private func fallbackAnalyze(code: String, language: String, analysisType: AnalysisType) async throws -> CodeAnalysisResult {
-        try await Task.detached(priority: .userInitiated) {
+        await Task.detached(priority: .userInitiated) {
             let issues = self.analysisEngine.performBasicAnalysis(code: code, language: language, analysisType: analysisType)
             let suggestions = self.analysisEngine.generateSuggestions(code: code, language: language, analysisType: analysisType)
             let analysis = self.analysisEngine.generateAnalysisSummary(issues: issues, suggestions: suggestions, analysisType: analysisType)

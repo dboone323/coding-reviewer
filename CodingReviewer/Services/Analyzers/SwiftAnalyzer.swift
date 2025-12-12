@@ -72,7 +72,34 @@ struct SwiftAnalyzer: LanguageAnalyzer {
 
     func detectBugs(code: String) -> [CodeIssue] {
         var issues: [CodeIssue] = []
-        // DONE: Add bug checks
+        let lines = code.components(separatedBy: .newlines)
+        
+        // Detect common Swift bugs
+        for (index, line) in lines.enumerated() {
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+            guard !trimmed.hasPrefix("//") else { continue }
+            
+            // Detect empty catch blocks (swallowed errors)
+            if trimmed.contains("catch") && trimmed.contains("{ }") {
+                issues.append(CodeIssue(
+                    description: "Empty catch block - errors should be handled or logged",
+                    severity: .high,
+                    line: index + 1,
+                    category: .bug
+                ))
+            }
+            
+            // Detect potential retain cycles in closures
+            if trimmed.contains("[self]") && !trimmed.contains("[weak self]") && !trimmed.contains("[unowned self]") {
+                issues.append(CodeIssue(
+                    description: "Strong self capture in closure may cause retain cycle",
+                    severity: .medium,
+                    line: index + 1,
+                    category: .bug
+                ))
+            }
+        }
+        
         return issues
     }
 }

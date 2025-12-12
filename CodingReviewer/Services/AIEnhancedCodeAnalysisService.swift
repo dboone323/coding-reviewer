@@ -652,8 +652,9 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
     }
 
     private func extractQualityRating(from response: String) -> Int {
-        let numbers = response.matches(of: /(\d+)\/10/).compactMap { match in
-            Int(match.output.1 ?? "0")
+        let numbers = response.matches(of: /(\d+)\/10/).compactMap { match -> Int? in
+            let captured = String(match.output.1)
+            return Int(captured)
         }
         return numbers.first ?? 7
     }

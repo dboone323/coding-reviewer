@@ -5,7 +5,6 @@
 //  Service for detecting performance issues in code
 //
 
-import CodingReviewer
 import Foundation
 
 /// Service responsible for detecting performance issues in code
@@ -110,7 +109,24 @@ struct PerformanceAnalysisService {
             // Also check line by line for single-line patterns
             let lines = code.components(separatedBy: .newlines)
             for (lineIndex, line) in lines.enumerated() {
-                // Add single-line patterns here if needed
+                let singleLinePatterns = [
+                    ("document\\.getElementById", "Frequent DOM lookups", IssueSeverity.low),
+                    ("\\.innerHTML\\s*\\+?=", "innerHTML manipulation", IssueSeverity.medium),
+                    ("eval\\s*\\(", "Use of eval() is a security/performance risk", IssueSeverity.high)
+                ]
+                for (pattern, description, severity) in singleLinePatterns where line.range(of: pattern, options: .regularExpression) != nil {
+                    let fullDescription = "Performance issue: \(description)"
+                    if !addedDescriptions.contains(fullDescription) {
+                        let issue = CodeIssue(
+                            description: fullDescription,
+                            severity: severity,
+                            line: lineIndex + 1,
+                            category: IssueCategory.performance
+                        )
+                        issues.append(issue)
+                        addedDescriptions.insert(fullDescription)
+                    }
+                }
             }
         }
 
