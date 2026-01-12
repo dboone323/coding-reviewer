@@ -1,8 +1,3 @@
-# CodingReviewer
-
-Thinking...
-We need to produce a README.md covering the specified sections for a Swift project called CodingReviewer. We don't have actual code details, but we can infer based on file names: there are UI tests, unit tests, debug engine, test_lines, etc. Provide a generic but comprehensive documentation. Include features like code review automation, AI-generated tests, debugging tools. Provide installation via Swift Package Manager, Xcode, etc. Provide usage examples: command line tool, integration with Xcode, using AI to generate tests. Architecture overview: modules like Core, UI, Test Generation, Debug Engine. Contributing guidelines: fork, PR, code style, tests. License: MIT or Apache. We'll produce a professional README.
-...done thinking.
 
 # CodingReviewer 🧑‍💻🤖
 
@@ -325,7 +320,7 @@ We welcome contributions! Please follow these guidelines to keep the project hea
 ```
 MIT License
 
-Copyright (c) 2025 ...
+Copyright (c) 2026 Daniel Stevens
 
 Permission is hereby granted, free of charge, to any person obtaining a copy...
 ```
