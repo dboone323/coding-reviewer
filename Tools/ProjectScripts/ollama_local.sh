@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 set -euo pipefail
 
 # Simple launcher to run CodingReviewer workflows via local Ollama.
