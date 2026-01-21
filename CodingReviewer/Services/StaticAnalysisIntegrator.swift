@@ -14,9 +14,9 @@ struct StaticAnalysisIntegrator {
         // External tool integration requires proper process execution
 
         #if DEBUG
-        print("StaticAnalysisIntegrator: Would run external tools for \(language) on \(fileURL.lastPathComponent)")
+            print("StaticAnalysisIntegrator: Would run external tools for \(language) on \(fileURL.lastPathComponent)")
         #endif
-        
+
         // Example of what this would look like with actual implementation:
         // let process = Process()
         // process.executableURL = URL(fileURLWithPath: "/usr/bin/swiftlint")

@@ -9,7 +9,6 @@
 import XCTest
 
 final class LanguageDetectorTests: XCTestCase {
-
     // MARK: - Initialization Tests
 
     func testInitialization() {

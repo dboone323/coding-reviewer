@@ -32,35 +32,35 @@ struct PerformanceAnalysisService {
             // Check multiline patterns on entire code
             for (pattern, description, severity) in multilinePatterns where code.range(of: pattern, options: .regularExpression) != nil {
                 let fullDescription = "Performance issue: \(description) can be optimized"
-                    if !addedDescriptions.contains(fullDescription) {
-                        let issue = CodeIssue(
-                            description: fullDescription,
-                            severity: severity,
-                            line: 1, // Approximate line for multiline patterns
-                            category: IssueCategory.performance
-                        )
-                        issues.append(issue)
-                        addedDescriptions.insert(fullDescription)
-                    }
+                if !addedDescriptions.contains(fullDescription) {
+                    let issue = CodeIssue(
+                        description: fullDescription,
+                        severity: severity,
+                        line: 1, // Approximate line for multiline patterns
+                        category: IssueCategory.performance
+                    )
+                    issues.append(issue)
+                    addedDescriptions.insert(fullDescription)
                 }
+            }
 
             // Check line-by-line patterns
             let lines = code.components(separatedBy: .newlines)
             for (lineIndex, line) in lines.enumerated() {
                 for (pattern, description, severity) in linePatterns where line.range(of: pattern, options: .regularExpression) != nil {
                     let fullDescription = "Performance issue: \(description) can be optimized"
-                        if !addedDescriptions.contains(fullDescription) {
-                            let issue = CodeIssue(
-                                description: fullDescription,
-                                severity: severity,
-                                line: lineIndex + 1,
-                                category: IssueCategory.performance
-                            )
-                            issues.append(issue)
-                            addedDescriptions.insert(fullDescription)
-                        }
+                    if !addedDescriptions.contains(fullDescription) {
+                        let issue = CodeIssue(
+                            description: fullDescription,
+                            severity: severity,
+                            line: lineIndex + 1,
+                            category: IssueCategory.performance
+                        )
+                        issues.append(issue)
+                        addedDescriptions.insert(fullDescription)
                     }
                 }
+            }
 
             // Check for multiple chained array operations (suggesting flatMap optimization)
             // Look for patterns like .filter { ... }.map { ... } on separate lines or same line

@@ -20,7 +20,7 @@ class GitIntegrationService {
     }
 
     func fetchPR(id: String) async throws -> String {
-        guard let provider = provider else { throw GitError.notConfigured }
+        guard let provider else { throw GitError.notConfigured }
         return try await provider.fetchPullRequest(id: id)
     }
 }
@@ -41,7 +41,7 @@ class GitHubProvider: GitProvider {
 
     func fetchPullRequest(id: String) async throws -> String {
         // Call GitHub API
-        return "Mock PR Content"
+        "Mock PR Content"
     }
 
     func postComment(prId: String, file: String, line: Int, comment: String) async throws {

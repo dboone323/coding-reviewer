@@ -37,10 +37,10 @@ struct PythonAnalyzer: LanguageAnalyzer {
     }
 
     func detectStyleIssues(code: String) -> [CodeIssue] {
-        return []
+        []
     }
 
     func detectBugs(code: String) -> [CodeIssue] {
-        return []
+        []
     }
 }

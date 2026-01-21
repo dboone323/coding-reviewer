@@ -10,7 +10,6 @@ import SwiftUI
 import XCTest
 
 final class WelcomeViewTests: XCTestCase {
-
     // MARK: - Initialization Tests
 
     func testInitialization() {

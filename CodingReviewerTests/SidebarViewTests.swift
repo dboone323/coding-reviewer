@@ -9,7 +9,6 @@
 import XCTest
 
 final class SidebarViewTests: XCTestCase {
-
     // MARK: - Initialization Tests
 
     func testInitialization() {

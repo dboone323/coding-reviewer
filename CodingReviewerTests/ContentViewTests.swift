@@ -9,7 +9,6 @@
 import XCTest
 
 final class ContentViewTests: XCTestCase {
-
     // MARK: - Initialization Tests
 
     func testInitialization() {

@@ -76,7 +76,7 @@ public struct ContentView: View {
             logger.info("ContentView appeared")
         }
         .alert("Error", isPresented: $showError) {
-            Button("OK", role: .cancel) { }
+            Button("OK", role: .cancel) {}
         } message: {
             Text(errorMessage)
         }
@@ -195,9 +195,9 @@ public struct ContentView: View {
 
     private func handleSaveResult(_ result: Result<URL, Error>) {
         switch result {
-        case .success(let url):
+        case let .success(url):
             logger.info("Review saved successfully to: \(url.path)")
-        case .failure(let error):
+        case let .failure(error):
             logger.error("Failed to save review: \(error.localizedDescription)")
             errorMessage = "Failed to save review: \(error.localizedDescription)"
             showError = true

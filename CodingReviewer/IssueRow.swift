@@ -42,10 +42,10 @@ public struct IssueRow: View {
 
                     if issue.suggestedFix != nil {
                         Spacer()
-                        Button(action: { onFix?() }) {
+                        Button(action: { onFix?() }, label: {
                             Label("Fix", systemImage: "wand.and.stars")
                                 .font(.caption)
-                        }
+                        })
                         .buttonStyle(.borderedProminent)
                         .controlSize(.small)
                     }

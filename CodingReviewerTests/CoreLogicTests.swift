@@ -2,7 +2,6 @@
 import XCTest
 
 final class CoreLogicTests: XCTestCase {
-
     var bugDetectionService: BugDetectionService!
 
     override func setUp() {

@@ -3,10 +3,10 @@
 AI Workflow Recovery System - Basic Version
 """
 import sys
-import os
 
 
 def main():
+    """Run the AI workflow recovery system."""
     print("AI Workflow Recovery System - Basic Version")
     print("This is a placeholder for the actual AI recovery system")
 

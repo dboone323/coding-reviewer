@@ -8,7 +8,6 @@
 import Foundation
 
 struct CodeSimilarityDetector {
-
     struct SimilarityResult {
         let score: Double // 0.0 to 1.0
         let isDuplicate: Bool

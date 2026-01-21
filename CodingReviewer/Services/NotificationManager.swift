@@ -12,7 +12,7 @@ final class NotificationManager: Sendable {
 
     func requestAuthorization() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { _, error in
-            if let error = error {
+            if let error {
                 print("Notification authorization failed: \(error.localizedDescription)")
             }
         }

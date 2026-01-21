@@ -54,6 +54,6 @@ struct JavaScriptAnalyzer: LanguageAnalyzer {
     }
 
     func detectBugs(code: String) -> [CodeIssue] {
-        return []
+        []
     }
 }

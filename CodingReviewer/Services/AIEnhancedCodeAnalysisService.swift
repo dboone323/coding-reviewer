@@ -370,7 +370,6 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
                     topImprovements: extractTopImprovements(from: reviewResponse),
                     reviewTimestamp: Date()
                 ))
-
             } catch {
                 logger.error("Failed to review file \(filePath): \(error.localizedDescription)")
             }

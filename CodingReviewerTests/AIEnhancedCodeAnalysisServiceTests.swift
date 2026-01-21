@@ -10,7 +10,6 @@ import XCTest
 
 @MainActor
 final class AIEnhancedCodeAnalysisServiceTests: XCTestCase {
-
     // MARK: - Initialization Tests
 
     func testInitialization() {

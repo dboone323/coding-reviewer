@@ -36,7 +36,7 @@ struct CodeSmellDetector {
 
         // Check last method
         if currentMethodLength > 50 {
-             issues.append(CodeIssue(
+            issues.append(CodeIssue(
                 description: "Long method detected (> 50 lines). Consider refactoring.",
                 severity: .low,
                 line: methodStartLine,

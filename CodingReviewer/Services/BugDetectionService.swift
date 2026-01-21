@@ -73,7 +73,7 @@ struct BugDetectionService {
                     // Check if it's likely a force unwrap (end of word or before dot)
                     // This is still a heuristic
                     if line.contains("!)") || line.contains("!.") || line.contains("! ") || line.hasSuffix("!") {
-                         issues.append(CodeIssue(
+                        issues.append(CodeIssue(
                             description: "Force unwrapping detected - consider safe unwrapping",
                             severity: .medium,
                             line: index + 1,

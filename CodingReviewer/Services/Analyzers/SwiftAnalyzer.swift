@@ -25,15 +25,13 @@ struct SwiftAnalyzer: LanguageAnalyzer {
         // Force Unwrapping
         let forceUnwrapMatches = PatternMatcher.findMatches(pattern: "[a-zA-Z0-9_]+\\s*!", in: code)
         // Filter out != and checks
-        for match in forceUnwrapMatches {
-            if !match.content.contains("!=") {
-                 issues.append(CodeIssue(
-                    description: "Force unwrapping found. Use optional binding (if let/guard let).",
-                    severity: .medium,
-                    line: match.line,
-                    category: .security // Can cause crashes
-                ))
-            }
+        for match in forceUnwrapMatches where !match.content.contains("!=") {
+            issues.append(CodeIssue(
+                description: "Force unwrapping found. Use optional binding (if let/guard let).",
+                severity: .medium,
+                line: match.line,
+                category: .security // Can cause crashes
+            ))
         }
 
         return issues
@@ -73,12 +71,12 @@ struct SwiftAnalyzer: LanguageAnalyzer {
     func detectBugs(code: String) -> [CodeIssue] {
         var issues: [CodeIssue] = []
         let lines = code.components(separatedBy: .newlines)
-        
+
         // Detect common Swift bugs
         for (index, line) in lines.enumerated() {
             let trimmed = line.trimmingCharacters(in: .whitespaces)
             guard !trimmed.hasPrefix("//") else { continue }
-            
+
             // Detect empty catch blocks (swallowed errors)
             if trimmed.contains("catch") && trimmed.contains("{ }") {
                 issues.append(CodeIssue(
@@ -88,7 +86,7 @@ struct SwiftAnalyzer: LanguageAnalyzer {
                     category: .bug
                 ))
             }
-            
+
             // Detect potential retain cycles in closures
             if trimmed.contains("[self]") && !trimmed.contains("[weak self]") && !trimmed.contains("[unowned self]") {
                 issues.append(CodeIssue(
@@ -99,7 +97,7 @@ struct SwiftAnalyzer: LanguageAnalyzer {
                 ))
             }
         }
-        
+
         return issues
     }
 }

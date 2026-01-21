@@ -10,7 +10,6 @@ import XCTest
 
 @MainActor
 final class AboutViewTests: XCTestCase {
-
     // MARK: - Initialization Tests
 
     func testInitialization() {

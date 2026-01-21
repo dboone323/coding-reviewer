@@ -1,7 +1,7 @@
-# Step 43: SwiftSyntax SPM Dependency
-# Package.swift
-
 // swift-tools-version:5.9
+// Step 43: SwiftSyntax SPM Dependency
+// Package.swift
+
 import PackageDescription
 
 let package = Package(

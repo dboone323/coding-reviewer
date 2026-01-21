@@ -14,7 +14,7 @@ protocol LanguageAnalyzer {
     func detectBugs(code: String) -> [CodeIssue]
 }
 
-struct LanguageAnalyzerFactory {
+enum LanguageAnalyzerFactory {
     static func analyzer(for language: String) -> LanguageAnalyzer {
         switch language.lowercased() {
         case "swift":

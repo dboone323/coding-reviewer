@@ -29,7 +29,7 @@ class AIModelManager: ObservableObject {
     @Published var selectedModelId: String = "deepseek-v3.1:671b-cloud"
 
     func getModel(id: String) -> ModelInfo? {
-        return availableModels.first { $0.id == id }
+        availableModels.first { $0.id == id }
     }
 
     func selectModel(id: String) {

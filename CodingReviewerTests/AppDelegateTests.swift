@@ -9,7 +9,6 @@
 import XCTest
 
 final class AppDelegateTests: XCTestCase {
-
     // MARK: - Initialization Tests
 
     func testInitialization() {

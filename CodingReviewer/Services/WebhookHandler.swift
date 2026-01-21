@@ -7,28 +7,32 @@
 
 import Foundation
 
+// MARK: - Webhook Types
+
+struct WebhookPayload: Codable {
+    let action: String
+    let repository: WebhookRepository
+    let pullRequest: WebhookPullRequest?
+
+    enum CodingKeys: String, CodingKey {
+        case action
+        case repository
+        case pullRequest = "pull_request"
+    }
+}
+
+struct WebhookRepository: Codable {
+    let fullName: String
+}
+
+struct WebhookPullRequest: Codable {
+    let number: Int
+    let title: String
+}
+
+// MARK: - WebhookHandler
+
 struct WebhookHandler {
-    struct WebhookPayload: Codable {
-        let action: String
-        let repository: Repository
-        let pullRequest: PullRequest?
-
-        enum CodingKeys: String, CodingKey {
-            case action
-            case repository
-            case pullRequest = "pull_request"
-        }
-    }
-
-    struct Repository: Codable {
-        let fullName: String
-    }
-
-    struct PullRequest: Codable {
-        let number: Int
-        let title: String
-    }
-
     func handle(payload: Data) throws {
         let decoder = JSONDecoder()
         let event = try decoder.decode(WebhookPayload.self, from: payload)

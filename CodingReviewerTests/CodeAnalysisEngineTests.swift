@@ -2,7 +2,6 @@
 import XCTest
 
 final class CodeAnalysisEngineTests: XCTestCase {
-
     var analysisEngine: CodeAnalysisEngine!
 
     override func setUp() {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PatternMatcher {
+enum PatternMatcher {
     struct Match {
         let line: Int
         let content: String
@@ -31,7 +31,7 @@ struct PatternMatcher {
                     matches.append(Match(line: index + 1, content: line.trimmingCharacters(in: .whitespaces), range: range))
                 } else {
                     // Fallback if range extraction fails but match existed
-                     matches.append(Match(line: index + 1, content: line.trimmingCharacters(in: .whitespaces), range: line.startIndex..<line.endIndex))
+                    matches.append(Match(line: index + 1, content: line.trimmingCharacters(in: .whitespaces), range: line.startIndex ..< line.endIndex))
                 }
             }
         }
