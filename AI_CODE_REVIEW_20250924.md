@@ -498,29 +498,29 @@ The current file violates fundamental best practices by existing in this state. 
 #### **5. Architectural Concerns**
 
 - **Invalid Architecture:** This file does not represent any valid test architecture. A well-architected UI test suite often uses the **Page Object Model (POM)**. This means:
-  - Creating classes (Page Objects) that represent screens in your app. These classes encapsulate the UI elements (accessibility identifiers) and interactions (tap, type) for that screen.
-  - The test files themselves (`XCTestCase` subclasses) should be clean, readable, and contain only the high-level test steps and assertions, using the methods provided by the Page Objects.
+    - Creating classes (Page Objects) that represent screens in your app. These classes encapsulate the UI elements (accessibility identifiers) and interactions (tap, type) for that screen.
+    - The test files themselves (`XCTestCase` subclasses) should be clean, readable, and contain only the high-level test steps and assertions, using the methods provided by the Page Objects.
 - **Example of a well-architected test method:**
 
-  ```swift
-  func testSuccessfulLogin() {
-      let loginPage = LoginPage(app: XCUIApplication())
-      loginPage.enterUsername("validUser")
-      loginPage.enterPassword("validPass")
-      loginPage.tapLoginButton()
+    ```swift
+    func testSuccessfulLogin() {
+        let loginPage = LoginPage(app: XCUIApplication())
+        loginPage.enterUsername("validUser")
+        loginPage.enterPassword("validPass")
+        loginPage.tapLoginButton()
 
-      let homePage = HomePage(app: XCUIApplication())
-      XCTAssertTrue(homePage.welcomeMessage.exists, "Welcome message should be visible after login")
-  }
-  ```
+        let homePage = HomePage(app: XCUIApplication())
+        XCTAssertTrue(homePage.welcomeMessage.exists, "Welcome message should be visible after login")
+    }
+    ```
 
 #### **6. Documentation Needs**
 
 - The existing comment is **misleading and incomplete.** It states tests were "generated" and to "review and customize," but no tests are present.
 - **Actionable Documentation Fix:**
-  - **Remove this file** from the project and version control. It serves no purpose.
-  - If AI-generated tests are desired, ensure the generation process is reliable and does not commit incomplete output.
-  - For actual test files, documentation should focus on the _purpose_ of the test suite (e.g., `// Tests for the user onboarding flow`). Individual complex tests should have comments explaining the specific scenario they validate.
+    - **Remove this file** from the project and version control. It serves no purpose.
+    - If AI-generated tests are desired, ensure the generation process is reliable and does not commit incomplete output.
+    - For actual test files, documentation should focus on the _purpose_ of the test suite (e.g., `// Tests for the user onboarding flow`). Individual complex tests should have comments explaining the specific scenario they validate.
 
 ---
 
@@ -534,40 +534,40 @@ The current file violates fundamental best practices by existing in this state. 
     - **Create a new `XCTestCase` subclass** (e.g., `LoginUITests`).
     - **Use Setup/Teardown:**
 
-      ```swift
-      class LoginUITests: XCTestCase {
-          var app: XCUIApplication!
+        ```swift
+        class LoginUITests: XCTestCase {
+            var app: XCUIApplication!
 
-          override func setUp() {
-              super.setUp()
-              continueAfterFailure = false // Stop on first failure
-              app = XCUIApplication()
-              app.launch() // or app.launchArguments = ["-uitesting"]
-          }
+            override func setUp() {
+                super.setUp()
+                continueAfterFailure = false // Stop on first failure
+                app = XCUIApplication()
+                app.launch() // or app.launchArguments = ["-uitesting"]
+            }
 
-          override func tearDown() {
-              app.terminate()
-              app = nil
-              super.tearDown()
-          }
-      }
-      ```
+            override func tearDown() {
+                app.terminate()
+                app = nil
+                super.tearDown()
+            }
+        }
+        ```
 
     - **Write Focused Test Methods:**
 
-      ```swift
-      func testLoginWithInvalidCredentialsShowsAlert() {
-          // Use accessibility identifiers, not static text
-          app.textFields["usernameTextField"].tap()
-          app.textFields["usernameTextField"].typeText("wrongUser")
-          app.secureTextFields["passwordTextField"].tap()
-          app.secureTextFields["passwordTextField"].typeText("wrongPass")
-          app.buttons["loginButton"].tap()
+        ```swift
+        func testLoginWithInvalidCredentialsShowsAlert() {
+            // Use accessibility identifiers, not static text
+            app.textFields["usernameTextField"].tap()
+            app.textFields["usernameTextField"].typeText("wrongUser")
+            app.secureTextFields["passwordTextField"].tap()
+            app.secureTextFields["passwordTextField"].typeText("wrongPass")
+            app.buttons["loginButton"].tap()
 
-          let alert = app.alerts["Login Error"]
-          XCTAssertTrue(alert.exists, "An alert should appear for invalid login attempts")
-      }
-      ```
+            let alert = app.alerts["Login Error"]
+            XCTAssertTrue(alert.exists, "An alert should appear for invalid login attempts")
+        }
+        ```
 
     - **Adopt the Page Object Model:** This is the single biggest improvement for UI test maintenance and readability. Create separate classes for each screen to hide XCUIElement queries.
 
@@ -595,31 +595,31 @@ Based on the provided information, here is a review and a set of actionable feed
 The comment indicates the tests were AI-generated and not yet reviewed. While AI can be a great tool, blindly accepting its output is a significant risk. AI can generate plausible but incorrect or inefficient tests, such as testing implementation details instead of public contracts, making brittle assumptions, or missing edge cases.
 
 - **Actionable Feedback:**
-  - **Treat this as a starting point, not a finished product.** You must critically review every generated test. Do not assume the tests are correct.
-  - **Focus on testing behaviors, not implementations.** Ensure tests validate the _what_ (the expected output/behavior of `debug_engine`) and not the _how_ (its internal private methods or variables). This makes tests more resilient to code refactoring.
+    - **Treat this as a starting point, not a finished product.** You must critically review every generated test. Do not assume the tests are correct.
+    - **Focus on testing behaviors, not implementations.** Ensure tests validate the _what_ (the expected output/behavior of `debug_engine`) and not the _how_ (its internal private methods or variables). This makes tests more resilient to code refactoring.
 
 **Issue: (Anticipated) Lack of Structure**
 Most likely, the generated tests are a series of `XCTestCase` methods without a clear structure like the "Given-When-Then" pattern. This reduces readability and maintainability.
 
 - **Actionable Feedback:**
-  - **Structure tests clearly.** Organize each test method into distinct sections.
+    - **Structure tests clearly.** Organize each test method into distinct sections.
 
-    ```swift
-    func testDebugEngine_InvalidInput_ReturnsError() {
-        // 1. Given: Set up the initial state and inputs.
-        let invalidInput = ""
-        let engine = DebugEngine()
+        ```swift
+        func testDebugEngine_InvalidInput_ReturnsError() {
+            // 1. Given: Set up the initial state and inputs.
+            let invalidInput = ""
+            let engine = DebugEngine()
 
-        // 2. When: Perform the action under test.
-        let result = engine.process(input: invalidInput)
+            // 2. When: Perform the action under test.
+            let result = engine.process(input: invalidInput)
 
-        // 3. Then: Assert the expected outcomes.
-        XCTAssertTrue(result.isFailure)
-        XCTAssertEqual(result.error, .invalidInput)
-    }
-    ```
+            // 3. Then: Assert the expected outcomes.
+            XCTAssertTrue(result.isFailure)
+            XCTAssertEqual(result.error, .invalidInput)
+        }
+        ```
 
-  - **Use descriptive test names.** The function name should clearly state the unit under test, the condition, and the expected result (e.g., `test<Unit>_<Condition>_<ExpectedResult>`).
+    - **Use descriptive test names.** The function name should clearly state the unit under test, the condition, and the expected result (e.g., `test<Unit>_<Condition>_<ExpectedResult>`).
 
 ---
 
@@ -629,24 +629,24 @@ Most likely, the generated tests are a series of `XCTestCase` methods without a 
 If the AI generated code that creates heavy objects (like the `DebugEngine` itself) repeatedly in each test instead of in `setUp()`, it could lead to performance degradation in the test suite.
 
 - **Actionable Feedback:**
-  - **Use `setUp()` efficiently.** Move the initialization of the System Under Test (SUT) and its dependencies to the `setUp()` method to avoid redundant creation. Reset the state in `tearDown()` to ensure test isolation.
+    - **Use `setUp()` efficiently.** Move the initialization of the System Under Test (SUT) and its dependencies to the `setUp()` method to avoid redundant creation. Reset the state in `tearDown()` to ensure test isolation.
 
-    ```swift
-    class DebugEngineTests: XCTestCase {
-        var sut: DebugEngine! // System Under Test
+        ```swift
+        class DebugEngineTests: XCTestCase {
+            var sut: DebugEngine! // System Under Test
 
-        override func setUp() {
-            super.setUp()
-            sut = DebugEngine() // Create a fresh instance before each test
+            override func setUp() {
+                super.setUp()
+                sut = DebugEngine() // Create a fresh instance before each test
+            }
+
+            override func tearDown() {
+                sut = nil // Clean up after each test
+                super.tearDown()
+            }
+            // ... your tests ...
         }
-
-        override func tearDown() {
-            sut = nil // Clean up after each test
-            super.tearDown()
-        }
-        // ... your tests ...
-    }
-    ```
+        ```
 
 ---
 
@@ -656,10 +656,10 @@ If the AI generated code that creates heavy objects (like the `DebugEngine` itse
 The `debug_engine` likely handles data that could have security implications (e.g., logging PII, processing untrusted input). The AI may not have known to generate tests for these cases.
 
 - **Actionable Feedback:**
-  - **Explicitly test security boundaries.** If the `debug_engine` processes external data, write tests for:
-    - **Input validation:** Fuzzing with malformed, extremely long, or unexpected data types.
-    - **Data sanitization:** Ensuring sensitive information (passwords, tokens) is redacted in debug output or logs.
-    - **Error handling:** That errors do not expose internal stack traces or system information to the outside world.
+    - **Explicitly test security boundaries.** If the `debug_engine` processes external data, write tests for:
+        - **Input validation:** Fuzzing with malformed, extremely long, or unexpected data types.
+        - **Data sanitization:** Ensuring sensitive information (passwords, tokens) is redacted in debug output or logs.
+        - **Error handling:** That errors do not expose internal stack traces or system information to the outside world.
 
 ---
 
@@ -669,8 +669,8 @@ The `debug_engine` likely handles data that could have security implications (e.
 AI-generated tests often have high coupling to the code they are based on. If the `debug_engine` implementation changes, these tests could all break even if the external behavior remains correct, indicating they test the _how_ instead of the _what_.
 
 - **Actionable Feedback:**
-  - **Decouple tests from implementation details.** Rework any tests that rely on internal state, private methods, or the specific order of operations. Use only public APIs and assert on public results.
-  - **Consider using a mocking framework** (like OCMock or a Swift protocol-based approach) if `DebugEngine` has dependencies. This allows you to isolate the SUT and test its interactions with dependencies in a controlled way.
+    - **Decouple tests from implementation details.** Rework any tests that rely on internal state, private methods, or the specific order of operations. Use only public APIs and assert on public results.
+    - **Consider using a mocking framework** (like OCMock or a Swift protocol-based approach) if `DebugEngine` has dependencies. This allows you to isolate the SUT and test its interactions with dependencies in a controlled way.
 
 ---
 
@@ -680,14 +680,14 @@ AI-generated tests often have high coupling to the code they are based on. If th
 The comment is a generic header. Tests themselves need documentation to explain _why_ a certain scenario is being tested, especially for non-obvious edge cases or business logic.
 
 - **Actionable Feedback:**
-  - **Document the "why," not the "what."** The test name and assertions should show _what_ is happening. Use comments to explain the _reason_ behind a complex test case.
-    ```swift
-    func testDebugEngine_InputWithSpecialCharacters_IsProcessedCorrectly() {
-        // This input caused a parsing issue in production (Ticket: PROJ-1234)
-        let input = "data[0].value"
-        // ... rest of test ...
-    }
-    ```
+    - **Document the "why," not the "what."** The test name and assertions should show _what_ is happening. Use comments to explain the _reason_ behind a complex test case.
+        ```swift
+        func testDebugEngine_InputWithSpecialCharacters_IsProcessedCorrectly() {
+            // This input caused a parsing issue in production (Ticket: PROJ-1234)
+            let input = "data[0].value"
+            // ... rest of test ...
+        }
+        ```
 
 ### Final Summary and Most Critical Next Steps
 
@@ -820,30 +820,30 @@ final class DebugIntegrationTests: XCTestCase {
 ## 🔧 Specific Action Items
 
 1. **Add Missing Structure**
-   - Import XCTest and your module
-   - Create proper XCTestCase subclass
-   - Implement setup/teardown methods
+    - Import XCTest and your module
+    - Create proper XCTestCase subclass
+    - Implement setup/teardown methods
 
 2. **Implement Actual Tests**
-   - Success case tests
-   - Failure case tests
-   - Edge case tests
-   - Performance tests
+    - Success case tests
+    - Failure case tests
+    - Edge case tests
+    - Performance tests
 
 3. **Add Async Support**
-   - Use `async` test methods
-   - Proper timeout handling
-   - Async setup/teardown
+    - Use `async` test methods
+    - Proper timeout handling
+    - Async setup/teardown
 
 4. **Improve Documentation**
-   - Add test purpose comments
-   - Document preconditions and expected outcomes
-   - Include error case documentation
+    - Add test purpose comments
+    - Document preconditions and expected outcomes
+    - Include error case documentation
 
 5. **Add Test Utilities**
-   - Mock objects for dependencies
-   - Test data factories
-   - Helper methods for common assertions
+    - Mock objects for dependencies
+    - Test data factories
+    - Helper methods for common assertions
 
 ## ⚡ Performance Considerations
 
@@ -1334,10 +1334,10 @@ final class AppDelegateTests: XCTestCase {
 
 - **Testing implementation, not behavior**: These tests only verify that methods don't crash, but don't test any actual functionality or side effects.
 - **Missing critical tests**: No tests for actual AppDelegate responsibilities like:
-  - Window management
-  - State restoration
-  - Menu bar configuration
-  - URL handling (if applicable)
+    - Window management
+    - State restoration
+    - Menu bar configuration
+    - URL handling (if applicable)
 
 **Actionable Recommendations:**
 
