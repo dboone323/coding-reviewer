@@ -87,7 +87,11 @@ struct CodeAnalysisEngine {
     ///   - includeExamples: Whether to include examples
     /// - Returns: Generated documentation string
     func generateBasicDocumentation(code: String, language: String, includeExamples: Bool) -> String {
-        self.documentationGenerator.generateBasicDocumentation(code: code, language: language, includeExamples: includeExamples)
+        self.documentationGenerator.generateBasicDocumentation(
+            code: code,
+            language: language,
+            includeExamples: includeExamples
+        )
     }
 
     /// Generate basic test code

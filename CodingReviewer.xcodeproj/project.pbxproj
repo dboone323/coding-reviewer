@@ -32,22 +32,16 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		688DD4A92E282B6D0020150F /* CodingReviewer */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = CodingReviewer;
 			sourceTree = "<group>";
 		};
 		688DD4B92E282B6F0020150F /* CodingReviewerTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = CodingReviewerTests;
 			sourceTree = "<group>";
 		};
 		688DD4C32E282B6F0020150F /* CodingReviewerUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = CodingReviewerUITests;
 			sourceTree = "<group>";
 		};
@@ -55,20 +49,6 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		688DD4A42E282B6D0020150F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		688DD4B32E282B6F0020150F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		688DD4BD2E282B6F0020150F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -126,7 +106,6 @@
 			buildConfigurationList = 688DD4CD2E282B6F0020150F /* Build configuration list for PBXNativeTarget "CodingReviewerTests" */;
 			buildPhases = (
 				688DD4B22E282B6F0020150F /* Sources */,
-				688DD4B32E282B6F0020150F /* Frameworks */,
 				688DD4B42E282B6F0020150F /* Resources */,
 			);
 			buildRules = (
@@ -147,7 +126,6 @@
 			buildConfigurationList = 688DD4D02E282B6F0020150F /* Build configuration list for PBXNativeTarget "CodingReviewerUITests" */;
 			buildPhases = (
 				688DD4BC2E282B6F0020150F /* Sources */,
-				688DD4BD2E282B6F0020150F /* Frameworks */,
 				688DD4BE2E282B6F0020150F /* Resources */,
 			);
 			buildRules = (
@@ -295,7 +273,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				BASE_CONFIGURATION_FILE = Config/Base.xcconfig;
+				BASE_CONFIGURATION_FILE = Config/Debug.xcconfig;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -363,7 +341,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				BASE_CONFIGURATION_FILE = Config/Base.xcconfig;
+				BASE_CONFIGURATION_FILE = Config/Release.xcconfig;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

@@ -1,5 +1,5 @@
 import Foundation
-import RegexBuilder  // If available
+import RegexBuilder // If available
 
 struct Match {
     let line: Int
@@ -27,7 +27,8 @@ func findMatches(pattern: String, in code: String, options: NSRegularExpression.
                 matches.append(
                     Match(
                         line: index + 1, content: line.trimmingCharacters(in: .whitespaces),
-                        range: swiftRange))
+                        range: swiftRange
+                    ))
             }
         }
     }
@@ -39,7 +40,8 @@ print("--- Case Sensitivity Test ---")
 let jsCode = "EVAL('code'); INNERHTML = 'x';"
 let evalMatches = findMatches(pattern: "eval\\(", in: jsCode, options: [.caseInsensitive])
 let innerHTMLMatches = findMatches(
-    pattern: "\\.innerHTML\\s*=", in: jsCode, options: [.caseInsensitive])
+    pattern: "\\.innerHTML\\s*=", in: jsCode, options: [.caseInsensitive]
+)
 print("EVAL matches count: \(evalMatches.count)")
 print("innerHTML matches count: \(innerHTMLMatches.count)")
 

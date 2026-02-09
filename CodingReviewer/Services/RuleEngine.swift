@@ -67,10 +67,10 @@ class RuleEngine {
     }
 
     func getRuleCount() -> Int {
-        return rules.count
+        rules.count
     }
 
     func getEnabledRuleCount() -> Int {
-        return rules.count  // All loaded rules are considered enabled
+        rules.count // All loaded rules are considered enabled
     }
 }

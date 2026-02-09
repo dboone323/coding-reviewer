@@ -1,7 +1,7 @@
 import Foundation
 
 /// Configuration for service resilience features
-public struct ServiceConfig {
+public struct ServiceConfig: Sendable {
     /// Timeout for individual operations (seconds)
     public let operationTimeout: TimeInterval
 
@@ -31,6 +31,7 @@ public struct ServiceConfig {
         self.verboseLogging = verboseLogging
     }
 
+    @MainActor
     public static let `default` = ServiceConfig()
 }
 
@@ -45,19 +46,18 @@ public enum ServiceError: Error, LocalizedError {
 
     public var errorDescription: String? {
         switch self {
-        case .timeout(let op):
-            return
-                "Operation '\(op)' timed out. Please try with a smaller code sample or check your connection."
-        case .retryExhausted(let op, let error):
-            return "Operation '\(op)' failed after multiple attempts: \(error.localizedDescription)"
-        case .cancelled(let op):
-            return "Operation '\(op)' was cancelled."
-        case .aiUnavailable(let reason):
-            return "AI service unavailable: \(reason). Falling back to offline analysis."
-        case .invalidInput(let message):
-            return "Invalid input: \(message)"
-        case .analysisFailure(let message):
-            return "Analysis failed: \(message)"
+        case let .timeout(op):
+            "Operation '\(op)' timed out. Please try with a smaller code sample or check your connection."
+        case let .retryExhausted(op, error):
+            "Operation '\(op)' failed after multiple attempts: \(error.localizedDescription)"
+        case let .cancelled(op):
+            "Operation '\(op)' was cancelled."
+        case let .aiUnavailable(reason):
+            "AI service unavailable: \(reason). Falling back to offline analysis."
+        case let .invalidInput(message):
+            "Invalid input: \(message)"
+        case let .analysisFailure(message):
+            "Analysis failed: \(message)"
         }
     }
 }
@@ -65,9 +65,9 @@ public enum ServiceError: Error, LocalizedError {
 /// Circuit breaker to prevent overwhelming failed services
 public actor CircuitBreaker {
     public enum State {
-        case closed  // Service is healthy
-        case open  // Service is failing
-        case halfOpen  // Testing if service recovered
+        case closed // Service is healthy
+        case open // Service is failing
+        case halfOpen // Testing if service recovered
     }
 
     private var state: State = .closed
@@ -103,7 +103,7 @@ public actor CircuitBreaker {
         case .open:
             // Check if enough time has passed to try half-open
             if let lastFailure = lastFailureTime,
-                Date().timeIntervalSince(lastFailure) >= resetTimeout
+               Date().timeIntervalSince(lastFailure) >= resetTimeout
             {
                 state = .halfOpen
                 return true

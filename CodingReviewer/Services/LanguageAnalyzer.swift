@@ -18,13 +18,13 @@ enum LanguageAnalyzerFactory {
     static func analyzer(for language: String) -> LanguageAnalyzer {
         switch language.lowercased() {
         case "swift":
-            return SwiftAnalyzer()
+            SwiftAnalyzer()
         case "javascript", "js":
-            return JavaScriptAnalyzer()
+            JavaScriptAnalyzer()
         case "python", "py":
-            return PythonAnalyzer()
+            PythonAnalyzer()
         default:
-            return GenericAnalyzer(language: language)
+            GenericAnalyzer(language: language)
         }
     }
 }

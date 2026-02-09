@@ -5,8 +5,8 @@
 //  Comprehensive test suite for ContentView
 //
 
-@testable import CodingReviewerCore
 import XCTest
+@testable import CodingReviewerCore
 
 final class ContentViewTests: XCTestCase {
     // MARK: - Initialization Tests

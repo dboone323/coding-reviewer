@@ -1,5 +1,5 @@
-@testable import CodingReviewerCore
 import XCTest
+@testable import CodingReviewerCore
 
 @MainActor
 final class AIServiceModelMappingTests: XCTestCase {

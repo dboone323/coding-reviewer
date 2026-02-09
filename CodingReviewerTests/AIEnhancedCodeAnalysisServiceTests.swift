@@ -5,8 +5,8 @@
 //  Comprehensive test suite for AIEnhancedCodeAnalysisService
 //
 
-@testable import CodingReviewerCore
 import XCTest
+@testable import CodingReviewerCore
 
 @MainActor
 final class AIEnhancedCodeAnalysisServiceTests: XCTestCase {
@@ -84,7 +84,12 @@ final class AIEnhancedCodeAnalysisServiceTests: XCTestCase {
             technicalDebtEstimate: .low,
             analysisTimestamp: Date()
         )
-        service.analysisResults.append(AIAnalysisResult(id: UUID(), type: .codeAnalysis, result: dummyResult, timestamp: Date()))
+        service.analysisResults.append(AIAnalysisResult(
+            id: UUID(),
+            type: .codeAnalysis,
+            result: dummyResult,
+            timestamp: Date()
+        ))
         XCTAssertEqual(service.analysisResults.count, 1)
     }
 }

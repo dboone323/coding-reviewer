@@ -25,7 +25,8 @@ struct JavaScriptAnalyzer: LanguageAnalyzer {
 
         // innerHTML
         let innerHTMLMatches = PatternMatcher.findMatches(
-            pattern: "(?i)(?:\\.|\\b)innerHTML\\s*=", in: code)
+            pattern: "(?i)(?:\\.|\\b)innerHTML\\s*=", in: code
+        )
         for match in innerHTMLMatches {
             issues.append(
                 CodeIssue(

@@ -5,8 +5,8 @@
 // Unit tests for the SwiftSyntax-based code analyzer.
 //
 
-@testable import CodingReviewerCore
 import XCTest
+@testable import CodingReviewerCore
 
 final class SwiftSyntaxAnalyzerTests: XCTestCase {
     var analyzer: SwiftSyntaxAnalyzer!
@@ -32,7 +32,8 @@ final class SwiftSyntaxAnalyzerTests: XCTestCase {
         let issues = analyzer.detectSecurityIssues(code: code)
 
         // Should detect force unwrap
-        XCTAssertTrue(issues.contains { $0.description.contains("Force unwrap") || $0.description.contains("optional") })
+        XCTAssertTrue(issues
+            .contains { $0.description.contains("Force unwrap") || $0.description.contains("optional") })
     }
 
     func testNoFalsePositiveForNotEqual() {
@@ -90,7 +91,8 @@ final class SwiftSyntaxAnalyzerTests: XCTestCase {
 
         let issues = analyzer.detectBugs(code: code)
 
-        XCTAssertTrue(issues.contains { $0.description.contains("Empty catch") || $0.description.contains("catch block") })
+        XCTAssertTrue(issues
+            .contains { $0.description.contains("Empty catch") || $0.description.contains("catch block") })
     }
 
     func testCatchWithHandlerNotFlagged() {
@@ -117,7 +119,8 @@ final class SwiftSyntaxAnalyzerTests: XCTestCase {
 
         let issues = analyzer.detectSecurityIssues(code: code)
 
-        XCTAssertTrue(issues.contains { $0.description.contains("UserDefaults") || $0.description.contains("password") })
+        XCTAssertTrue(issues
+            .contains { $0.description.contains("UserDefaults") || $0.description.contains("password") })
     }
 
     // MARK: - Retain Cycle Detection

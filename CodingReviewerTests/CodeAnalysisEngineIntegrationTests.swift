@@ -27,26 +27,26 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
     func testAnalyzeCode_FullAnalysis_SwiftCode() {
         // Given Swift code with multiple types of issues
         let code = """
-            // TODO: Fix this later
-            class Calculator {
-                func add(_ a: Int, _ b: Int) -> Int {
-                    print("Debug: adding numbers") // Debug print
-                    return a + b!
-                }
-
-                func processArray(_ numbers: [Int]) -> [Int] {
-                    var result: [Int] = []
-                    numbers.forEach { number in
-                        result.append(number * 2) // Inefficient forEach + append
-                    }
-                    return result
-                }
-
-                func longFunctionNameThatExceedsNormalLineLengthLimitsAndShouldBeConsideredAStyleIssue(parameter1: String, parameter2: Int, parameter3: Bool) -> String {
-                    return "This is a very long line that definitely exceeds the recommended line length limit for code style and should be flagged as a style issue in the analysis"
-                }
+        // TODO: Fix this later
+        class Calculator {
+            func add(_ a: Int, _ b: Int) -> Int {
+                print("Debug: adding numbers") // Debug print
+                return a + b!
             }
-            """
+
+            func processArray(_ numbers: [Int]) -> [Int] {
+                var result: [Int] = []
+                numbers.forEach { number in
+                    result.append(number * 2) // Inefficient forEach + append
+                }
+                return result
+            }
+
+            func longFunctionNameThatExceedsNormalLineLengthLimitsAndShouldBeConsideredAStyleIssue(parameter1: String, parameter2: Int, parameter3: Bool) -> String {
+                return "This is a very long line that definitely exceeds the recommended line length limit for code style and should be flagged as a style issue in the analysis"
+            }
+        }
+        """
 
         // When performing full analysis
         let result = analysisEngine.analyzeCode(
@@ -60,7 +60,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
         // Then multiple issues should be detected
         XCTAssertFalse(result.issues.isEmpty)
-        XCTAssertGreaterThan(result.issues.count, 2)  // Should find multiple issues
+        XCTAssertGreaterThan(result.issues.count, 2) // Should find multiple issues
 
         // Check for specific issue types
         let bugIssues = result.issues.filter { $0.category == IssueCategory.bug }
@@ -69,7 +69,8 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
         XCTAssertFalse(bugIssues.isEmpty, "Should detect bugs like TODO and force unwrap")
         XCTAssertFalse(
-            performanceIssues.isEmpty, "Should detect performance issues like forEach+append")
+            performanceIssues.isEmpty, "Should detect performance issues like forEach+append"
+        )
         XCTAssertFalse(styleIssues.isEmpty, "Should detect style issues like long lines")
 
         // Check that summary is generated
@@ -81,31 +82,31 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
     func testAnalyzeCode_FullAnalysis_JavaScriptCode() {
         // Given JavaScript code with security and other issues
         let code = """
-            // TODO: Implement security check
-            function processUserInput(input) {
-                console.log("Processing: " + input); // Debug log
+        // TODO: Implement security check
+        function processUserInput(input) {
+            console.log("Processing: " + input); // Debug log
 
-                // Dangerous eval usage
-                const result = eval(input);
+            // Dangerous eval usage
+            const result = eval(input);
 
-                // Setting innerHTML directly
-                document.getElementById('output').innerHTML = result;
+            // Setting innerHTML directly
+            document.getElementById('output').innerHTML = result;
 
-                // Inefficient array processing
-                const numbers = [1, 2, 3, 4, 5];
-                const doubled = [];
-                numbers.forEach(num => {
-                    doubled.push(num * 2);
-                });
+            // Inefficient array processing
+            const numbers = [1, 2, 3, 4, 5];
+            const doubled = [];
+            numbers.forEach(num => {
+                doubled.push(num * 2);
+            });
 
-                return result;
-            }
+            return result;
+        }
 
-            // Very long function name that exceeds line length limits and should be flagged as a style issue
-            function thisIsAVeryLongFunctionNameThatDefinitelyExceedsTheRecommendedLineLengthLimitForJavaScriptCode(parameter1, parameter2, parameter3, parameter4, parameter5) {
-                return "This line is also very long and should be detected as a style issue because it exceeds normal line length recommendations for readable code";
-            }
-            """
+        // Very long function name that exceeds line length limits and should be flagged as a style issue
+        function thisIsAVeryLongFunctionNameThatDefinitelyExceedsTheRecommendedLineLengthLimitForJavaScriptCode(parameter1, parameter2, parameter3, parameter4, parameter5) {
+            return "This line is also very long and should be detected as a style issue because it exceeds normal line length recommendations for readable code";
+        }
+        """
 
         // When performing full analysis
         let result = analysisEngine.analyzeCode(
@@ -140,16 +141,17 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
     func testAnalyzeCode_SelectiveAnalysisTypes() {
         // Given code with multiple issue types
         let code = """
-            // TODO: Fix later
-            function test() {
-                eval("dangerous code"); // Security issue
-                console.log("debug"); // Debug statement
-            }
-            """
+        // TODO: Fix later
+        function test() {
+            eval("dangerous code"); // Security issue
+            console.log("debug"); // Debug statement
+        }
+        """
 
         // When analyzing only bugs
         let bugOnlyResult = analysisEngine.analyzeCode(
-            code: code, language: "JavaScript", analysisTypes: [AnalysisType.bugs])
+            code: code, language: "JavaScript", analysisTypes: [AnalysisType.bugs]
+        )
 
         // Then only bug issues should be found
         let bugIssues = bugOnlyResult.issues.filter { $0.category == IssueCategory.bug }
@@ -160,7 +162,8 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
         // When analyzing only security
         let securityOnlyResult = analysisEngine.analyzeCode(
-            code: code, language: "JavaScript", analysisTypes: [AnalysisType.security])
+            code: code, language: "JavaScript", analysisTypes: [AnalysisType.security]
+        )
 
         // Then only security issues should be found
         let securityIssuesOnly = securityOnlyResult.issues.filter {
@@ -181,7 +184,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
         // Then no issues should be found
         XCTAssertTrue(result.issues.isEmpty)
-        XCTAssertFalse(result.analysis.isEmpty)  // But summary should still be generated
+        XCTAssertFalse(result.analysis.isEmpty) // But summary should still be generated
         XCTAssertTrue(result.analysis.contains("No issues found"))
     }
 
@@ -193,7 +196,8 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
         // When analyzing
         let result = analysisEngine.analyzeCode(
-            code: code, language: "Swift", analysisTypes: [AnalysisType.bugs])
+            code: code, language: "Swift", analysisTypes: [AnalysisType.bugs]
+        )
 
         // Then result should have proper structure
         XCTAssertFalse(result.issues.isEmpty)
@@ -202,7 +206,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
         let issue = result.issues.first!
         XCTAssertEqual(issue.category, IssueCategory.bug)
-        XCTAssertEqual(issue.severity, IssueSeverity.medium)  // TODO: is typically medium severity
+        XCTAssertEqual(issue.severity, IssueSeverity.medium) // TODO: is typically medium severity
         XCTAssertTrue(issue.description.contains("TODO"))
         XCTAssertEqual(issue.line, 1)
     }
@@ -213,7 +217,8 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
         // When analyzing
         let result = analysisEngine.analyzeCode(
-            code: code, language: "Swift", analysisTypes: [AnalysisType.bugs])
+            code: code, language: "Swift", analysisTypes: [AnalysisType.bugs]
+        )
 
         // Then multiple issues should be detected for the same line
         XCTAssertGreaterThanOrEqual(result.issues.count, 1)
@@ -233,13 +238,14 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
         for language in languages {
             let code =
                 language == "Swift"
-                ? "// Pending: Test"
-                : language == "JavaScript"
                     ? "// Pending: Test"
-                    : language == "Python" ? "# Pending: Test" : "// Pending: Test"
+                    : language == "JavaScript"
+                        ? "// Pending: Test"
+                        : language == "Python" ? "# Pending: Test" : "// Pending: Test"
 
             let result = analysisEngine.analyzeCode(
-                code: code, language: language, analysisTypes: [AnalysisType.bugs])
+                code: code, language: language, analysisTypes: [AnalysisType.bugs]
+            )
 
             // Should not crash and should generate some result
             XCTAssertNotNil(result)
@@ -253,7 +259,8 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
         // When analyzing with unsupported language
         let result = analysisEngine.analyzeCode(
-            code: code, language: "UnsupportedLang", analysisTypes: [AnalysisType.bugs])
+            code: code, language: "UnsupportedLang", analysisTypes: [AnalysisType.bugs]
+        )
 
         // Then should handle gracefully (may return empty results or basic analysis)
         XCTAssertNotNil(result)
@@ -267,13 +274,14 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
         var codeParts: [String] = []
         for codeIndex in 1...1000 {
             codeParts.append("// Pending: Item \(codeIndex)")
-            codeParts.append("let value\(codeIndex) = \(codeIndex)!")  // Force unwrap
+            codeParts.append("let value\(codeIndex) = \(codeIndex)!") // Force unwrap
         }
         let code = codeParts.joined(separator: "\n")
 
         // When analyzing large file
         let result = analysisEngine.analyzeCode(
-            code: code, language: "Swift", analysisTypes: [AnalysisType.bugs])
+            code: code, language: "Swift", analysisTypes: [AnalysisType.bugs]
+        )
 
         // Then should handle large files without crashing
         XCTAssertNotNil(result)
@@ -307,7 +315,8 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
         // When analyzing
         let result = analysisEngine.analyzeCode(
-            code: code, language: "Swift", analysisTypes: [AnalysisType.bugs])
+            code: code, language: "Swift", analysisTypes: [AnalysisType.bugs]
+        )
 
         // Then should return empty results
         XCTAssertTrue(result.issues.isEmpty)
@@ -322,50 +331,54 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
         do {
             // Given comprehensive test code with issues for all service types
             let code = """
-                // TODO: Complete implementation
-                import Foundation
+            // TODO: Complete implementation
+            import Foundation
 
-                class TestClass {
-                    // Force unwrap - Bug
-                    func dangerousFunction() -> String {
-                        let optionalValue: String? = nil
-                        return optionalValue! // Force unwrap detected by BugDetectionService
-                    }
-
-                    // Security issue - UserDefaults with password
-                    func storePassword(_ password: String) {
-                        UserDefaults.standard.set(password, forKey: "userPassword") // Security issue
-                    }
-
-                    // Performance issue - forEach with append
-                    func processArray(_ items: [Int]) -> [Int] {
-                        var result: [Int] = []
-                        items.forEach { item in
-                            result.append(item * 2) // Performance issue
-                        }
-                        return result
-                    }
-
-                    // Style issue - very long line
-                    func veryLongFunctionNameThatExceedsRecommendedLineLength(parameter1: String, parameter2: Int, parameter3: Bool, parameter4: Double, parameter5: Date) -> String {
-                        return "This is an extremely long line that definitely exceeds the maximum recommended " +
-                            "line length for Swift code and should be flagged as a style violation by the " +
-                            "StyleAnalysisService"
-                    }
+            class TestClass {
+                // Force unwrap - Bug
+                func dangerousFunction() -> String {
+                    let optionalValue: String? = nil
+                    return optionalValue! // Force unwrap detected by BugDetectionService
                 }
-                """
+
+                // Security issue - UserDefaults with password
+                func storePassword(_ password: String) {
+                    UserDefaults.standard.set(password, forKey: "userPassword") // Security issue
+                }
+
+                // Performance issue - forEach with append
+                func processArray(_ items: [Int]) -> [Int] {
+                    var result: [Int] = []
+                    items.forEach { item in
+                        result.append(item * 2) // Performance issue
+                    }
+                    return result
+                }
+
+                // Style issue - very long line
+                func veryLongFunctionNameThatExceedsRecommendedLineLength(parameter1: String, parameter2: Int, parameter3: Bool, parameter4: Double, parameter5: Date) -> String {
+                    return "This is an extremely long line that definitely exceeds the maximum recommended " +
+                        "line length for Swift code and should be flagged as a style violation by the " +
+                        "StyleAnalysisService"
+                }
+            }
+            """
 
             let analysisEngine = CodeAnalysisEngine()
 
             // Debug: Test each analysis type individually
             let bugsIssuesDirect = analysisEngine.performBasicAnalysis(
-                code: code, language: "Swift", analysisType: .bugs)
+                code: code, language: "Swift", analysisType: .bugs
+            )
             let securityIssuesDirect = analysisEngine.performBasicAnalysis(
-                code: code, language: "Swift", analysisType: .security)
+                code: code, language: "Swift", analysisType: .security
+            )
             let performanceIssuesDirect = analysisEngine.performBasicAnalysis(
-                code: code, language: "Swift", analysisType: .performance)
+                code: code, language: "Swift", analysisType: .performance
+            )
             let styleIssuesDirect = analysisEngine.performBasicAnalysis(
-                code: code, language: "Swift", analysisType: .style)
+                code: code, language: "Swift", analysisType: .style
+            )
 
             print("DEBUG: Individual service results:")
             print("DEBUG: Bugs: \(bugsIssuesDirect.count) issues")
@@ -401,7 +414,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
     func testAnalyzeCode_ServiceFailureHandling() {
         // Given code that might cause issues in individual services
-        let code = String(repeating: "a", count: 100_000)  // Very long string
+        let code = String(repeating: "a", count: 100_000) // Very long string
 
         // When analyzing
         let result = analysisEngine.analyzeCode(
@@ -422,9 +435,9 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
     func testAnalyzeCode_PartialServiceFailure() {
         // Given code where some services might fail but others succeed
         let code = """
-            // TODO: Fix this
-            let x = 1
-            """
+        // TODO: Fix this
+        let x = 1
+        """
 
         // When analyzing with all types
         let result = analysisEngine.analyzeCode(

@@ -10,8 +10,30 @@ public struct SentimentScore {
 }
 
 public final class KeywordSentimentScoringService {
-    private let positiveKeywords = ["love", "excellent", "amazing", "wonderful", "great", "good", "awesome", "fantastic", "brilliant", "perfect"]
-    private let negativeKeywords = ["terrible", "broken", "awful", "crash", "bad", "horrible", "worst", "hate", "disgusting", "pathetic"]
+    private let positiveKeywords = [
+        "love",
+        "excellent",
+        "amazing",
+        "wonderful",
+        "great",
+        "good",
+        "awesome",
+        "fantastic",
+        "brilliant",
+        "perfect",
+    ]
+    private let negativeKeywords = [
+        "terrible",
+        "broken",
+        "awful",
+        "crash",
+        "bad",
+        "horrible",
+        "worst",
+        "hate",
+        "disgusting",
+        "pathetic",
+    ]
 
     public init() {}
 
@@ -60,7 +82,8 @@ public final class OllamaSentimentScoringService {
             if let data = jsonString.data(using: .utf8) {
                 if let obj = try JSONSerialization.jsonObject(with: data) as? [String: Any],
                    let label = obj["label"] as? String,
-                   let score = obj["score"] as? Double {
+                   let score = obj["score"] as? Double
+                {
                     return SentimentScore(label: label, score: score)
                 }
             }

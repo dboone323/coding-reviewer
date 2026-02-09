@@ -58,8 +58,12 @@ struct TestGenerator {
         }
 
         // If the last component is empty (string ends with newline), don't count it as a line
-        let codeLines = codeComponents.last?.isEmpty == true && codeComponents.count > 1 ? codeComponents.count - 1 : codeComponents.count
-        let testLines = testComponents.last?.isEmpty == true && testComponents.count > 1 ? testComponents.count - 1 : testComponents.count
+        let codeLines = codeComponents.last?.isEmpty == true && codeComponents.count > 1
+            ? codeComponents.count - 1
+            : codeComponents.count
+        let testLines = testComponents.last?.isEmpty == true && testComponents.count > 1
+            ? testComponents.count - 1
+            : testComponents.count
 
         // Estimate coverage as test lines relative to code lines
         let coverage = Double(testLines) / Double(codeLines) * 100.0

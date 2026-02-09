@@ -1,5 +1,5 @@
-@testable import CodingReviewerCore
 import XCTest
+@testable import CodingReviewerCore
 
 final class CodeAnalysisEngineTests: XCTestCase {
     var analysisEngine: CodeAnalysisEngine!

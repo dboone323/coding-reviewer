@@ -13,7 +13,8 @@ struct SwiftAnalyzer: LanguageAnalyzer {
 
         // UserDefaults + Password (catch standard usage and common aliases)
         let passwordMatches = PatternMatcher.findMatches(
-            pattern: "(UserDefaults|defaults|standard).*password", in: code)
+            pattern: "(UserDefaults|defaults|standard).*password", in: code
+        )
         for match in passwordMatches {
             issues.append(
                 CodeIssue(
@@ -33,7 +34,7 @@ struct SwiftAnalyzer: LanguageAnalyzer {
                     description: "Force unwrapping found. Use optional binding (if let/guard let).",
                     severity: .medium,
                     line: match.line,
-                    category: .security  // Can cause crashes
+                    category: .security // Can cause crashes
                 ))
         }
 

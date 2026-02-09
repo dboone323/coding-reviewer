@@ -1,5 +1,3 @@
-// Centralized build settings for CodingReviewer
-#include "../../Config/WorkspaceBase.xcconfig"
+// Base build settings for CodingReviewer
+// Project-specific overrides below
 PRODUCT_BUNDLE_IDENTIFIER = com.DanielStevens.CodingReviewer
-
-// Additional app-specific keys can be added below

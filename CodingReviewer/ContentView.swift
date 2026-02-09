@@ -5,9 +5,9 @@
 //  Main content view for the CodingReviewer application
 //
 
+import os
 import SwiftUI
 import UniformTypeIdentifiers
-import os
 
 enum ContentViewType {
     case analysis, documentation, tests
@@ -111,12 +111,12 @@ public struct ContentView: View {
 
     private func handleFileSelection(_ result: Result<[URL], Error>) {
         switch result {
-        case .success(let urls):
+        case let .success(urls):
             if let url = urls.first {
                 selectedFileURL = url
                 loadFileContent(from: url)
             }
-        case .failure(let error):
+        case let .failure(error):
             logger.error("File selection failed: \(error.localizedDescription)")
             errorMessage = "Failed to select file: \(error.localizedDescription)"
             showError = true
@@ -175,7 +175,8 @@ public struct ContentView: View {
             do {
                 let language = languageDetector.detectLanguage(from: selectedFileURL)
                 let result = try await codeReviewService.generateDocumentation(
-                    codeContent, language: language, includeExamples: true)
+                    codeContent, language: language, includeExamples: true
+                )
                 documentationResult = result
                 logger.info("Documentation generation completed successfully")
             } catch is CancellationError {
@@ -200,7 +201,8 @@ public struct ContentView: View {
             do {
                 let language = languageDetector.detectLanguage(from: selectedFileURL)
                 let result = try await codeReviewService.generateTests(
-                    codeContent, language: language, testFramework: "XCTest")
+                    codeContent, language: language, testFramework: "XCTest"
+                )
                 testResult = result
                 logger.info("Test generation completed successfully")
             } catch is CancellationError {
@@ -214,7 +216,7 @@ public struct ContentView: View {
     }
 
     private func retryLastOperation() async {
-        if let lastOperation = lastOperation {
+        if let lastOperation {
             await lastOperation()
         }
     }
@@ -243,9 +245,9 @@ public struct ContentView: View {
 
     private func handleSaveResult(_ result: Result<URL, Error>) {
         switch result {
-        case .success(let url):
+        case let .success(url):
             logger.info("Review saved successfully to: \(url.path)")
-        case .failure(let error):
+        case let .failure(error):
             logger.error("Failed to save review: \(error.localizedDescription)")
             errorMessage = "Failed to save review: \(error.localizedDescription)"
             showError = true

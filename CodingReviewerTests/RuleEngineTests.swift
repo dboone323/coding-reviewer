@@ -29,7 +29,7 @@ final class RuleEngineTests: XCTestCase {
         )
 
         engine.addRule(rule)
-        XCTAssertTrue(true)  // No crash
+        XCTAssertTrue(true) // No crash
     }
 
     // MARK: - Analysis Tests
@@ -52,12 +52,12 @@ final class RuleEngineTests: XCTestCase {
         engine.addRule(rule)
 
         let code = """
-            func test() {
-                // TODO: Implement this
-            }
-            """
+        func test() {
+            // TODO: Implement this
+        }
+        """
 
-        let _ = engine.analyze(code: code, language: "swift")
+        _ = engine.analyze(code: code, language: "swift")
         // Test that analyze runs without crashing
         // Actual matching depends on PatternMatcher implementation
         XCTAssertTrue(true)

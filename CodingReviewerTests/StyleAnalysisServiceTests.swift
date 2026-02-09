@@ -5,8 +5,8 @@
 //  Unit tests for StyleAnalysisService
 //
 
-@testable import CodingReviewerCore
 import XCTest
+@testable import CodingReviewerCore
 
 final class StyleAnalysisServiceTests: XCTestCase {
     var styleAnalyzer: StyleAnalysisService!

@@ -38,7 +38,7 @@ public class PatternMatcher {
         var matches: [PatternMatch] = []
 
         guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
-            return matches  // Invalid regex pattern
+            return matches // Invalid regex pattern
         }
 
         let nsString = code as NSString
@@ -49,7 +49,7 @@ public class PatternMatcher {
 
         DispatchQueue.global(qos: .userInitiated).async {
             regex.enumerateMatches(in: code, options: [], range: nsRange) { match, _, _ in
-                guard let match = match else { return }
+                guard let match else { return }
 
                 if let matchRange = Range(match.range, in: code) {
                     let matchedText = String(code[matchRange])
@@ -69,7 +69,7 @@ public class PatternMatcher {
         // Wait for completion or timeout
         let result = semaphore.wait(timeout: .now() + timeout)
         if result == .timedOut {
-            return []  // Pattern matching timed out
+            return [] // Pattern matching timed out
         }
 
         return matches

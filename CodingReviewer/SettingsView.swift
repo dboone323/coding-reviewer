@@ -41,7 +41,8 @@ struct SettingsView: View {
                         .font(.footnote)
                         .foregroundStyle(
                             ollamaStatus.contains("✓")
-                                ? .green : (ollamaStatus.contains("Checking") ? .secondary : .red))
+                                ? .green
+                                : (ollamaStatus.contains("Checking") ? .secondary : .red))
 
                     Spacer()
 
@@ -72,7 +73,8 @@ struct SettingsView: View {
             do {
                 let client = OllamaClient()
                 _ = try await client.generate(
-                    model: "llama3.1:8b", prompt: "test", temperature: 0.0)
+                    model: "llama3.1:8b", prompt: "test", temperature: 0.0
+                )
                 ollamaStatus = "✓ Connected"
             } catch {
                 ollamaStatus = "⚠️ Not available"

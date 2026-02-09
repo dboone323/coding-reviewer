@@ -42,7 +42,7 @@ final class AnalysisCacheTests: XCTestCase {
                 severity: .medium,
                 line: 1,
                 category: .general
-            )
+            ),
         ]
 
         cache.set(issues: issues, for: code)
@@ -66,12 +66,12 @@ final class AnalysisCacheTests: XCTestCase {
         let code = "overwrite_test"
 
         let firstIssues = [
-            CodeIssue(description: "First", severity: .low, line: 1, category: .general)
+            CodeIssue(description: "First", severity: .low, line: 1, category: .general),
         ]
         cache.set(issues: firstIssues, for: code)
 
         let secondIssues = [
-            CodeIssue(description: "Second", severity: .high, line: 2, category: .general)
+            CodeIssue(description: "Second", severity: .high, line: 2, category: .general),
         ]
         cache.set(issues: secondIssues, for: code)
 
@@ -86,10 +86,10 @@ final class AnalysisCacheTests: XCTestCase {
         let code2 = "code_two"
 
         let issues1 = [
-            CodeIssue(description: "Issue 1", severity: .low, line: 1, category: .general)
+            CodeIssue(description: "Issue 1", severity: .low, line: 1, category: .general),
         ]
         let issues2 = [
-            CodeIssue(description: "Issue 2", severity: .high, line: 2, category: .general)
+            CodeIssue(description: "Issue 2", severity: .high, line: 2, category: .general),
         ]
 
         cache.set(issues: issues1, for: code1)

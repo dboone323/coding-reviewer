@@ -5,9 +5,9 @@
 //  Comprehensive test suite for WelcomeView
 //
 
-@testable import CodingReviewerCore
 import SwiftUI
 import XCTest
+@testable import CodingReviewerCore
 
 final class WelcomeViewTests: XCTestCase {
     // MARK: - Initialization Tests

@@ -5,8 +5,8 @@
 //  Unit tests for TestGenerator
 //
 
-@testable import CodingReviewerCore
 import XCTest
+@testable import CodingReviewerCore
 
 final class TestGeneratorTests: XCTestCase {
     var testGenerator: TestGenerator!

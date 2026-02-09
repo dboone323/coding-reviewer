@@ -21,16 +21,19 @@ struct PerformanceAnalysisService {
         if language == "Swift" {
             // Swift performance patterns - case sensitive
             let multilinePatterns = [
-                ("(?s)forEach.*append", "forEach with append", IssueSeverity.medium)
+                ("(?s)forEach.*append", "forEach with append", IssueSeverity.medium),
             ]
 
             let linePatterns = [
                 ("filter.*map", "filter followed by map", IssueSeverity.low),
-                ("map.*filter", "map followed by filter", IssueSeverity.low)
+                ("map.*filter", "map followed by filter", IssueSeverity.low),
             ]
 
             // Check multiline patterns on entire code
-            for (pattern, description, severity) in multilinePatterns where code.range(of: pattern, options: .regularExpression) != nil {
+            for (pattern, description, severity) in multilinePatterns where code.range(
+                of: pattern,
+                options: .regularExpression
+            ) != nil {
                 let fullDescription = "Performance issue: \(description) can be optimized"
                 if !addedDescriptions.contains(fullDescription) {
                     let issue = CodeIssue(
@@ -47,7 +50,10 @@ struct PerformanceAnalysisService {
             // Check line-by-line patterns
             let lines = code.components(separatedBy: .newlines)
             for (lineIndex, line) in lines.enumerated() {
-                for (pattern, description, severity) in linePatterns where line.range(of: pattern, options: .regularExpression) != nil {
+                for (pattern, description, severity) in linePatterns where line.range(
+                    of: pattern,
+                    options: .regularExpression
+                ) != nil {
                     let fullDescription = "Performance issue: \(description) can be optimized"
                     if !addedDescriptions.contains(fullDescription) {
                         let issue = CodeIssue(
@@ -72,7 +78,9 @@ struct PerformanceAnalysisService {
             let chainedPattern = "(?s)\\.filter\\s*\\{[^}]*\\}\\s*\\.map\\s*\\{[^}]*\\}"
             let hasChainedOperations = code.range(of: chainedPattern, options: .regularExpression) != nil
 
-            if hasFilter, hasMap, hasChainedOperations, code.contains("\n"), !addedDescriptions.contains(flatMapDescription) {
+            if hasFilter, hasMap, hasChainedOperations, code.contains("\n"),
+               !addedDescriptions.contains(flatMapDescription)
+            {
                 let issue = CodeIssue(
                     description: flatMapDescription,
                     severity: IssueSeverity.low,
@@ -85,7 +93,7 @@ struct PerformanceAnalysisService {
         } else if language == "JavaScript" {
             // JavaScript performance patterns - check entire code for multiline patterns
             let patterns = [
-                ("forEach.*push", "forEach with push", IssueSeverity.medium)
+                ("forEach.*push", "forEach with push", IssueSeverity.medium),
             ]
 
             // Check entire code for multiline patterns
@@ -112,9 +120,12 @@ struct PerformanceAnalysisService {
                 let singleLinePatterns = [
                     ("document\\.getElementById", "Frequent DOM lookups", IssueSeverity.low),
                     ("\\.innerHTML\\s*\\+?=", "innerHTML manipulation", IssueSeverity.medium),
-                    ("eval\\s*\\(", "Use of eval() is a security/performance risk", IssueSeverity.high)
+                    ("eval\\s*\\(", "Use of eval() is a security/performance risk", IssueSeverity.high),
                 ]
-                for (pattern, description, severity) in singleLinePatterns where line.range(of: pattern, options: .regularExpression) != nil {
+                for (pattern, description, severity) in singleLinePatterns where line.range(
+                    of: pattern,
+                    options: .regularExpression
+                ) != nil {
                     let fullDescription = "Performance issue: \(description)"
                     if !addedDescriptions.contains(fullDescription) {
                         let issue = CodeIssue(

@@ -5,8 +5,8 @@
 //  Comprehensive test suite for SidebarView
 //
 
-@testable import CodingReviewerCore
 import XCTest
+@testable import CodingReviewerCore
 
 final class SidebarViewTests: XCTestCase {
     // MARK: - Initialization Tests

@@ -5,8 +5,8 @@
 //  Comprehensive test suite for PerformanceManager
 //
 
-@testable import CodingReviewerCore
 import XCTest
+@testable import CodingReviewerCore
 
 final class PerformanceManagerTests: XCTestCase {
     // MARK: - Initialization Tests

@@ -3,8 +3,8 @@
 // CodingReviewerTests
 //
 
-@testable import CodingReviewerCore
 import XCTest
+@testable import CodingReviewerCore
 
 final class DiffViewTests: XCTestCase {
     // MARK: - View Initialization Tests

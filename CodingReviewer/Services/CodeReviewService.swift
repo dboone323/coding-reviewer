@@ -2,8 +2,7 @@ import Foundation
 import os
 
 public class OllamaClient {
-    public func generate(model: String, prompt: String, temperature: Double) async throws -> String
-    {
+    public func generate(model: String, prompt: String, temperature: Double) async throws -> String {
         // Stub implementation
         "Stub response from OllamaClient"
     }
@@ -20,10 +19,11 @@ public class OllamaClient {
 @MainActor
 public class CodeReviewService: CodeReviewServiceProtocol {
     public let serviceId = "code_review_service"
-    public let version = "1.0.1"  // Updated for resilience features
+    public let version = "1.0.1" // Updated for resilience features
 
     private let logger = Logger(
-        subsystem: "com.quantum.codingreviewer", category: "CodeReviewService")
+        subsystem: "com.quantum.codingreviewer", category: "CodeReviewService"
+    )
     private let config: ServiceConfig
     private let circuitBreaker = CircuitBreaker(failureThreshold: 3, resetTimeout: 60.0)
 
@@ -80,7 +80,7 @@ public class CodeReviewService: CodeReviewServiceProtocol {
             throw ServiceError.invalidInput(message: "Code cannot be empty")
         }
 
-        guard code.count < 500_000 else {  // 500KB limit
+        guard code.count < 500_000 else { // 500KB limit
             throw ServiceError.invalidInput(message: "Code size exceeds maximum limit (500KB)")
         }
 
@@ -93,7 +93,8 @@ public class CodeReviewService: CodeReviewServiceProtocol {
             do {
                 return try await withRetry(operation: "analyzeCode") {
                     try await self.analyzeWithAI(
-                        code: code, language: language, analysisType: analysisType)
+                        code: code, language: language, analysisType: analysisType
+                    )
                 }
             } catch let error as ServiceError {
                 logger.warning(
@@ -173,9 +174,9 @@ public class CodeReviewService: CodeReviewServiceProtocol {
 
         let summary =
             "AI Quality: \(result.qualityScore)/10 • "
-            + "Security: \(result.securityIssues.count) • "
-            + "Performance: \(result.performanceIssues.count) • "
-            + "Style: \(result.bestPracticeViolations.count)"
+                + "Security: \(result.securityIssues.count) • "
+                + "Performance: \(result.performanceIssues.count) • "
+                + "Style: \(result.bestPracticeViolations.count)"
 
         return CodeAnalysisResult(
             analysis: summary,
@@ -195,10 +196,12 @@ public class CodeReviewService: CodeReviewServiceProtocol {
             ensureAIService()
             if let aiService {
                 let doc = try await aiService.generateDocumentationWithAI(
-                    code, documentationType: includeExamples ? .comprehensive : .inline)
+                    code, documentationType: includeExamples ? .comprehensive : .inline
+                )
                 return DocumentationResult(
                     documentation: doc.generatedDocumentation, language: language,
-                    includesExamples: includeExamples)
+                    includesExamples: includeExamples
+                )
             }
         }
 
@@ -209,7 +212,8 @@ public class CodeReviewService: CodeReviewServiceProtocol {
                 includeExamples: includeExamples
             )
             return DocumentationResult(
-                documentation: documentation, language: language, includesExamples: includeExamples)
+                documentation: documentation, language: language, includesExamples: includeExamples
+            )
         }.value
     }
 
@@ -233,12 +237,15 @@ public class CodeReviewService: CodeReviewServiceProtocol {
 
         return await Task.detached(priority: .userInitiated) {
             let testCode = self.analysisEngine.generateBasicTests(
-                code: code, language: language, testFramework: testFramework)
+                code: code, language: language, testFramework: testFramework
+            )
             let estimatedCoverage = self.analysisEngine.estimateTestCoverage(
-                code: code, testCode: testCode)
+                code: code, testCode: testCode
+            )
             return TestGenerationResult(
                 testCode: testCode, language: language, testFramework: testFramework,
-                estimatedCoverage: estimatedCoverage)
+                estimatedCoverage: estimatedCoverage
+            )
         }.value
     }
 
@@ -265,11 +272,14 @@ public class CodeReviewService: CodeReviewServiceProtocol {
         return try await withTimeout(seconds: config.operationTimeout) {
             await Task.detached(priority: .userInitiated) {
                 let issues = self.analysisEngine.performBasicAnalysis(
-                    code: code, language: language, analysisType: analysisType)
+                    code: code, language: language, analysisType: analysisType
+                )
                 let suggestions = self.analysisEngine.generateSuggestions(
-                    code: code, language: language, analysisType: analysisType)
+                    code: code, language: language, analysisType: analysisType
+                )
                 let analysis = self.analysisEngine.generateAnalysisSummary(
-                    issues: issues, suggestions: suggestions, analysisType: analysisType)
+                    issues: issues, suggestions: suggestions, analysisType: analysisType
+                )
                 return CodeAnalysisResult(
                     analysis: analysis,
                     issues: issues,
@@ -332,25 +342,26 @@ public class CodeReviewService: CodeReviewServiceProtocol {
 
     // MARK: - Timeout Wrapper
 
-    private func withTimeout<T>(seconds: TimeInterval, body: @escaping () async throws -> T)
+    private func withTimeout<T: Sendable>(seconds: TimeInterval, body: @escaping () async throws -> T)
         async throws -> T
     {
-        try await withThrowingTaskGroup(of: T.self) { group in
-            // Start the actual operation
-            group.addTask {
-                try await body()
-            }
+        // Simple timeout implementation without complex concurrency
+        let timeoutTask = Task {
+            try await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
+            throw ServiceError.timeout(operation: "operation")
+        }
 
-            // Start the timeout task
-            group.addTask {
-                try await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
-                throw ServiceError.timeout(operation: "operation")
-            }
+        let operationTask = Task {
+            try await body()
+        }
 
-            // Return the first result (either success or timeout)
-            let result = try await group.next()!
-            group.cancelAll()
+        do {
+            let result = try await operationTask.value
+            timeoutTask.cancel()
             return result
+        } catch {
+            timeoutTask.cancel()
+            throw error
         }
     }
 }

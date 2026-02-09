@@ -85,7 +85,7 @@ public struct CodeReviewView: View {
                 .frame(minWidth: 400)
                 .task(id: codeContent) {
                     guard isLiveAnalysisEnabled, !codeContent.isEmpty else { return }
-                    try? await Task.sleep(nanoseconds: 500_000_000)  // 0.5s debounce
+                    try? await Task.sleep(nanoseconds: 500_000_000) // 0.5s debounce
                     if !Task.isCancelled {
                         await onAnalyze()
                     }

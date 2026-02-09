@@ -115,7 +115,8 @@ import Foundation
         override func visit(_ node: FunctionCallExprSyntax) -> SyntaxVisitorContinueKind {
             // Check if callee is 'print'
             if let callee = node.calledExpression.as(DeclReferenceExprSyntax.self),
-               callee.baseName.text == "print" {
+               callee.baseName.text == "print"
+            {
                 let location = node.startLocation(converter: SourceLocationConverter(fileName: "", tree: node.root))
                 issues.append(CodeIssue(
                     description: "Avoid using print() in production. Use Logger or OSLog.",
@@ -139,7 +140,8 @@ import Foundation
                 let captureText = captureClause.description
                 if captureText.contains("self") &&
                     !captureText.contains("weak self") &&
-                    !captureText.contains("unowned self") {
+                    !captureText.contains("unowned self")
+                {
                     let location = node.startLocation(converter: SourceLocationConverter(fileName: "", tree: node.root))
                     issues.append(CodeIssue(
                         description: "Strong self capture in closure may cause retain cycle. Use [weak self].",

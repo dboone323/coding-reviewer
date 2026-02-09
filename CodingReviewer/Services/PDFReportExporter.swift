@@ -75,9 +75,9 @@ public final class PDFReportExporter {
 
             <div class="summary">
                 <strong>Summary:</strong> \(issues.count) issues found<br>
-                <span class="severity high">High:</span> \(issues.filter { $0.severity == .high }.count) |
-                <span class="severity medium">Medium:</span> \(issues.filter { $0.severity == .medium }.count) |
-                <span class="severity low">Low:</span> \(issues.filter { $0.severity == .low }.count)
+                <span class="severity high">High:</span> \(issues.count(where: { $0.severity == .high })) |
+                <span class="severity medium">Medium:</span> \(issues.count(where: { $0.severity == .medium })) |
+                <span class="severity low">Low:</span> \(issues.count(where: { $0.severity == .low }))
             </div>
         """
 
