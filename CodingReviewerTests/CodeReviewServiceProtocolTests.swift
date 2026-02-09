@@ -5,7 +5,7 @@
 //  Comprehensive test suite for CodeReviewServiceProtocol
 //
 
-@testable import CodingReviewer
+@testable import CodingReviewerCore
 import XCTest
 
 final class CodeReviewServiceProtocolTests: XCTestCase {

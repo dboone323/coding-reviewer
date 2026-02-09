@@ -5,7 +5,7 @@
 //  Comprehensive test suite for WelcomeView
 //
 
-@testable import CodingReviewer
+@testable import CodingReviewerCore
 import SwiftUI
 import XCTest
 

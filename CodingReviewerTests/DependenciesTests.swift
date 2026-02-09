@@ -5,7 +5,7 @@
 //  Comprehensive test suite for Dependencies
 //
 
-@testable import CodingReviewer
+@testable import CodingReviewerCore
 import XCTest
 
 final class DependenciesTests: XCTestCase {

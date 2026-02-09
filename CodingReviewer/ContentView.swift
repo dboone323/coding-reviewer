@@ -5,9 +5,9 @@
 //  Main content view for the CodingReviewer application
 //
 
-import os
 import SwiftUI
 import UniformTypeIdentifiers
+import os
 
 enum ContentViewType {
     case analysis, documentation, tests
@@ -33,6 +33,8 @@ public struct ContentView: View {
     @State private var errorMessage = ""
     @State private var showSavePanel = false
     @State private var reviewToSave: ReviewData?
+    @State private var lastOperation: (() async -> Void)?
+    @State private var currentTask: Task<Void, Never>?
 
     public var body: some View {
         NavigationSplitView {
@@ -58,7 +60,8 @@ public struct ContentView: View {
                         currentView: currentView,
                         onAnalyze: { await analyzeCode() },
                         onGenerateDocumentation: { await generateDocumentation() },
-                        onGenerateTests: { await generateTests() }
+                        onGenerateTests: { await generateTests() },
+                        onCancel: { cancelCurrentTask() }
                     )
                 } else {
                     WelcomeView(showFilePicker: $showFilePicker)
@@ -76,11 +79,18 @@ public struct ContentView: View {
             logger.info("ContentView appeared")
         }
         .alert("Error", isPresented: $showError) {
+            Button("Retry") {
+                Task {
+                    await retryLastOperation()
+                }
+            }
             Button("OK", role: .cancel) {}
         } message: {
             Text(errorMessage)
         }
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("SaveReviewNotification"))) { _ in
+        .onReceive(
+            NotificationCenter.default.publisher(for: Notification.Name("SaveReviewNotification"))
+        ) { _ in
             prepareForSave()
         }
         .fileExporter(
@@ -91,16 +101,22 @@ public struct ContentView: View {
         ) { result in
             handleSaveResult(result)
         }
+        .keyboardShortcut("n", modifiers: .command)
+        .keyboardShortcut("r", modifiers: .command)
+        .onReceive(NotificationCenter.default.publisher(for: NSWindow.didBecomeMainNotification)) {
+            _ in
+            // Handle window focus if needed
+        }
     }
 
     private func handleFileSelection(_ result: Result<[URL], Error>) {
         switch result {
-        case let .success(urls):
+        case .success(let urls):
             if let url = urls.first {
                 selectedFileURL = url
                 loadFileContent(from: url)
             }
-        case let .failure(error):
+        case .failure(let error):
             logger.error("File selection failed: \(error.localizedDescription)")
             errorMessage = "Failed to select file: \(error.localizedDescription)"
             showError = true
@@ -121,60 +137,92 @@ public struct ContentView: View {
 
     private func analyzeCode() async {
         guard !codeContent.isEmpty else { return }
+        lastOperation = { await self.analyzeCode() }
 
-        isAnalyzing = true
-        defer { isAnalyzing = false }
+        cancelCurrentTask()
+        currentTask = Task {
+            isAnalyzing = true
+            defer { isAnalyzing = false }
 
-        do {
-            let language = languageDetector.detectLanguage(from: selectedFileURL)
-            let result = try await codeReviewService.analyzeCode(
-                codeContent,
-                language: language,
-                analysisType: selectedAnalysisType
-            )
-            analysisResult = result
-            logger.info("Code analysis completed successfully")
-        } catch {
-            logger.error("Code analysis failed: \(error.localizedDescription)")
-            errorMessage = "Analysis failed: \(error.localizedDescription)"
-            showError = true
+            do {
+                let language = languageDetector.detectLanguage(from: selectedFileURL)
+                let result = try await codeReviewService.analyzeCode(
+                    codeContent,
+                    language: language,
+                    analysisType: selectedAnalysisType
+                )
+                analysisResult = result
+                logger.info("Code analysis completed successfully")
+            } catch is CancellationError {
+                logger.info("Code analysis was cancelled")
+            } catch {
+                logger.error("Code analysis failed: \(error.localizedDescription)")
+                errorMessage = "Analysis failed: \(error.localizedDescription)"
+                showError = true
+            }
         }
     }
 
     private func generateDocumentation() async {
         guard !codeContent.isEmpty else { return }
+        lastOperation = { await self.generateDocumentation() }
 
-        isAnalyzing = true
-        defer { isAnalyzing = false }
+        cancelCurrentTask()
+        currentTask = Task {
+            isAnalyzing = true
+            defer { isAnalyzing = false }
 
-        do {
-            let language = languageDetector.detectLanguage(from: selectedFileURL)
-            let result = try await codeReviewService.generateDocumentation(codeContent, language: language, includeExamples: true)
-            documentationResult = result
-            logger.info("Documentation generation completed successfully")
-        } catch {
-            logger.error("Documentation generation failed: \(error.localizedDescription)")
-            errorMessage = "Documentation generation failed: \(error.localizedDescription)"
-            showError = true
+            do {
+                let language = languageDetector.detectLanguage(from: selectedFileURL)
+                let result = try await codeReviewService.generateDocumentation(
+                    codeContent, language: language, includeExamples: true)
+                documentationResult = result
+                logger.info("Documentation generation completed successfully")
+            } catch is CancellationError {
+                logger.info("Documentation generation was cancelled")
+            } catch {
+                logger.error("Documentation generation failed: \(error.localizedDescription)")
+                errorMessage = "Documentation generation failed: \(error.localizedDescription)"
+                showError = true
+            }
         }
     }
 
     private func generateTests() async {
         guard !codeContent.isEmpty else { return }
+        lastOperation = { await self.generateTests() }
 
-        isAnalyzing = true
-        defer { isAnalyzing = false }
+        cancelCurrentTask()
+        currentTask = Task {
+            isAnalyzing = true
+            defer { isAnalyzing = false }
 
-        do {
-            let language = languageDetector.detectLanguage(from: selectedFileURL)
-            let result = try await codeReviewService.generateTests(codeContent, language: language, testFramework: "XCTest")
-            testResult = result
-            logger.info("Test generation completed successfully")
-        } catch {
-            logger.error("Test generation failed: \(error.localizedDescription)")
-            errorMessage = "Test generation failed: \(error.localizedDescription)"
-            showError = true
+            do {
+                let language = languageDetector.detectLanguage(from: selectedFileURL)
+                let result = try await codeReviewService.generateTests(
+                    codeContent, language: language, testFramework: "XCTest")
+                testResult = result
+                logger.info("Test generation completed successfully")
+            } catch is CancellationError {
+                logger.info("Test generation was cancelled")
+            } catch {
+                logger.error("Test generation failed: \(error.localizedDescription)")
+                errorMessage = "Test generation failed: \(error.localizedDescription)"
+                showError = true
+            }
         }
+    }
+
+    private func retryLastOperation() async {
+        if let lastOperation = lastOperation {
+            await lastOperation()
+        }
+    }
+
+    private func cancelCurrentTask() {
+        currentTask?.cancel()
+        currentTask = nil
+        isAnalyzing = false
     }
 
     private func prepareForSave() {
@@ -195,9 +243,9 @@ public struct ContentView: View {
 
     private func handleSaveResult(_ result: Result<URL, Error>) {
         switch result {
-        case let .success(url):
+        case .success(let url):
             logger.info("Review saved successfully to: \(url.path)")
-        case let .failure(error):
+        case .failure(let error):
             logger.error("Failed to save review: \(error.localizedDescription)")
             errorMessage = "Failed to save review: \(error.localizedDescription)"
             showError = true

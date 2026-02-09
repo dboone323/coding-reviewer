@@ -5,7 +5,7 @@
 //  Comprehensive test suite for ContentView
 //
 
-@testable import CodingReviewer
+@testable import CodingReviewerCore
 import XCTest
 
 final class ContentViewTests: XCTestCase {

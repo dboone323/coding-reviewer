@@ -5,7 +5,7 @@
 //  Comprehensive test suite for AIEnhancedCodeAnalysisService
 //
 
-@testable import CodingReviewer
+@testable import CodingReviewerCore
 import XCTest
 
 @MainActor

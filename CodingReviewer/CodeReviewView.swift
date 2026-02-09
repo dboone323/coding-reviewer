@@ -20,6 +20,7 @@ public struct CodeReviewView: View {
     let onAnalyze: () async -> Void
     let onGenerateDocumentation: () async -> Void
     let onGenerateTests: () async -> Void
+    let onCancel: () -> Void
 
     public var body: some View {
         VStack(spacing: 0) {
@@ -37,24 +38,33 @@ public struct CodeReviewView: View {
                             .toggleStyle(.switch)
                             .controlSize(.small)
 
-                        Button(action: { Task { await onAnalyze() } }, label: {
-                            Label("Analyze", systemImage: "play.fill")
-                        })
+                        Button(
+                            action: { Task { await onAnalyze() } },
+                            label: {
+                                Label("Analyze", systemImage: "play.fill")
+                            }
+                        )
                         .accessibilityLabel("Analyze Code")
                         .accessibilityHint("Run code analysis on this file")
                         .disabled(isAnalyzing || codeContent.isEmpty)
                     }
                 case .documentation:
-                    Button(action: { Task { await onGenerateDocumentation() } }, label: {
-                        Label("Generate Docs", systemImage: "doc.text")
-                    })
+                    Button(
+                        action: { Task { await onGenerateDocumentation() } },
+                        label: {
+                            Label("Generate Docs", systemImage: "doc.text")
+                        }
+                    )
                     .accessibilityLabel("Generate Documentation")
                     .accessibilityHint("Generate documentation for this code")
                     .disabled(isAnalyzing || codeContent.isEmpty)
                 case .tests:
-                    Button(action: { Task { await onGenerateTests() } }, label: {
-                        Label("Generate Tests", systemImage: "testtube.2")
-                    })
+                    Button(
+                        action: { Task { await onGenerateTests() } },
+                        label: {
+                            Label("Generate Tests", systemImage: "testtube.2")
+                        }
+                    )
                     .accessibilityLabel("Generate Tests")
                     .accessibilityHint("Generate unit tests for this code")
                     .disabled(isAnalyzing || codeContent.isEmpty)
@@ -75,7 +85,7 @@ public struct CodeReviewView: View {
                 .frame(minWidth: 400)
                 .task(id: codeContent) {
                     guard isLiveAnalysisEnabled, !codeContent.isEmpty else { return }
-                    try? await Task.sleep(nanoseconds: 500_000_000) // 0.5s debounce
+                    try? await Task.sleep(nanoseconds: 500_000_000)  // 0.5s debounce
                     if !Task.isCancelled {
                         await onAnalyze()
                     }
@@ -88,7 +98,8 @@ public struct CodeReviewView: View {
                     documentationResult: documentationResult,
                     testResult: testResult,
                     isAnalyzing: isAnalyzing,
-                    onApplyFix: { issue in applyFix(issue) }
+                    onApplyFix: { issue in applyFix(issue) },
+                    onCancel: onCancel
                 )
                 .frame(minWidth: 300)
             }
@@ -113,6 +124,7 @@ public struct ResultsPanel: View {
     let testResult: TestGenerationResult?
     let isAnalyzing: Bool
     var onApplyFix: ((CodeIssue) -> Void)?
+    let onCancel: () -> Void
 
     private var presenter: ResultsPanelPresenter {
         ResultsPanelPresenter(currentView: currentView, isAnalyzing: isAnalyzing)
@@ -126,8 +138,17 @@ public struct ResultsPanel: View {
                     .font(.headline)
                 Spacer()
                 if isAnalyzing {
-                    ProgressView()
-                        .scaleEffect(0.7)
+                    HStack {
+                        ProgressView()
+                            .scaleEffect(0.7)
+
+                        Button(action: onCancel) {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundColor(.secondary)
+                        }
+                        .buttonStyle(.plain)
+                        .help("Cancel operation")
+                    }
                 }
             }
             .padding()
@@ -141,7 +162,9 @@ public struct ResultsPanel: View {
                     case .analysis:
                         if let result = analysisResult {
                             AnalysisResultsView(result: result, onApplyFix: onApplyFix)
-                        } else if let message = presenter.emptyStateMessage(hasResult: analysisResult != nil) {
+                        } else if let message = presenter.emptyStateMessage(
+                            hasResult: analysisResult != nil)
+                        {
                             Text(message)
                                 .foregroundColor(.secondary)
                                 .padding()
@@ -149,7 +172,9 @@ public struct ResultsPanel: View {
                     case .documentation:
                         if let result = documentationResult {
                             DocumentationResultsView(result: result)
-                        } else if let message = presenter.emptyStateMessage(hasResult: documentationResult != nil) {
+                        } else if let message = presenter.emptyStateMessage(
+                            hasResult: documentationResult != nil)
+                        {
                             Text(message)
                                 .foregroundColor(.secondary)
                                 .padding()
@@ -157,7 +182,9 @@ public struct ResultsPanel: View {
                     case .tests:
                         if let result = testResult {
                             TestResultsView(result: result)
-                        } else if let message = presenter.emptyStateMessage(hasResult: testResult != nil) {
+                        } else if let message = presenter.emptyStateMessage(
+                            hasResult: testResult != nil)
+                        {
                             Text(message)
                                 .foregroundColor(.secondary)
                                 .padding()

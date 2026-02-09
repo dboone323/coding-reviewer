@@ -3,15 +3,17 @@
 // CodingReviewerTests
 //
 
-@testable import CodingReviewer
 import XCTest
 
+@testable import CodingReviewerCore
+
+@MainActor
 final class PDFReportExporterTests: XCTestCase {
     var sut: PDFReportExporter!
 
     override func setUp() {
         super.setUp()
-        sut = PDFReportExporter()
+        sut = PDFReportExporter.shared
     }
 
     override func tearDown() {
@@ -23,13 +25,13 @@ final class PDFReportExporterTests: XCTestCase {
 
     func testGeneratePDFFromIssues() {
         let issues: [CodeIssue] = []
-        let result = sut.generatePDF(from: issues)
+        let result = sut.exportReport(issues: issues, title: "Test Report", filename: "test")
         XCTAssertNotNil(result)
     }
 
     func testEmptyReportGeneration() {
         let issues: [CodeIssue] = []
-        let pdf = sut.generatePDF(from: issues)
+        let pdf = sut.exportReport(issues: issues, title: "Empty Report", filename: "empty")
         XCTAssertNotNil(pdf)
     }
 

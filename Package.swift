@@ -6,9 +6,10 @@ import PackageDescription
 
 let package = Package(
     name: "CodingReviewer",
+    defaultLocalization: "en",
     platforms: [
         .iOS(.v17),
-        .macOS(.v14)
+        .macOS(.v14),
     ],
     products: [
         .library(
@@ -29,14 +30,34 @@ let package = Package(
             dependencies: [
                 .product(name: "SwiftSyntax", package: "swift-syntax"),
                 .product(name: "SwiftParser", package: "swift-syntax"),
-                .product(name: "SwiftSyntaxBuilder", package: "swift-syntax")
+                .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
             ],
-            path: "CodingReviewer/Services"
+            path: "CodingReviewer",
+            sources: [
+                "Services",
+                "Models",
+                "Utilities",
+                "ContentView.swift",
+                "CodeReviewView.swift",
+                "SidebarView.swift",
+                "DashboardView.swift",
+                "SettingsView.swift",
+                "WelcomeView.swift",
+                "AboutView.swift",
+                "AnalysisResultsView.swift",
+                "DocumentationResultsView.swift",
+                "TestResultsView.swift",
+                "DiffView.swift",
+                "NewReviewView.swift",
+                "ReviewHistoryView.swift",
+                "IssueRow.swift",
+                "AppDelegate.swift",
+            ]
         ),
         .testTarget(
             name: "CodingReviewerTests",
             dependencies: ["CodingReviewerCore"],
             path: "CodingReviewerTests"
-        )
+        ),
     ]
 )

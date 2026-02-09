@@ -5,7 +5,7 @@
 //  Unit tests for BugDetectionService
 //
 
-@testable import CodingReviewer
+@testable import CodingReviewerCore
 import XCTest
 
 final class BugDetectionServiceTests: XCTestCase {

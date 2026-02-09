@@ -5,7 +5,7 @@
 //  Unit tests for AnalysisSummaryGenerator
 //
 
-@testable import CodingReviewer
+@testable import CodingReviewerCore
 import XCTest
 
 final class AnalysisSummaryGeneratorTests: XCTestCase {

@@ -5,8 +5,9 @@
 //  Unit tests for SecurityAnalysisService
 //
 
-@testable import CodingReviewer
 import XCTest
+
+@testable import CodingReviewerCore
 
 final class SecurityAnalysisServiceTests: XCTestCase {
     var securityAnalyzer: SecurityAnalysisService!
@@ -26,10 +27,10 @@ final class SecurityAnalysisServiceTests: XCTestCase {
     func testDetectSecurityIssues_JavaScript_Eval() {
         // Given JavaScript code with eval
         let code = """
-        function executeCode(code) {
-            return eval(code);
-        }
-        """
+            function executeCode(code) {
+                return eval(code);
+            }
+            """
 
         // When analyzing for security issues
         let issues = securityAnalyzer.detectSecurityIssues(code: code, language: "JavaScript")
@@ -44,10 +45,10 @@ final class SecurityAnalysisServiceTests: XCTestCase {
     func testDetectSecurityIssues_JavaScript_InnerHTML() {
         // Given JavaScript code with innerHTML
         let code = """
-        function updateContent(content) {
-            document.getElementById('content').innerHTML = content;
-        }
-        """
+            function updateContent(content) {
+                document.getElementById('content').innerHTML = content;
+            }
+            """
 
         // When analyzing for security issues
         let issues = securityAnalyzer.detectSecurityIssues(code: code, language: "JavaScript")
@@ -62,11 +63,11 @@ final class SecurityAnalysisServiceTests: XCTestCase {
     func testDetectSecurityIssues_JavaScript_MultipleVulnerabilities() {
         // Given JavaScript code with both eval and innerHTML
         let code = """
-        function dangerousFunction(code, content) {
-            document.getElementById('content').innerHTML = content;
-            return eval(code);
-        }
-        """
+            function dangerousFunction(code, content) {
+                document.getElementById('content').innerHTML = content;
+                return eval(code);
+            }
+            """
 
         // When analyzing for security issues
         let issues = securityAnalyzer.detectSecurityIssues(code: code, language: "JavaScript")
@@ -88,12 +89,12 @@ final class SecurityAnalysisServiceTests: XCTestCase {
     func testDetectSecurityIssues_Swift_UserDefaults_Password() {
         // Given Swift code storing password in UserDefaults
         let code = """
-        class AuthManager {
-            func savePassword(_ password: String) {
-                UserDefaults.standard.set(password, forKey: "userPassword")
+            class AuthManager {
+                func savePassword(_ password: String) {
+                    UserDefaults.standard.set(password, forKey: "userPassword")
+                }
             }
-        }
-        """
+            """
 
         // When analyzing for security issues
         let issues = securityAnalyzer.detectSecurityIssues(code: code, language: "Swift")
@@ -109,12 +110,12 @@ final class SecurityAnalysisServiceTests: XCTestCase {
     func testDetectSecurityIssues_Swift_UserDefaults_NoPassword() {
         // Given Swift code using UserDefaults but not for passwords
         let code = """
-        class SettingsManager {
-            func saveTheme(_ theme: String) {
-                UserDefaults.standard.set(theme, forKey: "appTheme")
+            class SettingsManager {
+                func saveTheme(_ theme: String) {
+                    UserDefaults.standard.set(theme, forKey: "appTheme")
+                }
             }
-        }
-        """
+            """
 
         // When analyzing for security issues
         let issues = securityAnalyzer.detectSecurityIssues(code: code, language: "Swift")
@@ -126,12 +127,12 @@ final class SecurityAnalysisServiceTests: XCTestCase {
     func testDetectSecurityIssues_Swift_Password_NoUserDefaults() {
         // Given Swift code with password but not using UserDefaults
         let code = """
-        class AuthManager {
-            func savePassword(_ password: String) {
-                KeychainHelper.shared.setString(password, forKey: "userPassword")
+            class AuthManager {
+                func savePassword(_ password: String) {
+                    KeychainHelper.shared.setString(password, forKey: "userPassword")
+                }
             }
-        }
-        """
+            """
 
         // When analyzing for security issues
         let issues = securityAnalyzer.detectSecurityIssues(code: code, language: "Swift")
@@ -145,10 +146,10 @@ final class SecurityAnalysisServiceTests: XCTestCase {
     func testDetectSecurityIssues_NonJavaScript_NoIssues() {
         // Given JavaScript security issues in non-JavaScript code
         let code = """
-        function executeCode(code) {
-            return eval(code);
-        }
-        """
+            function executeCode(code) {
+                return eval(code);
+            }
+            """
 
         // When analyzing as Swift
         let issues = securityAnalyzer.detectSecurityIssues(code: code, language: "Swift")
@@ -160,12 +161,12 @@ final class SecurityAnalysisServiceTests: XCTestCase {
     func testDetectSecurityIssues_NonSwift_NoIssues() {
         // Given Swift security issues in non-Swift code
         let code = """
-        class AuthManager {
-            func savePassword(_ password: String) {
-                UserDefaults.standard.set(password, forKey: "userPassword")
+            class AuthManager {
+                func savePassword(_ password: String) {
+                    UserDefaults.standard.set(password, forKey: "userPassword")
+                }
             }
-        }
-        """
+            """
 
         // When analyzing as JavaScript
         let issues = securityAnalyzer.detectSecurityIssues(code: code, language: "JavaScript")
@@ -200,10 +201,10 @@ final class SecurityAnalysisServiceTests: XCTestCase {
 
     func testDetectSecurityIssues_CaseSensitivity() {
         // Given code with different cases
-        let code1 = "eval('code')" // lowercase
-        let code2 = "EVAL('code')" // uppercase
-        let code3 = "innerHTML = content" // camelCase
-        let code4 = "INNERHTML = content" // uppercase
+        let code1 = "eval('code')"  // lowercase
+        let code2 = "EVAL('code')"  // uppercase
+        let code3 = "innerHTML = content"  // camelCase
+        let code4 = "INNERHTML = content"  // uppercase
 
         // When analyzing for security issues
         let issues1 = securityAnalyzer.detectSecurityIssues(code: code1, language: "JavaScript")
@@ -212,10 +213,10 @@ final class SecurityAnalysisServiceTests: XCTestCase {
         let issues4 = securityAnalyzer.detectSecurityIssues(code: code4, language: "JavaScript")
 
         // Then issues should be detected regardless of case
-        XCTAssertEqual(issues1.count, 1) // eval detected
-        XCTAssertEqual(issues2.count, 0) // EVAL not detected (case sensitive)
-        XCTAssertEqual(issues3.count, 1) // innerHTML detected
-        XCTAssertEqual(issues4.count, 0) // INNERHTML not detected (case sensitive)
+        XCTAssertEqual(issues1.count, 1)  // eval detected
+        XCTAssertEqual(issues2.count, 1)  // EVAL detected (case insensitive)
+        XCTAssertEqual(issues3.count, 1)  // innerHTML detected
+        XCTAssertEqual(issues4.count, 1)  // INNERHTML detected (case insensitive)
     }
 
     // MARK: - Complex Scenarios
@@ -223,24 +224,24 @@ final class SecurityAnalysisServiceTests: XCTestCase {
     func testDetectSecurityIssues_ComplexJavaScript() {
         // Given complex JavaScript with multiple security issues
         let code = """
-        class DynamicCodeExecutor {
-            execute(code) {
-                // Dangerous eval usage
-                const result = eval(code);
+            class DynamicCodeExecutor {
+                execute(code) {
+                    // Dangerous eval usage
+                    const result = eval(code);
 
-                // XSS vulnerability
-                this.element.innerHTML = result;
+                    // XSS vulnerability
+                    this.element.innerHTML = result;
 
-                return result;
+                    return result;
+                }
+
+                saveCredentials(user, pass) {
+                    // This would be flagged if it used UserDefaults
+                    localStorage.setItem('user', user);
+                    localStorage.setItem('pass', pass);
+                }
             }
-
-            saveCredentials(user, pass) {
-                // This would be flagged if it used UserDefaults
-                localStorage.setItem('user', user);
-                localStorage.setItem('pass', pass);
-            }
-        }
-        """
+            """
 
         // When analyzing for security issues
         let issues = securityAnalyzer.detectSecurityIssues(code: code, language: "JavaScript")
@@ -258,27 +259,27 @@ final class SecurityAnalysisServiceTests: XCTestCase {
     func testDetectSecurityIssues_ComplexSwift() {
         // Given complex Swift with security issues
         let code = """
-        class AuthService {
-            private let defaults = UserDefaults.standard
+            class AuthService {
+                private let defaults = UserDefaults.standard
 
-            func storePassword(_ password: String) {
-                // Security vulnerability: storing password in UserDefaults
-                defaults.set(password, forKey: "user_password")
-                defaults.set(password, forKey: "backup_password")
-            }
+                func storePassword(_ password: String) {
+                    // Security vulnerability: storing password in UserDefaults
+                    defaults.set(password, forKey: "user_password")
+                    defaults.set(password, forKey: "backup_password")
+                }
 
-            func storeToken(_ token: String) {
-                // This is OK - not a password
-                defaults.set(token, forKey: "auth_token")
+                func storeToken(_ token: String) {
+                    // This is OK - not a password
+                    defaults.set(token, forKey: "auth_token")
+                }
             }
-        }
-        """
+            """
 
         // When analyzing for security issues
         let issues = securityAnalyzer.detectSecurityIssues(code: code, language: "Swift")
 
         // Then password storage issues should be detected
-        XCTAssertEqual(issues.count, 2) // Two instances of password + UserDefaults
+        XCTAssertEqual(issues.count, 2)  // Two instances of password + UserDefaults
 
         for issue in issues {
             XCTAssertEqual(issue.severity, .high)

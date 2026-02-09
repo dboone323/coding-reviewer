@@ -5,7 +5,7 @@
 //  Unit tests for TestGenerator
 //
 
-@testable import CodingReviewer
+@testable import CodingReviewerCore
 import XCTest
 
 final class TestGeneratorTests: XCTestCase {

@@ -12,10 +12,13 @@ struct SettingsView: View {
                     .accessibilityHint("Toggle to enable or disable AI-powered code analysis")
 
                 if useAI {
-                    Picker("Model", selection: Binding(
-                        get: { AIModelManager.shared.selectedModelId },
-                        set: { AIModelManager.shared.selectModel(id: $0) }
-                    )) {
+                    Picker(
+                        "Model",
+                        selection: Binding(
+                            get: { AIModelManager.shared.selectedModelId },
+                            set: { AIModelManager.shared.selectModel(id: $0) }
+                        )
+                    ) {
                         ForEach(AIModelManager.shared.availableModels) { model in
                             Text(model.name).tag(model.id)
                         }
@@ -36,7 +39,17 @@ struct SettingsView: View {
                         .font(.footnote)
                     Text(ollamaStatus)
                         .font(.footnote)
-                        .foregroundStyle(ollamaStatus.contains("✓") ? .green : .secondary)
+                        .foregroundStyle(
+                            ollamaStatus.contains("✓")
+                                ? .green : (ollamaStatus.contains("Checking") ? .secondary : .red))
+
+                    Spacer()
+
+                    Button("Test Connection") {
+                        checkOllamaStatus()
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.small)
                 }
                 .accessibilityElement(children: .combine)
                 .accessibilityLabel("Ollama status: \(ollamaStatus)")
@@ -58,7 +71,8 @@ struct SettingsView: View {
         Task {
             do {
                 let client = OllamaClient()
-                _ = try await client.generate(model: "llama3.1:8b", prompt: "test", temperature: 0.0)
+                _ = try await client.generate(
+                    model: "llama3.1:8b", prompt: "test", temperature: 0.0)
                 ollamaStatus = "✓ Connected"
             } catch {
                 ollamaStatus = "⚠️ Not available"

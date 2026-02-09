@@ -5,7 +5,7 @@
 //  Comprehensive test suite for DocumentationResultsView
 //
 
-@testable import CodingReviewer
+@testable import CodingReviewerCore
 import XCTest
 
 final class DocumentationResultsViewTests: XCTestCase {

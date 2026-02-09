@@ -12,25 +12,28 @@ struct JavaScriptAnalyzer: LanguageAnalyzer {
         var issues: [CodeIssue] = []
 
         // Eval
-        let evalMatches = PatternMatcher.findMatches(pattern: "eval\\(", in: code)
+        let evalMatches = PatternMatcher.findMatches(pattern: "(?i)eval\\s*\\(", in: code)
         for match in evalMatches {
-            issues.append(CodeIssue(
-                description: "Use of eval() detected. This is a major security risk.",
-                severity: .high,
-                line: match.line,
-                category: .security
-            ))
+            issues.append(
+                CodeIssue(
+                    description: "Use of eval() detected. This is a major security risk.",
+                    severity: .high,
+                    line: match.line,
+                    category: .security
+                ))
         }
 
         // innerHTML
-        let innerHTMLMatches = PatternMatcher.findMatches(pattern: "\\.innerHTML\\s*=", in: code)
+        let innerHTMLMatches = PatternMatcher.findMatches(
+            pattern: "(?i)(?:\\.|\\b)innerHTML\\s*=", in: code)
         for match in innerHTMLMatches {
-            issues.append(CodeIssue(
-                description: "Direct assignment to innerHTML can lead to XSS attacks.",
-                severity: .medium,
-                line: match.line,
-                category: .security
-            ))
+            issues.append(
+                CodeIssue(
+                    description: "Direct assignment to innerHTML can lead to XSS attacks.",
+                    severity: .medium,
+                    line: match.line,
+                    category: .security
+                ))
         }
 
         return issues
@@ -42,12 +45,13 @@ struct JavaScriptAnalyzer: LanguageAnalyzer {
         // Console.log
         let consoleMatches = PatternMatcher.findMatches(pattern: "console\\.log\\(", in: code)
         for match in consoleMatches {
-            issues.append(CodeIssue(
-                description: "Remove console.log statements before production.",
-                severity: .low,
-                line: match.line,
-                category: .style
-            ))
+            issues.append(
+                CodeIssue(
+                    description: "Remove console.log statements before production.",
+                    severity: .low,
+                    line: match.line,
+                    category: .style
+                ))
         }
 
         return issues

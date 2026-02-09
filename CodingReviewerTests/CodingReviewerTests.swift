@@ -7,7 +7,7 @@
 
 import XCTest
 
-@testable import CodingReviewer
+@testable import CodingReviewerCore
 
 final class CodingReviewerTests: XCTestCase {
     override func setUpWithError() throws {
@@ -62,27 +62,28 @@ final class CodingReviewerTests: XCTestCase {
 
         XCTAssertNotNil(service)
         XCTAssertEqual(serviceId, "code_review_service")
-        XCTAssertEqual(version, "1.0.0")
+        XCTAssertEqual(version, "1.0.1")
     }
 
     func testCodeAnalysis() async throws {
         let service = await CodeReviewService()
 
         let testCode = """
-        class TestClass {
-            func testMethod() {
-                print("Hello World")
-                // TODO: Add error handling
+            class TestClass {
+                func testMethod() {
+                    print("Hello World")
+                    // TODO: Add error handling
+                }
             }
-        }
-        """
+            """
 
-        let result = try await service.analyzeCode(testCode, language: "Swift", analysisType: .comprehensive)
+        let result = try await service.analyzeCode(
+            testCode, language: "Swift", analysisType: .comprehensive)
 
         XCTAssertNotNil(result)
         XCTAssertEqual(result.language, "Swift")
         XCTAssertEqual(result.analysisType, .comprehensive)
-        XCTAssertFalse(result.issues.isEmpty) // Should find TODO comment
+        XCTAssertFalse(result.issues.isEmpty)  // Should find TODO comment
         XCTAssertFalse(result.suggestions.isEmpty)
     }
 
@@ -90,14 +91,15 @@ final class CodingReviewerTests: XCTestCase {
         let service = await CodeReviewService()
 
         let testCode = """
-        class TestClass {
-            func testMethod() -> String {
-                return "test"
+            class TestClass {
+                func testMethod() -> String {
+                    return "test"
+                }
             }
-        }
-        """
+            """
 
-        let result = try await service.generateDocumentation(testCode, language: "Swift", includeExamples: true)
+        let result = try await service.generateDocumentation(
+            testCode, language: "Swift", includeExamples: true)
 
         XCTAssertNotNil(result)
         XCTAssertEqual(result.language, "Swift")
@@ -109,14 +111,15 @@ final class CodingReviewerTests: XCTestCase {
         let service = await CodeReviewService()
 
         let testCode = """
-        class Calculator {
-            func add(_ a: Int, _ b: Int) -> Int {
-                return a + b
+            class Calculator {
+                func add(_ a: Int, _ b: Int) -> Int {
+                    return a + b
+                }
             }
-        }
-        """
+            """
 
-        let result = try await service.generateTests(testCode, language: "Swift", testFramework: "XCTest")
+        let result = try await service.generateTests(
+            testCode, language: "Swift", testFramework: "XCTest")
 
         XCTAssertNotNil(result)
         XCTAssertEqual(result.language, "Swift")
@@ -129,23 +132,27 @@ final class CodingReviewerTests: XCTestCase {
         let service = await CodeReviewService()
 
         // Create a large code sample to test background processing
-        let largeCode = String(repeating: """
-        class TestClass {
-            func method\(Int.random(in: 1 ... 100))() {
-                print("Method implementation")
-                // Some code here
-                let result = 1 + 1
-                return result
-            }
-        }
-        """, count: 50)
+        let largeCode = String(
+            repeating: """
+                class TestClass {
+                    func method\(Int.random(in: 1 ... 100))() {
+                        print("Method implementation")
+                        // Some code here
+                        let result = 1 + 1
+                        return result
+                    }
+                }
+                """, count: 50)
 
         // Measure time to ensure it's not blocking the main thread
         let startTime = Date()
 
-        async let analysisTask = service.analyzeCode(largeCode, language: "Swift", analysisType: .comprehensive)
-        async let docTask = service.generateDocumentation(largeCode, language: "Swift", includeExamples: false)
-        async let testTask = service.generateTests(largeCode, language: "Swift", testFramework: "XCTest")
+        async let analysisTask = service.analyzeCode(
+            largeCode, language: "Swift", analysisType: .comprehensive)
+        async let docTask = service.generateDocumentation(
+            largeCode, language: "Swift", includeExamples: false)
+        async let testTask = service.generateTests(
+            largeCode, language: "Swift", testFramework: "XCTest")
 
         let (analysisResult, docResult, testResult) = try await (analysisTask, docTask, testTask)
 
@@ -153,7 +160,8 @@ final class CodingReviewerTests: XCTestCase {
         let duration = endTime.timeIntervalSince(startTime)
 
         // Should complete in reasonable time (less than 5 seconds for this test)
-        XCTAssertLessThan(duration, 5.0, "Analysis should complete quickly with background processing")
+        XCTAssertLessThan(
+            duration, 5.0, "Analysis should complete quickly with background processing")
 
         // Verify all results are valid
         XCTAssertNotNil(analysisResult)

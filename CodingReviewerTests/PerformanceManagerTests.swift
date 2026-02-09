@@ -5,7 +5,7 @@
 //  Comprehensive test suite for PerformanceManager
 //
 
-@testable import CodingReviewer
+@testable import CodingReviewerCore
 import XCTest
 
 final class PerformanceManagerTests: XCTestCase {

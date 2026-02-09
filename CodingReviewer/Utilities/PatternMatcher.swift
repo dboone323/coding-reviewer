@@ -2,40 +2,93 @@
 // PatternMatcher.swift
 // CodingReviewer
 //
-// Helper for regex-based code analysis
+// Defines a robust pattern matcher utility for code analysis
 //
 
 import Foundation
 
-enum PatternMatcher {
-    struct Match {
-        let line: Int
-        let content: String
-        let range: Range<String.Index>
-    }
+/// Match result from pattern matching
+public struct PatternMatch {
+    public let range: Range<String.Index>
+    public let line: Int?
+    public let matchedText: String
 
-    static func findMatches(pattern: String, in code: String) -> [Match] {
-        var matches: [Match] = []
+    public init(range: Range<String.Index>, line: Int?, matchedText: String) {
+        self.range = range
+        self.line = line
+        self.matchedText = matchedText
+    }
+}
+
+/// Pattern matcher utility for finding code patterns
+public class PatternMatcher {
+    public static let defaultTimeout: TimeInterval = 5.0
+
+    /// Find all matches of a pattern in code
+    /// - Parameters:
+    ///   - pattern: Regular expression pattern to match
+    ///   - code: Source code to search
+    ///   - timeout: Maximum time to spend matching (default 5s)
+    /// - Returns: Array of pattern matches with line numbers
+    public static func findMatches(
+        pattern: String,
+        in code: String,
+        timeout: TimeInterval = defaultTimeout
+    ) -> [PatternMatch] {
+        var matches: [PatternMatch] = []
 
         guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
-            return matches
+            return matches  // Invalid regex pattern
         }
 
-        let lines = code.components(separatedBy: .newlines)
+        let nsString = code as NSString
+        let nsRange = NSRange(location: 0, length: nsString.length)
 
-        for (index, line) in lines.enumerated() {
-            let range = NSRange(location: 0, length: line.utf16.count)
-            if regex.firstMatch(in: line, options: [], range: range) != nil {
-                // Find the range in the string
-                if let range = line.range(of: pattern, options: .regularExpression) {
-                    matches.append(Match(line: index + 1, content: line.trimmingCharacters(in: .whitespaces), range: range))
-                } else {
-                    // Fallback if range extraction fails but match existed
-                    matches.append(Match(line: index + 1, content: line.trimmingCharacters(in: .whitespaces), range: line.startIndex ..< line.endIndex))
+        // Perform matching with timeout protection
+        let semaphore = DispatchSemaphore(value: 0)
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            regex.enumerateMatches(in: code, options: [], range: nsRange) { match, _, _ in
+                guard let match = match else { return }
+
+                if let matchRange = Range(match.range, in: code) {
+                    let matchedText = String(code[matchRange])
+                    let lineNumber = calculateLineNumber(in: code, at: matchRange.lowerBound)
+
+                    matches.append(
+                        PatternMatch(
+                            range: matchRange,
+                            line: lineNumber,
+                            matchedText: matchedText
+                        ))
                 }
             }
+            semaphore.signal()
+        }
+
+        // Wait for completion or timeout
+        let result = semaphore.wait(timeout: .now() + timeout)
+        if result == .timedOut {
+            return []  // Pattern matching timed out
         }
 
         return matches
+    }
+
+    /// Calculate line number for a string index
+    private static func calculateLineNumber(in code: String, at index: String.Index) -> Int? {
+        let prefix = code[..<index]
+        let lineCount = prefix.components(separatedBy: .newlines).count
+        return lineCount
+    }
+
+    /// Validate a regex pattern
+    public static func isValidPattern(_ pattern: String) -> Bool {
+        do {
+            _ = try NSRegularExpression(pattern: pattern, options: [])
+            return true
+        } catch {
+            return false
+        }
     }
 }

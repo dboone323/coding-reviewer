@@ -5,8 +5,9 @@
 // Tests for analysis result caching
 //
 
-@testable import CodingReviewer
 import XCTest
+
+@testable import CodingReviewerCore
 
 final class AnalysisCacheTests: XCTestCase {
     var cache: AnalysisCache!
@@ -38,9 +39,9 @@ final class AnalysisCacheTests: XCTestCase {
         let issues = [
             CodeIssue(
                 description: "Test issue",
-                severity: .warning,
+                severity: .medium,
                 line: 1,
-                category: "test"
+                category: .general
             )
         ]
 
@@ -65,12 +66,12 @@ final class AnalysisCacheTests: XCTestCase {
         let code = "overwrite_test"
 
         let firstIssues = [
-            CodeIssue(description: "First", severity: .info, line: 1, category: "a")
+            CodeIssue(description: "First", severity: .low, line: 1, category: .general)
         ]
         cache.set(issues: firstIssues, for: code)
 
         let secondIssues = [
-            CodeIssue(description: "Second", severity: .error, line: 2, category: "b")
+            CodeIssue(description: "Second", severity: .high, line: 2, category: .general)
         ]
         cache.set(issues: secondIssues, for: code)
 
@@ -84,8 +85,12 @@ final class AnalysisCacheTests: XCTestCase {
         let code1 = "code_one"
         let code2 = "code_two"
 
-        let issues1 = [CodeIssue(description: "Issue 1", severity: .info, line: 1, category: "a")]
-        let issues2 = [CodeIssue(description: "Issue 2", severity: .error, line: 2, category: "b")]
+        let issues1 = [
+            CodeIssue(description: "Issue 1", severity: .low, line: 1, category: .general)
+        ]
+        let issues2 = [
+            CodeIssue(description: "Issue 2", severity: .high, line: 2, category: .general)
+        ]
 
         cache.set(issues: issues1, for: code1)
         cache.set(issues: issues2, for: code2)

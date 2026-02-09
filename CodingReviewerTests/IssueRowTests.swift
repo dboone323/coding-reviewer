@@ -5,7 +5,7 @@
 //  Comprehensive test suite for IssueRow
 //
 
-@testable import CodingReviewer
+@testable import CodingReviewerCore
 import XCTest
 
 final class IssueRowTests: XCTestCase {

@@ -5,7 +5,7 @@
 // Unit tests for the SwiftSyntax-based code analyzer.
 //
 
-@testable import CodingReviewer
+@testable import CodingReviewerCore
 import XCTest
 
 final class SwiftSyntaxAnalyzerTests: XCTestCase {

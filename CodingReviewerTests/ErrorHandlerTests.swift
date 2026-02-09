@@ -5,7 +5,7 @@
 //  Comprehensive test suite for ErrorHandler
 //
 
-@testable import CodingReviewer
+@testable import CodingReviewerCore
 import XCTest
 
 final class ErrorHandlerTests: XCTestCase {

@@ -5,7 +5,7 @@
 //  Comprehensive test suite for AnalysisResultsView
 //
 
-@testable import CodingReviewer
+@testable import CodingReviewerCore
 import XCTest
 
 final class AnalysisResultsViewTests: XCTestCase {

@@ -5,7 +5,7 @@
 //  Comprehensive test suite for LanguageDetector
 //
 
-@testable import CodingReviewer
+@testable import CodingReviewerCore
 import XCTest
 
 final class LanguageDetectorTests: XCTestCase {

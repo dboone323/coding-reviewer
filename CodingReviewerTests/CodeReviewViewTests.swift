@@ -5,7 +5,7 @@
 //  Comprehensive test suite for CodeReviewView
 //
 
-@testable import CodingReviewer
+@testable import CodingReviewerCore
 import XCTest
 
 final class CodeReviewViewTests: XCTestCase {

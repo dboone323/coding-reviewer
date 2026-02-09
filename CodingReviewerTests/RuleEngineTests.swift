@@ -5,8 +5,9 @@
 // Tests for custom rule engine functionality
 //
 
-@testable import CodingReviewer
 import XCTest
+
+@testable import CodingReviewerCore
 
 final class RuleEngineTests: XCTestCase {
     var engine: RuleEngine!
@@ -20,16 +21,15 @@ final class RuleEngineTests: XCTestCase {
     func testAddRuleDoesNotCrash() {
         let rule = CustomRule(
             id: "test-rule",
-            name: "Test Rule",
             description: "Test description",
-            language: "swift",
             pattern: "TODO:",
-            severity: .warning,
-            category: "maintenance"
+            language: "swift",
+            severity: .medium,
+            category: .maintainability
         )
 
         engine.addRule(rule)
-        XCTAssertTrue(true) // No crash
+        XCTAssertTrue(true)  // No crash
     }
 
     // MARK: - Analysis Tests
@@ -43,22 +43,21 @@ final class RuleEngineTests: XCTestCase {
     func testAnalyzeMatchesRule() {
         let rule = CustomRule(
             id: "todo-check",
-            name: "TODO Check",
             description: "Found a TODO comment",
-            language: "swift",
             pattern: "// TODO:",
-            severity: .info,
-            category: "maintenance"
+            language: "swift",
+            severity: .low,
+            category: .maintainability
         )
         engine.addRule(rule)
 
         let code = """
-        func test() {
-            // TODO: Implement this
-        }
-        """
+            func test() {
+                // TODO: Implement this
+            }
+            """
 
-        let issues = engine.analyze(code: code, language: "swift")
+        let _ = engine.analyze(code: code, language: "swift")
         // Test that analyze runs without crashing
         // Actual matching depends on PatternMatcher implementation
         XCTAssertTrue(true)
@@ -67,12 +66,11 @@ final class RuleEngineTests: XCTestCase {
     func testAnalyzeFiltersLanguage() {
         let swiftRule = CustomRule(
             id: "swift-only",
-            name: "Swift Rule",
             description: "Swift-specific",
-            language: "swift",
             pattern: "var",
-            severity: .warning,
-            category: "style"
+            language: "swift",
+            severity: .medium,
+            category: .style
         )
         engine.addRule(swiftRule)
 
@@ -86,12 +84,11 @@ final class RuleEngineTests: XCTestCase {
     func testAnalyzeWildcardLanguage() {
         let universalRule = CustomRule(
             id: "universal",
-            name: "Universal Rule",
             description: "Applies to all",
-            language: "*",
             pattern: "FIXME",
-            severity: .warning,
-            category: "maintenance"
+            language: "*",
+            severity: .medium,
+            category: .maintainability
         )
         engine.addRule(universalRule)
 

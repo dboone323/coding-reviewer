@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DashboardView: View {
     @Binding var showFilePicker: Bool
+    @AppStorage("CR_USE_AI") private var useAI: Bool = false
 
     var body: some View {
         VStack(spacing: 20) {
@@ -27,8 +28,8 @@ struct DashboardView: View {
                     // Navigate to history
                 }
 
-                DashboardCard(title: "Settings", icon: "gear", color: .gray) {
-                    // Open settings
+                DashboardCard(title: "AI Status", icon: "cpu", color: useAI ? .green : .secondary) {
+                    // Open settings or show info
                 }
             }
             .padding()

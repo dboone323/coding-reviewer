@@ -5,7 +5,7 @@
 //  Unit tests for DocumentationGenerator
 //
 
-@testable import CodingReviewer
+@testable import CodingReviewerCore
 import XCTest
 
 final class DocumentationGeneratorTests: XCTestCase {

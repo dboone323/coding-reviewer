@@ -10,13 +10,16 @@ import Foundation
 /// Protocol defining the interface for code review services
 public protocol CodeReviewServiceProtocol: ServiceProtocol {
     /// Analyze code for issues and provide suggestions
-    func analyzeCode(_ code: String, language: String, analysisType: AnalysisType) async throws -> CodeAnalysisResult
+    func analyzeCode(_ code: String, language: String, analysisType: AnalysisType) async throws
+        -> CodeAnalysisResult
 
     /// Generate documentation for the provided code
-    func generateDocumentation(_ code: String, language: String, includeExamples: Bool) async throws -> DocumentationResult
+    func generateDocumentation(_ code: String, language: String, includeExamples: Bool) async throws
+        -> DocumentationResult
 
     /// Generate tests for the provided code
-    func generateTests(_ code: String, language: String, testFramework: String) async throws -> TestGenerationResult
+    func generateTests(_ code: String, language: String, testFramework: String) async throws
+        -> TestGenerationResult
 
     /// Track progress of a code review session
     func trackReviewProgress(_ reviewId: UUID) async throws
@@ -48,42 +51,7 @@ public enum AnalysisType: String, Codable, CaseIterable, Sendable {
     case comprehensive = "Comprehensive"
 }
 
-/// Severity levels for code issues
-public enum IssueSeverity: String, Codable, CaseIterable, Sendable {
-    case low = "Low"
-    case medium = "Medium"
-    case high = "High"
-    case critical = "Critical"
-}
-
-/// Categories of code issues
-public enum IssueCategory: String, Codable, CaseIterable, Sendable {
-    case bug = "Bug"
-    case security = "Security"
-    case performance = "Performance"
-    case style = "Style"
-    case maintainability = "Maintainability"
-    case general = "General"
-}
-
-/// Represents a single code issue found during analysis
-public struct CodeIssue: Codable, Identifiable, Sendable {
-    public let id: UUID
-    public let description: String
-    public let severity: IssueSeverity
-    public let line: Int?
-    public let category: IssueCategory
-    public let suggestedFix: String?
-
-    public init(description: String, severity: IssueSeverity, line: Int? = nil, category: IssueCategory, suggestedFix: String? = nil) {
-        self.id = UUID()
-        self.description = description
-        self.severity = severity
-        self.line = line
-        self.category = category
-        self.suggestedFix = suggestedFix
-    }
-}
+// Note: IssueSeverity, IssueCategory, and CodeIssue are now defined in Models/ModelTypes.swift
 
 /// Result of code analysis
 public struct CodeAnalysisResult: Codable, Identifiable, Sendable {
@@ -94,7 +62,10 @@ public struct CodeAnalysisResult: Codable, Identifiable, Sendable {
     public let language: String
     public let analysisType: AnalysisType
 
-    public init(analysis: String, issues: [CodeIssue], suggestions: [String], language: String, analysisType: AnalysisType) {
+    public init(
+        analysis: String, issues: [CodeIssue], suggestions: [String], language: String,
+        analysisType: AnalysisType
+    ) {
         self.id = UUID()
         self.analysis = analysis
         self.issues = issues
@@ -127,7 +98,9 @@ public struct TestGenerationResult: Codable, Identifiable, Sendable {
     public let testFramework: String
     public let estimatedCoverage: Double
 
-    public init(testCode: String, language: String, testFramework: String, estimatedCoverage: Double) {
+    public init(
+        testCode: String, language: String, testFramework: String, estimatedCoverage: Double
+    ) {
         self.id = UUID()
         self.testCode = testCode
         self.language = language

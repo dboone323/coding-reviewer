@@ -5,7 +5,7 @@
 //  Comprehensive test suite for AppDelegate
 //
 
-@testable import CodingReviewer
+@testable import CodingReviewerCore
 import XCTest
 
 final class AppDelegateTests: XCTestCase {

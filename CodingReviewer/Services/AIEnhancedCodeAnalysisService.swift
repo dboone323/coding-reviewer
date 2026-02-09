@@ -29,7 +29,9 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
 
     // MARK: - AI-Powered Code Analysis
 
-    public func analyzeCodeWithAI(_ code: String, language: String = "swift", context: String? = nil) async throws -> AICodeAnalysisResult {
+    public func analyzeCodeWithAI(
+        _ code: String, language: String = "swift", context: String? = nil
+    ) async throws -> AICodeAnalysisResult {
         isAnalyzing = true
         currentAnalysisTask = "Analyzing code with AI models..."
 
@@ -42,24 +44,24 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
 
         // Use cloud models for comprehensive analysis
         let analysisPrompt = """
-        Perform comprehensive code analysis for this \(language) code:
+            Perform comprehensive code analysis for this \(language) code:
 
-        Code:
-        \(code)
+            Code:
+            \(code)
 
-        \(context != nil ? "Context: \(context!)" : "")
+            \(context != nil ? "Context: \(context!)" : "")
 
-        Provide detailed analysis including:
-        1. Code quality assessment (1-10 rating)
-        2. Security vulnerabilities
-        3. Performance issues
-        4. Best practice violations
-        5. Maintainability concerns
-        6. Specific improvement recommendations
-        7. Estimated technical debt
+            Provide detailed analysis including:
+            1. Code quality assessment (1-10 rating)
+            2. Security vulnerabilities
+            3. Performance issues
+            4. Best practice violations
+            5. Maintainability concerns
+            6. Specific improvement recommendations
+            7. Estimated technical debt
 
-        Format response as structured analysis with priorities and actionable items.
-        """
+            Format response as structured analysis with priorities and actionable items.
+            """
 
         let analysisResponse = try await callOllamaModel(
             model: "deepseek-v3.1:671b-cloud",
@@ -68,7 +70,8 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         )
 
         // Generate code suggestions
-        let suggestionsResponse = try await generateCodeSuggestions(code, language: language, analysis: analysisResponse)
+        let suggestionsResponse = try await generateCodeSuggestions(
+            code, language: language, analysis: analysisResponse)
 
         // Parse results
         let result = AICodeAnalysisResult(
@@ -85,15 +88,17 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         )
 
         await MainActor.run {
-            self.analysisResults.append(AIAnalysisResult(
-                id: UUID(),
-                type: .codeAnalysis,
-                result: result,
-                timestamp: Date()
-            ))
+            self.analysisResults.append(
+                AIAnalysisResult(
+                    id: UUID(),
+                    type: .codeAnalysis,
+                    result: result,
+                    timestamp: Date()
+                ))
         }
 
-        logger.info("AI code analysis completed with \(result.recommendations.count) recommendations")
+        logger.info(
+            "AI code analysis completed with \(result.recommendations.count) recommendations")
         return result
     }
 
@@ -107,23 +112,23 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         currentAnalysisTask = "Generating code with AI..."
 
         let codeGenPrompt = """
-        Generate high-quality \(language) code for the following requirement:
+            Generate high-quality \(language) code for the following requirement:
 
-        Requirement: \(prompt)
+            Requirement: \(prompt)
 
-        Code style: \(style.description)
-        Context: CodingReviewer macOS application
+            Code style: \(style.description)
+            Context: CodingReviewer macOS application
 
-        Requirements:
-        1. Follow \(language) best practices and conventions
-        2. Include proper error handling
-        3. Add comprehensive documentation
-        4. Consider thread safety where applicable
-        5. Use appropriate design patterns
-        6. Include basic unit test suggestions
+            Requirements:
+            1. Follow \(language) best practices and conventions
+            2. Include proper error handling
+            3. Add comprehensive documentation
+            4. Consider thread safety where applicable
+            5. Use appropriate design patterns
+            6. Include basic unit test suggestions
 
-        Generate only the code with minimal explanation.
-        """
+            Generate only the code with minimal explanation.
+            """
 
         let generatedCode = try await callOllamaModel(
             model: "qwen3-coder:480b-cloud",
@@ -132,7 +137,8 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         )
 
         // Analyze the generated code for quality
-        let qualityAnalysis = try await analyzeCodeWithAI(generatedCode, language: language, context: "Generated code for: \(prompt)")
+        let qualityAnalysis = try await analyzeCodeWithAI(
+            generatedCode, language: language, context: "Generated code for: \(prompt)")
 
         let result = AICodeGenerationResult(
             originalPrompt: prompt,
@@ -144,12 +150,13 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         )
 
         await MainActor.run {
-            self.analysisResults.append(AIAnalysisResult(
-                id: UUID(),
-                type: .codeGeneration,
-                result: result,
-                timestamp: Date()
-            ))
+            self.analysisResults.append(
+                AIAnalysisResult(
+                    id: UUID(),
+                    type: .codeGeneration,
+                    result: result,
+                    timestamp: Date()
+                ))
         }
 
         logger.info("AI code generation completed for prompt: \(prompt.prefix(50))...")
@@ -166,27 +173,27 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         currentAnalysisTask = "Refactoring code with AI..."
 
         let refactoringPrompt = """
-        Refactor this \(language) code to achieve: \(refactoringGoal.description)
+            Refactor this \(language) code to achieve: \(refactoringGoal.description)
 
-        Original code:
-        \(code)
+            Original code:
+            \(code)
 
-        Refactoring objectives:
-        \(refactoringGoal.objectives.joined(separator: "\n- "))
+            Refactoring objectives:
+            \(refactoringGoal.objectives.joined(separator: "\n- "))
 
-        Requirements:
-        1. Maintain existing functionality
-        2. Improve code structure and readability
-        3. Follow SOLID principles
-        4. Add appropriate comments for changes
-        5. Preserve public API compatibility where possible
+            Requirements:
+            1. Maintain existing functionality
+            2. Improve code structure and readability
+            3. Follow SOLID principles
+            4. Add appropriate comments for changes
+            5. Preserve public API compatibility where possible
 
-        Provide:
-        1. Refactored code
-        2. Explanation of changes made
-        3. Benefits of the refactoring
-        4. Any potential breaking changes
-        """
+            Provide:
+            1. Refactored code
+            2. Explanation of changes made
+            3. Benefits of the refactoring
+            4. Any potential breaking changes
+            """
 
         let refactoredCode = try await callOllamaModel(
             model: "qwen3-coder:480b-cloud",
@@ -209,12 +216,13 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         )
 
         await MainActor.run {
-            self.analysisResults.append(AIAnalysisResult(
-                id: UUID(),
-                type: .refactoring,
-                result: result,
-                timestamp: Date()
-            ))
+            self.analysisResults.append(
+                AIAnalysisResult(
+                    id: UUID(),
+                    type: .refactoring,
+                    result: result,
+                    timestamp: Date()
+                ))
         }
 
         logger.info("AI code refactoring completed for goal: \(refactoringGoal.description)")
@@ -230,23 +238,23 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         currentAnalysisTask = "Generating documentation with AI..."
 
         let docPrompt = """
-        Generate \(documentationType.description) documentation for this Swift code:
+            Generate \(documentationType.description) documentation for this Swift code:
 
-        Code:
-        \(code)
+            Code:
+            \(code)
 
-        Include:
-        1. Overview and purpose
-        2. Parameter descriptions
-        3. Return value documentation
-        4. Usage examples
-        5. Error handling information
-        6. Performance considerations
-        7. Thread safety notes
+            Include:
+            1. Overview and purpose
+            2. Parameter descriptions
+            3. Return value documentation
+            4. Usage examples
+            5. Error handling information
+            6. Performance considerations
+            7. Thread safety notes
 
-        Use Swift documentation comments (///) format.
-        Make it comprehensive but concise.
-        """
+            Use Swift documentation comments (///) format.
+            Make it comprehensive but concise.
+            """
 
         let documentation = try await callOllamaModel(
             model: "gpt-oss:120b-cloud",
@@ -262,12 +270,13 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         )
 
         await MainActor.run {
-            self.analysisResults.append(AIAnalysisResult(
-                id: UUID(),
-                type: .documentation,
-                result: result,
-                timestamp: Date()
-            ))
+            self.analysisResults.append(
+                AIAnalysisResult(
+                    id: UUID(),
+                    type: .documentation,
+                    result: result,
+                    timestamp: Date()
+                ))
         }
 
         logger.info("AI documentation generation completed")
@@ -276,26 +285,28 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
 
     // MARK: - AI-Powered Test Generation
 
-    public func generateTestsWithAI(_ code: String, testType: TestType = .unit) async throws -> AITestGenerationResult {
+    public func generateTestsWithAI(_ code: String, testType: TestType = .unit) async throws
+        -> AITestGenerationResult
+    {
         currentAnalysisTask = "Generating tests with AI..."
 
         let testPrompt = """
-        Generate \(testType.description) tests for this Swift code:
+            Generate \(testType.description) tests for this Swift code:
 
-        Code to test:
-        \(code)
+            Code to test:
+            \(code)
 
-        Generate comprehensive XCTest-based tests including:
-        1. Happy path scenarios
-        2. Edge cases
-        3. Error conditions
-        4. Performance tests (if applicable)
-        5. Mock objects where needed
-        6. Proper setup and teardown
+            Generate comprehensive XCTest-based tests including:
+            1. Happy path scenarios
+            2. Edge cases
+            3. Error conditions
+            4. Performance tests (if applicable)
+            5. Mock objects where needed
+            6. Proper setup and teardown
 
-        Use XCTest framework and follow Swift testing best practices.
-        Include descriptive test names and clear assertions.
-        """
+            Use XCTest framework and follow Swift testing best practices.
+            Include descriptive test names and clear assertions.
+            """
 
         let generatedTests = try await callOllamaModel(
             model: "qwen3-coder:480b-cloud",
@@ -312,49 +323,53 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         )
 
         await MainActor.run {
-            self.analysisResults.append(AIAnalysisResult(
-                id: UUID(),
-                type: .testGeneration,
-                result: result,
-                timestamp: Date()
-            ))
+            self.analysisResults.append(
+                AIAnalysisResult(
+                    id: UUID(),
+                    type: .testGeneration,
+                    result: result,
+                    timestamp: Date()
+                ))
         }
 
-        logger.info("AI test generation completed with estimated coverage: \(result.estimatedCoverage)%")
+        logger.info(
+            "AI test generation completed with estimated coverage: \(result.estimatedCoverage)%")
         return result
     }
 
     // MARK: - AI-Powered Code Review
 
-    public func performAICodeReview(_ files: [String], reviewType: ReviewType = .comprehensive) async throws -> AICodeReviewResult {
+    public func performAICodeReview(_ files: [String], reviewType: ReviewType = .comprehensive)
+        async throws -> AICodeReviewResult
+    {
         currentAnalysisTask = "Performing AI code review..."
 
         var fileAnalyses: [FileReviewAnalysis] = []
 
-        for filePath in files.prefix(10) where fileManager.fileExists(atPath: filePath) { // Limit to avoid overwhelming the AI
+        for filePath in files.prefix(10) where fileManager.fileExists(atPath: filePath) {  // Limit to avoid overwhelming the AI
             do {
                 let content = try String(contentsOfFile: filePath, encoding: .utf8)
                 let fileName = URL(fileURLWithPath: filePath).lastPathComponent
 
                 let reviewPrompt = """
-                Perform a \(reviewType.description) code review for this Swift file:
+                    Perform a \(reviewType.description) code review for this Swift file:
 
-                File: \(fileName)
-                Code:
-                \(String(content.prefix(2000))) // First 2000 chars
+                    File: \(fileName)
+                    Code:
+                    \(String(content.prefix(2000))) // First 2000 chars
 
-                Review criteria:
-                1. Code quality and style
-                2. Architecture and design patterns
-                3. Performance considerations
-                4. Security implications
-                5. Error handling
-                6. Testing needs
-                7. Documentation quality
+                    Review criteria:
+                    1. Code quality and style
+                    2. Architecture and design patterns
+                    3. Performance considerations
+                    4. Security implications
+                    5. Error handling
+                    6. Testing needs
+                    7. Documentation quality
 
-                Provide specific, actionable feedback with line-level suggestions where possible.
-                Rate the overall file quality (1-10) and highlight top 3 improvements.
-                """
+                    Provide specific, actionable feedback with line-level suggestions where possible.
+                    Rate the overall file quality (1-10) and highlight top 3 improvements.
+                    """
 
                 let reviewResponse = try await callOllamaModel(
                     model: "deepseek-v3.1:671b-cloud",
@@ -362,14 +377,15 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
                     temperature: 0.3
                 )
 
-                fileAnalyses.append(FileReviewAnalysis(
-                    fileName: fileName,
-                    filePath: filePath,
-                    reviewComments: reviewResponse,
-                    qualityRating: extractQualityRating(from: reviewResponse),
-                    topImprovements: extractTopImprovements(from: reviewResponse),
-                    reviewTimestamp: Date()
-                ))
+                fileAnalyses.append(
+                    FileReviewAnalysis(
+                        fileName: fileName,
+                        filePath: filePath,
+                        reviewComments: reviewResponse,
+                        qualityRating: extractQualityRating(from: reviewResponse),
+                        topImprovements: extractTopImprovements(from: reviewResponse),
+                        reviewTimestamp: Date()
+                    ))
             } catch {
                 logger.error("Failed to review file \(filePath): \(error.localizedDescription)")
             }
@@ -377,21 +393,21 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
 
         // Generate overall summary
         let summaryPrompt = """
-        Generate an overall code review summary based on these file analyses:
+            Generate an overall code review summary based on these file analyses:
 
-        Files reviewed: \(fileAnalyses.count)
-        Average quality: \(fileAnalyses.map(\.qualityRating).reduce(0, +) / fileAnalyses.count)
+            Files reviewed: \(fileAnalyses.count)
+            Average quality: \(fileAnalyses.map(\.qualityRating).reduce(0, +) / fileAnalyses.count)
 
-        Individual file summaries:
-        \(fileAnalyses.map { "\($0.fileName): Rating \($0.qualityRating)/10" }.joined(separator: "\n"))
+            Individual file summaries:
+            \(fileAnalyses.map { "\($0.fileName): Rating \($0.qualityRating)/10" }.joined(separator: "\n"))
 
-        Provide:
-        1. Overall code health assessment
-        2. Common patterns and issues
-        3. Architectural recommendations
-        4. Priority action items
-        5. Team development suggestions
-        """
+            Provide:
+            1. Overall code health assessment
+            2. Common patterns and issues
+            3. Architectural recommendations
+            4. Priority action items
+            5. Team development suggestions
+            """
 
         let overallSummary = try await callOllamaModel(
             model: "gpt-oss:120b-cloud",
@@ -404,17 +420,19 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
             fileAnalyses: fileAnalyses,
             overallSummary: overallSummary,
             reviewType: reviewType,
-            overallQualityScore: fileAnalyses.map(\.qualityRating).reduce(0, +) / fileAnalyses.count,
+            overallQualityScore: fileAnalyses.map(\.qualityRating).reduce(0, +)
+                / fileAnalyses.count,
             reviewTimestamp: Date()
         )
 
         await MainActor.run {
-            self.analysisResults.append(AIAnalysisResult(
-                id: UUID(),
-                type: .codeReview,
-                result: result,
-                timestamp: Date()
-            ))
+            self.analysisResults.append(
+                AIAnalysisResult(
+                    id: UUID(),
+                    type: .codeReview,
+                    result: result,
+                    timestamp: Date()
+                ))
         }
 
         logger.info("AI code review completed for \(files.count) files")
@@ -423,7 +441,9 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
 
     // MARK: - Private Helpers
 
-    private func callOllamaModel(model: String, prompt: String, temperature: Double = 0.5) async throws -> String {
+    private func callOllamaModel(model: String, prompt: String, temperature: Double = 0.5)
+        async throws -> String
+    {
         let mappedModel = mapToFreeModel(model)
 
         if let llmGenerate {
@@ -460,25 +480,27 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         let mapping: [String: String] = [
             "deepseek-v3.1:671b-cloud": "llama3.1:8b",
             "qwen3-coder:480b-cloud": "qwen2.5-coder:7b",
-            "gpt-oss:120b-cloud": "mistral:7b"
+            "gpt-oss:120b-cloud": "mistral:7b",
         ]
         return mapping[requested] ?? requested
     }
 
-    private func generateCodeSuggestions(_: String, language _: String, analysis: String) async throws -> [CodeImprovement] {
+    private func generateCodeSuggestions(_: String, language _: String, analysis: String)
+        async throws -> [CodeImprovement]
+    {
         let suggestionsPrompt = """
-        Based on this code analysis, generate specific code improvement suggestions:
+            Based on this code analysis, generate specific code improvement suggestions:
 
-        Analysis: \(String(analysis.prefix(1000)))
+            Analysis: \(String(analysis.prefix(1000)))
 
-        For each suggestion, provide:
-        1. Specific issue or improvement area
-        2. Current code example
-        3. Improved code example
-        4. Explanation of benefits
+            For each suggestion, provide:
+            1. Specific issue or improvement area
+            2. Current code example
+            3. Improved code example
+            4. Explanation of benefits
 
-        Limit to top 5 most impactful suggestions.
-        """
+            Limit to top 5 most impactful suggestions.
+            """
 
         let suggestions = try await callOllamaModel(
             model: "qwen3-coder:480b-cloud",
@@ -503,23 +525,25 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         }
     }
 
-    private func compareCodeVersions(original: String, refactored: String) async throws -> CodeComparison {
+    private func compareCodeVersions(original: String, refactored: String) async throws
+        -> CodeComparison
+    {
         let comparisonPrompt = """
-        Compare these two versions of Swift code:
+            Compare these two versions of Swift code:
 
-        Original:
-        \(String(original.prefix(1000)))
+            Original:
+            \(String(original.prefix(1000)))
 
-        Refactored:
-        \(String(refactored.prefix(1000)))
+            Refactored:
+            \(String(refactored.prefix(1000)))
 
-        Analyze:
-        1. Lines of code change
-        2. Complexity reduction
-        3. Performance impact
-        4. Maintainability improvement
-        5. Readability enhancement
-        """
+            Analyze:
+            1. Lines of code change
+            2. Complexity reduction
+            3. Performance impact
+            4. Maintainability improvement
+            5. Readability enhancement
+            """
 
         let comparison = try await callOllamaModel(
             model: "deepseek-v3.1:671b-cloud",
@@ -530,9 +554,9 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         return CodeComparison(
             originalLinesOfCode: original.components(separatedBy: .newlines).count,
             refactoredLinesOfCode: refactored.components(separatedBy: .newlines).count,
-            complexityReduction: 0.0, // Would be calculated
+            complexityReduction: 0.0,  // Would be calculated
             performanceImpact: comparison.contains("performance") ? .positive : .neutral,
-            maintainabilityScore: 0.0, // Would be calculated
+            maintainabilityScore: 0.0,  // Would be calculated
             readabilityImprovement: comparison.contains("readable") || comparison.contains("clear")
         )
     }
@@ -540,29 +564,49 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
     private func estimateTestCoverage(_ tests: String) -> Int {
         // Simple heuristic based on test method count
         let testMethods = tests.components(separatedBy: "func test").count - 1
-        return min(testMethods * 15, 95) // Rough estimate
+        return min(testMethods * 15, 95)  // Rough estimate
     }
 
     // MARK: - Parsing Helpers
 
     private func extractQualityScore(from analysis: String) -> Int {
-        // Extract quality score from analysis text
-        let numbers = analysis.matches(of: /(\d+)\/10|\b(\d)\s*out\s*of\s*10/).compactMap { match in
-            Int(match.output.1 ?? match.output.2 ?? "0")
+        // Extract quality score from analysis text using NSRegularExpression
+        guard let regex = try? NSRegularExpression(pattern: #"(\d+)/10|\b(\d)\s*out\s*of\s*10"#)
+        else {
+            return 7
         }
-        return numbers.first ?? 7
+
+        let range = NSRange(analysis.startIndex..., in: analysis)
+        let matches = regex.matches(in: analysis, range: range)
+
+        for match in matches {
+            for i in 1..<match.numberOfRanges {
+                let matchRange = match.range(at: i)
+                if matchRange.location != NSNotFound,
+                    let range = Range(matchRange, in: analysis)
+                {
+                    if let number = Int(analysis[range]) {
+                        return number
+                    }
+                }
+            }
+        }
+        return 7
     }
 
     private func extractSecurityIssues(from analysis: String) -> [SecurityIssue] {
         // Parse security issues from analysis
-        let securityKeywords = ["security", "vulnerability", "exploit", "injection", "authentication"]
+        let securityKeywords = [
+            "security", "vulnerability", "exploit", "injection", "authentication",
+        ]
         let lines = analysis.components(separatedBy: .newlines)
 
         return lines.compactMap { line in
             for keyword in securityKeywords where line.lowercased().contains(keyword) {
                 return SecurityIssue(
                     type: keyword.capitalized,
-                    severity: line.lowercased().contains("critical") || line.lowercased().contains("high") ? .high : .medium,
+                    severity: line.lowercased().contains("critical")
+                        || line.lowercased().contains("high") ? .high : .medium,
                     description: line,
                     recommendation: "Address security concern"
                 )
@@ -572,7 +616,9 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
     }
 
     private func extractPerformanceIssues(from analysis: String) -> [PerformanceIssue] {
-        let performanceKeywords = ["performance", "slow", "inefficient", "optimization", "bottleneck"]
+        let performanceKeywords = [
+            "performance", "slow", "inefficient", "optimization", "bottleneck",
+        ]
         let lines = analysis.components(separatedBy: .newlines)
 
         return lines.compactMap { line in
@@ -615,9 +661,13 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
     }
 
     private func extractTechnicalDebt(from analysis: String) -> TechnicalDebtLevel {
-        if analysis.lowercased().contains("high debt") || analysis.lowercased().contains("significant debt") {
+        if analysis.lowercased().contains("high debt")
+            || analysis.lowercased().contains("significant debt")
+        {
             .high
-        } else if analysis.lowercased().contains("medium debt") || analysis.lowercased().contains("moderate debt") {
+        } else if analysis.lowercased().contains("medium debt")
+            || analysis.lowercased().contains("moderate debt")
+        {
             .medium
         } else {
             .low
@@ -627,7 +677,8 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
     private func extractChangesExplanation(from response: String) -> String {
         // Extract explanation section from refactoring response
         let lines = response.components(separatedBy: .newlines)
-        return lines.first { $0.contains("explanation") || $0.contains("changes") } ?? "Refactoring completed"
+        return lines.first { $0.contains("explanation") || $0.contains("changes") }
+            ?? "Refactoring completed"
     }
 
     private func extractBenefits(from response: String) -> [String] {
@@ -651,11 +702,24 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
     }
 
     private func extractQualityRating(from response: String) -> Int {
-        let numbers = response.matches(of: /(\d+)\/10/).compactMap { match -> Int? in
-            let captured = String(match.output.1)
-            return Int(captured)
+        // Extract quality rating using NSRegularExpression
+        guard let regex = try? NSRegularExpression(pattern: #"(\d+)/10"#) else {
+            return 7
         }
-        return numbers.first ?? 7
+
+        let range = NSRange(response.startIndex..., in: response)
+        let matches = regex.matches(in: response, range: range)
+
+        for match in matches where match.numberOfRanges > 1 {
+            let captureRange = match.range(at: 1)
+            if captureRange.location != NSNotFound,
+                let range = Range(captureRange, in: response),
+                let number = Int(response[range])
+            {
+                return number
+            }
+        }
+        return 7
     }
 
     private func extractTopImprovements(from response: String) -> [String] {
