@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import CodingReviewerCore
+@testable import CodingReviewer
 
 @MainActor
 final class AIEnhancedCodeAnalysisServiceTests: XCTestCase {

@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import CodingReviewerCore
+@testable import CodingReviewer
 
 final class PerformanceManagerTests: XCTestCase {
     // MARK: - Initialization Tests

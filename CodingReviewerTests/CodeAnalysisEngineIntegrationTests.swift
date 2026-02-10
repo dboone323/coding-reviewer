@@ -7,7 +7,7 @@
 
 import XCTest
 
-@testable import CodingReviewerCore
+@testable import CodingReviewer
 
 final class CodeAnalysisEngineIntegrationTests: XCTestCase {
     var analysisEngine: CodeAnalysisEngine!

@@ -7,7 +7,7 @@
 
 import XCTest
 
-@testable import CodingReviewerCore
+@testable import CodingReviewer
 
 final class AnalysisCacheTests: XCTestCase {
     var cache: AnalysisCache!

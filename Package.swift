@@ -1,4 +1,4 @@
-// swift-tools-version:5.9
+// swift-tools-version:6.0
 // Step 43: SwiftSyntax SPM Dependency
 // Package.swift
 
@@ -8,7 +8,6 @@ let package = Package(
     name: "CodingReviewer",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v17),
         .macOS(.v14),
     ],
     products: [
@@ -22,7 +21,12 @@ let package = Package(
         .package(
             url: "https://github.com/apple/swift-syntax.git",
             from: "509.0.0"
-        )
+        ),
+        // CodeEditSourceEditor for syntax-highlighted code editing
+        .package(
+            url: "https://github.com/CodeEditApp/CodeEditSourceEditor.git",
+            from: "0.15.0"
+        ),
     ],
     targets: [
         .target(
@@ -31,12 +35,14 @@ let package = Package(
                 .product(name: "SwiftSyntax", package: "swift-syntax"),
                 .product(name: "SwiftParser", package: "swift-syntax"),
                 .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
+                .product(name: "CodeEditSourceEditor", package: "CodeEditSourceEditor"),
             ],
             path: "CodingReviewer",
             sources: [
                 "Services",
                 "Models",
                 "Utilities",
+                "IDE",
                 "ContentView.swift",
                 "CodeReviewView.swift",
                 "SidebarView.swift",

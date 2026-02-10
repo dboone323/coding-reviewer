@@ -7,7 +7,7 @@
 
 import XCTest
 
-@testable import CodingReviewerCore
+@testable import CodingReviewer
 
 final class SecurityAnalysisServiceTests: XCTestCase {
     var securityAnalyzer: SecurityAnalysisService!
