@@ -10,7 +10,6 @@ import Testing
 import Foundation
 
 struct CodingReviewerTests {
-
     @Test func testAppInitialization() async throws {
         // Test that the app can be initialized without crashing
         // This is a basic smoke test
@@ -26,7 +25,7 @@ struct CodingReviewerTests {
             category: .general,
             suggestedFix: "Fix it"
         )
-        
+
         #expect(issue.id != UUID())
         #expect(issue.description == "Test issue")
         #expect(issue.severity == .low)
@@ -39,7 +38,7 @@ struct CodingReviewerTests {
         #expect(IssueSeverity.medium.rawValue == "Medium")
         #expect(IssueSeverity.high.rawValue == "High")
         #expect(IssueSeverity.critical.rawValue == "Critical")
-        
+
         #expect(IssueSeverity.allCases.count == 4)
     }
 
@@ -51,7 +50,7 @@ struct CodingReviewerTests {
         #expect(IssueCategory.style.rawValue == "Style")
         #expect(IssueCategory.maintainability.rawValue == "Maintainability")
         #expect(IssueCategory.general.rawValue == "General")
-        
+
         #expect(IssueCategory.allCases.count == 6)
     }
 }

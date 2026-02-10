@@ -69,7 +69,6 @@ public final class GitHubPanelViewModel {
             // Load PRs and issues
             await loadPullRequests()
             await loadIssues()
-
         } catch {
             handleError(error)
         }
