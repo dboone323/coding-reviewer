@@ -36,7 +36,7 @@ public class CodeReviewService: CodeReviewServiceProtocol {
         self.aiService = nil
     }
 
-    // Preference-backed AI toggle with env fallback
+    /// Preference-backed AI toggle with env fallback
     private var isAIEnabled: Bool {
         let defaults = UserDefaults.standard
         if defaults.object(forKey: "CR_USE_AI") != nil

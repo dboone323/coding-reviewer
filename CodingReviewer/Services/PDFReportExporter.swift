@@ -151,7 +151,7 @@ public final class PDFReportExporter {
             let pdfData = NSMutableData()
             UIGraphicsBeginPDFContextToData(pdfData, pageRect, nil)
 
-            for i in 0 ..< renderer.numberOfPages {
+            for i in 0..<renderer.numberOfPages {
                 UIGraphicsBeginPDFPage()
                 renderer.drawPage(at: i, in: UIGraphicsGetPDFContextBounds())
             }
@@ -167,8 +167,8 @@ public final class PDFReportExporter {
             }
 
         #elseif os(macOS)
-            // macOS implementation would use NSPrintOperation
-            // For now, save HTML as fallback
+            /// macOS implementation would use NSPrintOperation
+            /// For now, save HTML as fallback
             let htmlURL = tempDir.appendingPathComponent("\(filename).html")
             try? html.write(to: htmlURL, atomically: true, encoding: .utf8)
             print("[PDFExport] HTML saved to: \(htmlURL)")

@@ -61,7 +61,7 @@ public final class ChatViewModel {
     private let defaultModelKey = "CR_OLLAMA_MODEL"
     private let temperatureKey = "CR_OLLAMA_TEMPERATURE"
 
-    // Settings values (cached from UserDefaults)
+    /// Settings values (cached from UserDefaults)
     private var ollamaEndpoint: String {
         UserDefaults.standard.string(forKey: ollamaEndpointKey) ?? "http://localhost:11434"
     }
@@ -81,7 +81,7 @@ public final class ChatViewModel {
         Task { await checkConnection() }
     }
 
-    // Save selected model to UserDefaults
+    /// Save selected model to UserDefaults
     public func saveSelectedModel() {
         UserDefaults.standard.set(selectedModel, forKey: defaultModelKey)
     }

@@ -2,9 +2,9 @@ import Foundation
 import OSLog
 import SwiftUI
 
-/// AI-Enhanced Code Analysis Service
-/// Integrates Ollama models for intelligent code review and analysis
-/// Part of the CodingReviewer AI Enhancement Suite
+// AI-Enhanced Code Analysis Service
+// Integrates Ollama models for intelligent code review and analysis
+// Part of the CodingReviewer AI Enhancement Suite
 
 @MainActor
 public class AIEnhancedCodeAnalysisService: ObservableObject {

@@ -274,7 +274,7 @@ struct BottomPanel: View {
     }
 }
 
-/// Placeholder views for future panels
+// Placeholder views for future panels
 
 struct AgentsPlaceholderView: View {
     var body: some View {

@@ -175,7 +175,7 @@ import Foundation
     }
 
 #else
-    // Fallback when SwiftSyntax is not available
+    /// Fallback when SwiftSyntax is not available
     struct SwiftSyntaxAnalyzer: LanguageAnalyzer {
         let language = "Swift"
 
