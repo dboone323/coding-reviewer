@@ -1,6 +1,6 @@
 #!/bin/bash
 # shellcheck disable=SC2154
-# Simple MCP health check for CodingReviewer
+# Simple MCP health check for HabitQuest
 # Verifies connectivity to MCP server and Ollama
 
 set -e

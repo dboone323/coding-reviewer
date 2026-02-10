@@ -105,7 +105,7 @@ public final class SourceControlViewModel {
 
         do {
             try await gitService.commit(message: commitMessage, in: directory)
-            commitMessage = ""  // Clear the message
+            commitMessage = "" // Clear the message
             selectedFile = nil
             selectedFileDiff = ""
             await refreshStatus()

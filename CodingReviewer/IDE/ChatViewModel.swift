@@ -74,7 +74,7 @@ public final class ChatViewModel {
     public init() {
         // Load default model from UserDefaults
         if let savedModel = UserDefaults.standard.string(forKey: defaultModelKey),
-            !savedModel.isEmpty
+           !savedModel.isEmpty
         {
             selectedModel = savedModel
         }
@@ -122,7 +122,7 @@ public final class ChatViewModel {
         // Build conversation
         let systemPrompt = buildSystemPrompt(context: context)
         var ollamaMessages: [OllamaChatMessage] = [
-            OllamaChatMessage(role: "system", content: systemPrompt)
+            OllamaChatMessage(role: "system", content: systemPrompt),
         ]
 
         // Add recent message history (last 20 messages for context)
@@ -184,32 +184,30 @@ public final class ChatViewModel {
     // MARK: - System Prompts
 
     private func buildSystemPrompt(context: String?) -> String {
-        var prompt: String
-
-        switch currentMode {
+        var prompt = switch currentMode {
         case .chat:
-            prompt = """
-                You are CodingReviewer AI, a helpful coding assistant running locally via Ollama.
-                You help with code analysis, debugging, writing, and answering programming questions.
-                Be concise but thorough. Use code blocks with language labels for code.
-                """
+            """
+            You are CodingReviewer AI, a helpful coding assistant running locally via Ollama.
+            You help with code analysis, debugging, writing, and answering programming questions.
+            Be concise but thorough. Use code blocks with language labels for code.
+            """
 
         case .planning:
-            prompt = """
-                You are CodingReviewer AI in Planning Mode.
-                When the user describes a task, break it down into a clear, step-by-step plan.
-                Format the plan as numbered steps. Include file paths, code snippets, and commands.
-                Identify potential risks or dependencies between steps.
-                """
+            """
+            You are CodingReviewer AI in Planning Mode.
+            When the user describes a task, break it down into a clear, step-by-step plan.
+            Format the plan as numbered steps. Include file paths, code snippets, and commands.
+            Identify potential risks or dependencies between steps.
+            """
 
         case .agent:
-            prompt = """
-                You are CodingReviewer AI in Agent Mode.
-                You can help orchestrate Docker agents and MCP tools.
-                Available agents: codegen, architect, debug, testing, reviewer, planner, audit.
-                When the user asks for a task, determine which agent(s) to use and provide
-                the commands needed. Format agent commands clearly.
-                """
+            """
+            You are CodingReviewer AI in Agent Mode.
+            You can help orchestrate Docker agents and MCP tools.
+            Available agents: codegen, architect, debug, testing, reviewer, planner, audit.
+            When the user asks for a task, determine which agent(s) to use and provide
+            the commands needed. Format agent commands clearly.
+            """
         }
 
         if let context, !context.isEmpty {

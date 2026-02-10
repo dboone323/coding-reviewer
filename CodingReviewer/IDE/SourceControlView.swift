@@ -200,7 +200,7 @@ struct ChangesList: View {
     }
 
     private var stagedChanges: [GitFileChange] {
-        status.allChanges.filter { $0.isStaged }
+        status.allChanges.filter(\.isStaged)
     }
 
     private var unstagedChanges: [GitFileChange] {
@@ -247,21 +247,21 @@ struct FileChangeRow: View {
 
     private func statusIcon(for status: GitChangeStatus) -> String {
         switch status {
-        case .modified: return "M"
-        case .added: return "A"
-        case .deleted: return "D"
-        case .renamed: return "R"
-        case .untracked: return "U"
+        case .modified: "M"
+        case .added: "A"
+        case .deleted: "D"
+        case .renamed: "R"
+        case .untracked: "U"
         }
     }
 
     private func statusColor(for status: GitChangeStatus) -> Color {
         switch status {
-        case .modified: return .orange
-        case .added: return .green
-        case .deleted: return .red
-        case .renamed: return .blue
-        case .untracked: return .purple
+        case .modified: .orange
+        case .added: .green
+        case .deleted: .red
+        case .renamed: .blue
+        case .untracked: .purple
         }
     }
 }

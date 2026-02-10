@@ -78,7 +78,7 @@ public final class GitHubPanelViewModel {
 
     /// Load pull requests for the current repo
     public func loadPullRequests() async {
-        guard let repo = repo else { return }
+        guard let repo else { return }
 
         let parts = repo.fullName.components(separatedBy: "/")
         guard parts.count == 2 else { return }
@@ -92,7 +92,7 @@ public final class GitHubPanelViewModel {
 
     /// Load issues for the current repo
     public func loadIssues() async {
-        guard let repo = repo else { return }
+        guard let repo else { return }
 
         let parts = repo.fullName.components(separatedBy: "/")
         guard parts.count == 2 else { return }
@@ -106,7 +106,7 @@ public final class GitHubPanelViewModel {
 
     /// Create a new issue
     public func createIssue(title: String, body: String) async {
-        guard let repo = repo else { return }
+        guard let repo else { return }
 
         let parts = repo.fullName.components(separatedBy: "/")
         guard parts.count == 2 else { return }
@@ -118,7 +118,7 @@ public final class GitHubPanelViewModel {
                 title: title,
                 body: body
             )
-            issues.insert(newIssue, at: 0)  // Add to top of list
+            issues.insert(newIssue, at: 0) // Add to top of list
         } catch {
             handleError(error)
         }
@@ -132,12 +132,12 @@ public final class GitHubPanelViewModel {
 
         var cleanURL =
             urlString
-            .replacingOccurrences(of: ".git", with: "")
-            .replacingOccurrences(of: "git@github.com:", with: "https://github.com/")
+                .replacingOccurrences(of: ".git", with: "")
+                .replacingOccurrences(of: "git@github.com:", with: "https://github.com/")
 
         guard let url = URL(string: cleanURL),
-            let host = url.host,
-            host.contains("github.com")
+              let host = url.host,
+              host.contains("github.com")
         else {
             return nil
         }

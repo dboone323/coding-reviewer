@@ -153,7 +153,8 @@ public actor OllamaService {
                         messages: messages,
                         stream: true,
                         options: OllamaOptions(
-                            temperature: temperature, num_predict: nil, top_p: nil)
+                            temperature: temperature, num_predict: nil, top_p: nil
+                        )
                     )
 
                     var urlRequest = URLRequest(url: url)
@@ -163,7 +164,7 @@ public actor OllamaService {
 
                     let (bytes, response) = try await session.bytes(for: urlRequest)
                     guard let httpResponse = response as? HTTPURLResponse,
-                        httpResponse.statusCode == 200
+                          httpResponse.statusCode == 200
                     else {
                         throw OllamaServiceError.serverError("Stream request failed")
                     }
@@ -171,8 +172,8 @@ public actor OllamaService {
                     for try await line in bytes.lines {
                         guard !line.isEmpty else { continue }
                         if let data = line.data(using: .utf8),
-                            let chunk = try? JSONDecoder().decode(OllamaChatChunk.self, from: data),
-                            let content = chunk.message?.content
+                           let chunk = try? JSONDecoder().decode(OllamaChatChunk.self, from: data),
+                           let content = chunk.message?.content
                         {
                             continuation.yield(content)
                             if chunk.done {
@@ -228,9 +229,9 @@ public enum OllamaServiceError: Error, LocalizedError {
 
     public var errorDescription: String? {
         switch self {
-        case .serverError(let msg): return "Ollama server error: \(msg)"
-        case .modelNotFound(let model): return "Model '\(model)' not found"
-        case .connectionFailed: return "Cannot connect to Ollama. Is it running?"
+        case let .serverError(msg): "Ollama server error: \(msg)"
+        case let .modelNotFound(model): "Model '\(model)' not found"
+        case .connectionFailed: "Cannot connect to Ollama. Is it running?"
         }
     }
 }

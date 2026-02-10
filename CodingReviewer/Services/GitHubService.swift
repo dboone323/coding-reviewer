@@ -21,7 +21,7 @@ public struct GitHubRepo: Identifiable, Codable, Sendable {
     enum CodingKeys: String, CodingKey {
         case id, name, description
         case fullName = "full_name"
-        case `private` = "private"
+        case `private`
         case htmlUrl = "html_url"
         case defaultBranch = "default_branch"
     }
@@ -106,8 +106,7 @@ public actor GitHubService {
     }
 
     /// Get pull request details
-    public func getPullRequest(owner: String, repo: String, number: Int) async throws -> PullRequest
-    {
+    public func getPullRequest(owner: String, repo: String, number: Int) async throws -> PullRequest {
         let url = URL(string: "\(baseURL)/api/github/repos/\(owner)/\(repo)/pulls/\(number)")!
         return try await fetch(url: url)
     }
@@ -182,13 +181,13 @@ public enum GitHubError: Error, LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .invalidResponse:
-            return "Invalid response from GitHub API"
-        case .httpError(let code):
-            return "HTTP error: \(code)"
+            "Invalid response from GitHub API"
+        case let .httpError(code):
+            "HTTP error: \(code)"
         case .decodingError:
-            return "Failed to decode response"
+            "Failed to decode response"
         case .networkError:
-            return "Network error"
+            "Network error"
         }
     }
 }

@@ -5,12 +5,13 @@
 //  Created by GitHub Copilot on 2026-02-10.
 //
 
+import Foundation
 import Testing
 @testable import CodingReviewer
-import Foundation
 
 struct CrashTests {
-    @Test func testAppDoesNotCrashOnLaunch() async throws {
+    @Test
+    func appDoesNotCrashOnLaunch() async throws {
         // Test that basic app functionality doesn't crash
         // This simulates what would happen on device launch
 
@@ -29,7 +30,8 @@ struct CrashTests {
         #expect(issue.category == .bug)
     }
 
-    @Test func testEnumValuesAreStable() async throws {
+    @Test
+    func enumValuesAreStable() async throws {
         // Test that enum values don't change unexpectedly (would cause crashes)
         #expect(IssueSeverity.low != IssueSeverity.high)
         #expect(IssueCategory.bug != IssueCategory.security)
@@ -39,7 +41,8 @@ struct CrashTests {
         #expect(!IssueCategory.allCases.isEmpty)
     }
 
-    @Test func testMemoryManagement() async throws {
+    @Test
+    func memoryManagement() async throws {
         // Test basic memory management to prevent leaks/crashes
         var issues: [CodeIssue] = []
 
@@ -63,7 +66,8 @@ struct CrashTests {
         #expect(issues.isEmpty)
     }
 
-    @Test func testConcurrentAccess() async throws {
+    @Test
+    func concurrentAccess() async throws {
         // Test that the app can handle concurrent operations without crashing
         let iterations = 50
 

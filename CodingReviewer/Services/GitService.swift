@@ -38,15 +38,14 @@ public struct GitStatus: Sendable {
 
         // Staged files
         for path in staged {
-            let status: GitChangeStatus
-            if added.contains(path) {
-                status = .added
+            let status: GitChangeStatus = if added.contains(path) {
+                .added
             } else if deleted.contains(path) {
-                status = .deleted
+                .deleted
             } else if renamed.contains(path) {
-                status = .renamed
+                .renamed
             } else {
-                status = .modified
+                .modified
             }
 
             changes.append(GitFileChange(path: path, status: status, isStaged: true))
@@ -77,13 +76,13 @@ public enum GitCommandError: Error, LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .notARepository:
-            return "Not a git repository"
-        case .commandFailed(let message):
-            return "Git command failed: \(message)"
+            "Not a git repository"
+        case let .commandFailed(message):
+            "Git command failed: \(message)"
         case .invalidDirectory:
-            return "Invalid directory"
+            "Invalid directory"
         case .gitNotFound:
-            return "Git executable not found"
+            "Git executable not found"
         }
     }
 }
@@ -135,12 +134,12 @@ public actor GitService {
 
     /// Push to remote
     public func push(in directory: URL) async throws -> String {
-        return try await execute(["push"], in: directory)
+        try await execute(["push"], in: directory)
     }
 
     /// Pull from remote
     public func pull(in directory: URL) async throws -> String {
-        return try await execute(["pull"], in: directory)
+        try await execute(["pull"], in: directory)
     }
 
     // MARK: - Branch Operations
@@ -156,11 +155,11 @@ public actor GitService {
         let output = try await execute(["branch", "--list"], in: directory)
         return
             output
-            .components(separatedBy: .newlines)
-            .map {
-                $0.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "* ", with: "")
-            }
-            .filter { !$0.isEmpty }
+                .components(separatedBy: .newlines)
+                .map {
+                    $0.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "* ", with: "")
+                }
+                .filter { !$0.isEmpty }
     }
 
     /// Checkout a branch

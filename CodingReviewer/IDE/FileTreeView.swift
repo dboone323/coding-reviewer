@@ -69,28 +69,28 @@ public enum FileTreeBuilder {
         if isDir.boolValue {
             var children: [FileNode] = []
             if depth > 0,
-                let contents = try? fm.contentsOfDirectory(
-                    at: url,
-                    includingPropertiesForKeys: [.isDirectoryKey],
-                    options: [.skipsHiddenFiles]
-                )
+               let contents = try? fm.contentsOfDirectory(
+                   at: url,
+                   includingPropertiesForKeys: [.isDirectoryKey],
+                   options: [.skipsHiddenFiles]
+               )
             {
                 children =
                     contents
-                    .sorted { a, b in
-                        let aIsDir =
-                            (try? a.resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory
-                            ?? false
-                        let bIsDir =
-                            (try? b.resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory
-                            ?? false
-                        if aIsDir != bIsDir { return aIsDir }
-                        return a.lastPathComponent.localizedCaseInsensitiveCompare(
-                            b.lastPathComponent) == .orderedAscending
-                    }
-                    .compactMap { childURL in
-                        buildTree(from: childURL, depth: depth - 1)
-                    }
+                        .sorted { a, b in
+                            let aIsDir =
+                                (try? a.resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory
+                                    ?? false
+                            let bIsDir =
+                                (try? b.resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory
+                                    ?? false
+                            if aIsDir != bIsDir { return aIsDir }
+                            return a.lastPathComponent.localizedCaseInsensitiveCompare(
+                                b.lastPathComponent) == .orderedAscending
+                        }
+                        .compactMap { childURL in
+                            buildTree(from: childURL, depth: depth - 1)
+                        }
             }
             return FileNode(url: url, isDirectory: true, children: children)
         } else {
@@ -250,7 +250,7 @@ struct FileTreeNodeView: View {
                 expandedNodes.insert(node.id)
                 // Lazy-load children if needed
                 if let rootNode = FileTreeBuilder.buildTree(from: node.url, depth: 2),
-                    let children = rootNode.children
+                   let children = rootNode.children
                 {
                     // Children already loaded via tree builder
                     _ = children
