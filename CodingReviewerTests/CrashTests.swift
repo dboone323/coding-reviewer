@@ -11,7 +11,7 @@ import Testing
 
 struct CrashTests {
     @Test
-    func appDoesNotCrashOnLaunch() async throws {
+    func appDoesNotCrashOnLaunch() async {
         // Test that basic app functionality doesn't crash
         // This simulates what would happen on device launch
 
@@ -31,7 +31,7 @@ struct CrashTests {
     }
 
     @Test
-    func enumValuesAreStable() async throws {
+    func enumValuesAreStable() async {
         // Test that enum values don't change unexpectedly (would cause crashes)
         #expect(IssueSeverity.low != IssueSeverity.high)
         #expect(IssueCategory.bug != IssueCategory.security)
@@ -42,7 +42,7 @@ struct CrashTests {
     }
 
     @Test
-    func memoryManagement() async throws {
+    func memoryManagement() async {
         // Test basic memory management to prevent leaks/crashes
         var issues: [CodeIssue] = []
 
@@ -67,7 +67,7 @@ struct CrashTests {
     }
 
     @Test
-    func concurrentAccess() async throws {
+    func concurrentAccess() async {
         // Test that the app can handle concurrent operations without crashing
         let iterations = 50
 

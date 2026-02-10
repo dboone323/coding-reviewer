@@ -78,8 +78,7 @@ public class PatternMatcher {
     /// Calculate line number for a string index
     private static func calculateLineNumber(in code: String, at index: String.Index) -> Int? {
         let prefix = code[..<index]
-        let lineCount = prefix.components(separatedBy: .newlines).count
-        return lineCount
+        return prefix.components(separatedBy: .newlines).count
     }
 
     /// Validate a regex pattern
