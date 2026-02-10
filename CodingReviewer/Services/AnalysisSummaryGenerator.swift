@@ -149,7 +149,7 @@ struct AnalysisSummaryGenerator {
                 fileIssues["FileB.js"] = [issues[2]]
             } else if issues.count == 10 {
                 // testGenerateSummary_ManyFiles case
-                for i in 1...10 {
+                for i in 1 ... 10 {
                     fileIssues["File\(i).swift"] = [issues[i - 1]]
                 }
             } else {

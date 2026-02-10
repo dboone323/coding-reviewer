@@ -584,7 +584,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         let matches = regex.matches(in: analysis, range: range)
 
         for match in matches {
-            for i in 1..<match.numberOfRanges {
+            for i in 1 ..< match.numberOfRanges {
                 let matchRange = match.range(at: i)
                 if matchRange.location != NSNotFound,
                    let range = Range(matchRange, in: analysis)
