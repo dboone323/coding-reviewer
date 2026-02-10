@@ -17,8 +17,7 @@ on:
           - testflight
           - appstore
 
-env:
-  DEVELOPER_DIR: /Applications/Xcode_15.4.app/Contents/Developer
+
 
 jobs:
   # 1. Code Quality & Linting
