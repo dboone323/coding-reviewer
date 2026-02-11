@@ -68,7 +68,9 @@ public class CodeReviewService: CodeReviewServiceProtocol {
         self.logger.info("Cleaning up CodeReviewService")
     }
 
-    public func healthCheck() async -> ServiceHealthStatus { .healthy }
+    public func healthCheck() async -> ServiceHealthStatus {
+        .healthy
+    }
 
     // MARK: - CodeReviewServiceProtocol Conformance
 
@@ -120,7 +122,8 @@ public class CodeReviewService: CodeReviewServiceProtocol {
         // Check circuit breaker
         guard await circuitBreaker.canAttempt() else {
             throw ServiceError.aiUnavailable(
-                reason: "Circuit breaker is open (too many recent failures)")
+                reason: "Circuit breaker is open (too many recent failures)"
+            )
         }
 
         ensureAIService()
@@ -147,7 +150,8 @@ public class CodeReviewService: CodeReviewServiceProtocol {
                     severity: Self.mapSeverity(secIssue.severity),
                     line: nil,
                     category: .security
-                ))
+                )
+            )
         }
 
         for perfIssue in result.performanceIssues {
@@ -159,7 +163,8 @@ public class CodeReviewService: CodeReviewServiceProtocol {
                     severity: sev,
                     line: nil,
                     category: .performance
-                ))
+                )
+            )
         }
 
         for bestPractice in result.bestPracticeViolations {
@@ -169,7 +174,8 @@ public class CodeReviewService: CodeReviewServiceProtocol {
                     severity: .medium,
                     line: nil,
                     category: .style
-                ))
+                )
+            )
         }
 
         let summary =

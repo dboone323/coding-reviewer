@@ -60,7 +60,8 @@ public class PatternMatcher {
                             range: matchRange,
                             line: lineNumber,
                             matchedText: matchedText
-                        ))
+                        )
+                    )
                 }
             }
             semaphore.signal()

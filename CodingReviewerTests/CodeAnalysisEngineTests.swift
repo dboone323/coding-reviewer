@@ -16,7 +16,7 @@ final class CodeAnalysisEngineTests: XCTestCase {
 
     // MARK: - Full Integration Tests
 
-    func testAnalyzeSwiftFile() async {
+    func testAnalyzeSwiftFile() {
         let swiftCode = """
         import Foundation
 
@@ -38,7 +38,7 @@ final class CodeAnalysisEngineTests: XCTestCase {
         XCTAssertTrue(result.issues.contains { $0.description.contains("TODO") })
     }
 
-    func testAnalyzeMultipleFiles() async {
+    func testAnalyzeMultipleFiles() {
         // analyzeCode only handles one file string, so we test that
         let code = "let x = optional!"
         let result = analysisEngine.analyzeCode(code: code, language: "Swift", analysisTypes: [.bugs])
@@ -46,7 +46,7 @@ final class CodeAnalysisEngineTests: XCTestCase {
         XCTAssertGreaterThan(result.issues.count, 0)
     }
 
-    func testGenerateReport() async {
+    func testGenerateReport() {
         let swiftCode = """
         let value1 = optional!
         let value2 = another!
@@ -60,7 +60,7 @@ final class CodeAnalysisEngineTests: XCTestCase {
         XCTAssertGreaterThan(report.count, 10)
     }
 
-    func testSeverityClassification() async {
+    func testSeverityClassification() {
         let code = """
         let safe = optionalValue ?? defaultValue
         let unsafe = optionalValue!
@@ -73,12 +73,12 @@ final class CodeAnalysisEngineTests: XCTestCase {
         XCTAssertGreaterThan(mediumSeverity.count, 0)
     }
 
-    func testEmptyFileHandling() async {
+    func testEmptyFileHandling() {
         let result = analysisEngine.analyzeCode(code: "", language: "Swift", analysisTypes: [.comprehensive])
         XCTAssertEqual(result.issues.count, 0)
     }
 
-    func testPerformanceOnLargeFile() async {
+    func testPerformanceOnLargeFile() {
         let largeCode = String(repeating: "let x = 1\n", count: 10000)
 
         let start = Date()

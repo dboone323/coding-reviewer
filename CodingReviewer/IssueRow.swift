@@ -10,7 +10,9 @@ import SwiftUI
 public struct IssueRow: View {
     let issue: CodeIssue
     var onFix: (() -> Void)?
-    private var presenter: IssueRowPresenter { IssueRowPresenter(issue: issue) }
+    private var presenter: IssueRowPresenter {
+        IssueRowPresenter(issue: issue)
+    }
 
     public var body: some View {
         HStack(alignment: .top, spacing: 8) {
@@ -93,11 +95,17 @@ struct IssueRowPresenter {
         Self.palette[issue.severity] ?? Self.palette[.low]!
     }
 
-    var iconName: String { paletteForIssue.iconName }
+    var iconName: String {
+        paletteForIssue.iconName
+    }
 
-    var iconColor: Color { paletteForIssue.iconColor }
+    var iconColor: Color {
+        paletteForIssue.iconColor
+    }
 
-    var severityColor: Color { paletteForIssue.severityColor }
+    var severityColor: Color {
+        paletteForIssue.severityColor
+    }
 
     var diagnostics: Diagnostics {
         Diagnostics(

@@ -263,7 +263,9 @@ struct ReviewData: Codable {
 }
 
 struct JSONFileDocument: FileDocument {
-    static var readableContentTypes: [UTType] { [.json] }
+    static var readableContentTypes: [UTType] {
+        [.json]
+    }
 
     var reviewData: ReviewData?
 

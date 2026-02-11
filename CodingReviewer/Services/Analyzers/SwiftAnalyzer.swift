@@ -22,7 +22,8 @@ struct SwiftAnalyzer: LanguageAnalyzer {
                     severity: .high,
                     line: match.line,
                     category: .security
-                ))
+                )
+            )
         }
 
         // Force Unwrapping
@@ -35,7 +36,8 @@ struct SwiftAnalyzer: LanguageAnalyzer {
                     severity: .medium,
                     line: match.line,
                     category: .security // Can cause crashes
-                ))
+                )
+            )
         }
 
         return issues
@@ -58,7 +60,8 @@ struct SwiftAnalyzer: LanguageAnalyzer {
                         line: index + 1,
                         category: .style,
                         suggestedFix: fix
-                    ))
+                    )
+                )
             }
 
             // Check for TODOs
@@ -69,7 +72,8 @@ struct SwiftAnalyzer: LanguageAnalyzer {
                         severity: .low,
                         line: index + 1,
                         category: .maintainability
-                    ))
+                    )
+                )
             }
         }
 
@@ -93,7 +97,8 @@ struct SwiftAnalyzer: LanguageAnalyzer {
                         severity: .high,
                         line: index + 1,
                         category: .bug
-                    ))
+                    )
+                )
             }
 
             // Detect potential retain cycles in closures
@@ -106,7 +111,8 @@ struct SwiftAnalyzer: LanguageAnalyzer {
                         severity: .medium,
                         line: index + 1,
                         category: .bug
-                    ))
+                    )
+                )
             }
         }
 

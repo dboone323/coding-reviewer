@@ -42,7 +42,8 @@ struct SettingsView: View {
                         .foregroundStyle(
                             ollamaStatus.contains("✓")
                                 ? .green
-                                : (ollamaStatus.contains("Checking") ? .secondary : .red))
+                                : (ollamaStatus.contains("Checking") ? .secondary : .red)
+                        )
 
                     Spacer()
 

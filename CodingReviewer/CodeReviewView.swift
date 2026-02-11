@@ -163,8 +163,8 @@ public struct ResultsPanel: View {
                         if let result = analysisResult {
                             AnalysisResultsView(result: result, onApplyFix: onApplyFix)
                         } else if let message = presenter.emptyStateMessage(
-                            hasResult: analysisResult != nil)
-                        {
+                            hasResult: analysisResult != nil
+                        ) {
                             Text(message)
                                 .foregroundColor(.secondary)
                                 .padding()
@@ -173,8 +173,8 @@ public struct ResultsPanel: View {
                         if let result = documentationResult {
                             DocumentationResultsView(result: result)
                         } else if let message = presenter.emptyStateMessage(
-                            hasResult: documentationResult != nil)
-                        {
+                            hasResult: documentationResult != nil
+                        ) {
                             Text(message)
                                 .foregroundColor(.secondary)
                                 .padding()
@@ -183,8 +183,8 @@ public struct ResultsPanel: View {
                         if let result = testResult {
                             TestResultsView(result: result)
                         } else if let message = presenter.emptyStateMessage(
-                            hasResult: testResult != nil)
-                        {
+                            hasResult: testResult != nil
+                        ) {
                             Text(message)
                                 .foregroundColor(.secondary)
                                 .padding()

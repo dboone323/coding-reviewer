@@ -397,7 +397,8 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
             print("DEBUG: Analysis result: \(result.analysis)")
             print(
-                "DEBUG: Issues found: \(result.issues.map { "\($0.category): \($0.description)" })")
+                "DEBUG: Issues found: \(result.issues.map { "\($0.category): \($0.description)" })"
+            )
             print("DEBUG: Total issues count: \(result.issues.count)")
             print("DEBUG: Result object: \(result)")
 

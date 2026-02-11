@@ -16,7 +16,9 @@ public struct OpenFile: Identifiable, Equatable {
     public var language: String
     public var isModified: Bool
 
-    public var filename: String { url.lastPathComponent }
+    public var filename: String {
+        url.lastPathComponent
+    }
 
     public init(url: URL, content: String, language: String) {
         self.id = UUID()

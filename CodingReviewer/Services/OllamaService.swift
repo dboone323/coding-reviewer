@@ -13,7 +13,10 @@ public struct OllamaModelList: Codable, Sendable {
 }
 
 public struct OllamaModel: Codable, Sendable, Identifiable {
-    public var id: String { name }
+    public var id: String {
+        name
+    }
+
     public let name: String
     public let size: Int64?
     public let digest: String?

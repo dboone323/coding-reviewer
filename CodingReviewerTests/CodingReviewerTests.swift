@@ -11,14 +11,14 @@ import Testing
 
 struct CodingReviewerTests {
     @Test
-    func appInitialization() async {
+    func appInitialization() {
         // Test that the app can be initialized without crashing
         // This is a basic smoke test
         #expect(true, "App should initialize successfully")
     }
 
     @Test
-    func modelTypesExist() async {
+    func modelTypesExist() {
         // Test that our model types are properly defined
         let issue = CodeIssue(
             description: "Test issue",
@@ -35,7 +35,7 @@ struct CodingReviewerTests {
     }
 
     @Test
-    func issueSeverityEnum() async {
+    func issueSeverityEnum() {
         // Test that IssueSeverity enum works correctly
         #expect(IssueSeverity.low.rawValue == "Low")
         #expect(IssueSeverity.medium.rawValue == "Medium")
@@ -46,7 +46,7 @@ struct CodingReviewerTests {
     }
 
     @Test
-    func issueCategoryEnum() async {
+    func issueCategoryEnum() {
         // Test that IssueCategory enum works correctly
         #expect(IssueCategory.bug.rawValue == "Bug")
         #expect(IssueCategory.security.rawValue == "Security")

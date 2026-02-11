@@ -86,7 +86,8 @@ public enum FileTreeBuilder {
                                     ?? false
                             if aIsDir != bIsDir { return aIsDir }
                             return a.lastPathComponent.localizedCaseInsensitiveCompare(
-                                b.lastPathComponent) == .orderedAscending
+                                b.lastPathComponent
+                            ) == .orderedAscending
                         }
                         .compactMap { childURL in
                             buildTree(from: childURL, depth: depth - 1)

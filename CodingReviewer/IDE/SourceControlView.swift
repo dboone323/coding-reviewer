@@ -347,7 +347,8 @@ struct CommitSection: View {
                 .controlSize(.small)
                 .disabled(
                     viewModel.commitMessage.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-                        || (viewModel.status?.staged.isEmpty ?? true))
+                        || (viewModel.status?.staged.isEmpty ?? true)
+                )
             }
         }
         .padding(12)

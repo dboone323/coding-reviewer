@@ -20,7 +20,8 @@ struct JavaScriptAnalyzer: LanguageAnalyzer {
                     severity: .high,
                     line: match.line,
                     category: .security
-                ))
+                )
+            )
         }
 
         // innerHTML
@@ -34,7 +35,8 @@ struct JavaScriptAnalyzer: LanguageAnalyzer {
                     severity: .medium,
                     line: match.line,
                     category: .security
-                ))
+                )
+            )
         }
 
         return issues
@@ -52,7 +54,8 @@ struct JavaScriptAnalyzer: LanguageAnalyzer {
                     severity: .low,
                     line: match.line,
                     category: .style
-                ))
+                )
+            )
         }
 
         return issues

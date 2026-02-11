@@ -10,7 +10,9 @@ import SwiftUI
 public struct AnalysisResultsView: View {
     let result: CodeAnalysisResult
     var onApplyFix: ((CodeIssue) -> Void)?
-    private var viewModel: AnalysisResultsViewModel { AnalysisResultsViewModel(result: result) }
+    private var viewModel: AnalysisResultsViewModel {
+        AnalysisResultsViewModel(result: result)
+    }
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -32,9 +34,15 @@ public struct AnalysisResultsView: View {
 struct AnalysisResultsViewModel {
     let result: CodeAnalysisResult
 
-    var issues: [CodeIssue] { result.issues }
+    var issues: [CodeIssue] {
+        result.issues
+    }
 
-    var shouldShowEmptyState: Bool { result.issues.isEmpty }
+    var shouldShowEmptyState: Bool {
+        result.issues.isEmpty
+    }
 
-    var emptyStateMessage: String { "No issues found" }
+    var emptyStateMessage: String {
+        "No issues found"
+    }
 }
