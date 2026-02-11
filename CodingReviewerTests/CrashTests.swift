@@ -46,7 +46,7 @@ struct CrashTests {
         // Test basic memory management to prevent leaks/crashes
         var issues: [CodeIssue] = []
 
-        for i in 0 ..< 100 {
+        for i in 0..<100 {
             let issue = CodeIssue(
                 description: "Memory test issue \(i)",
                 severity: .medium,
@@ -72,7 +72,7 @@ struct CrashTests {
         let iterations = 50
 
         await withTaskGroup(of: Void.self) { group in
-            for i in 0 ..< iterations {
+            for i in 0..<iterations {
                 group.addTask {
                     let issue = CodeIssue(
                         description: "Concurrent test \(i)",

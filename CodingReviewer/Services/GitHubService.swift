@@ -142,7 +142,7 @@ public actor GitHubService {
             throw GitHubError.invalidResponse
         }
 
-        guard (200 ... 299).contains(httpResponse.statusCode) else {
+        guard (200...299).contains(httpResponse.statusCode) else {
             throw GitHubError.httpError(httpResponse.statusCode)
         }
 
@@ -160,7 +160,7 @@ public actor GitHubService {
             throw GitHubError.invalidResponse
         }
 
-        guard (200 ... 299).contains(httpResponse.statusCode) else {
+        guard (200...299).contains(httpResponse.statusCode) else {
             throw GitHubError.httpError(httpResponse.statusCode)
         }
 

@@ -299,7 +299,7 @@ public class CodeReviewService: CodeReviewServiceProtocol {
         let attempts = maxAttempts ?? config.maxRetryAttempts
         var lastError: Error?
 
-        for attempt in 1 ... attempts {
+        for attempt in 1...attempts {
             // Check for cancellation
             if Task.isCancelled {
                 throw ServiceError.cancelled(operation: operation)
@@ -320,7 +320,7 @@ public class CodeReviewService: CodeReviewServiceProtocol {
                         config.initialBackoff * pow(2.0, Double(attempt - 1)),
                         config.maxBackoff
                     )
-                    let jitter = Double.random(in: 0 ... 0.1) * backoff
+                    let jitter = Double.random(in: 0...0.1) * backoff
                     let delay = backoff + jitter
 
                     logger.warning(

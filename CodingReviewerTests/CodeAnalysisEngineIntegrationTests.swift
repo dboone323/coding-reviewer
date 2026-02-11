@@ -271,7 +271,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
     func testAnalyzeCode_LargeCodeFile() {
         // Given large code file (simulate with many lines)
         var codeParts: [String] = []
-        for codeIndex in 1 ... 1000 {
+        for codeIndex in 1...1000 {
             codeParts.append("// Pending: Item \(codeIndex)")
             codeParts.append("let value\(codeIndex) = \(codeIndex)!") // Force unwrap
         }
