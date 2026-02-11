@@ -6,7 +6,6 @@
 //
 
 import XCTest
-
 @testable import CodingReviewer
 
 final class SecurityAnalysisServiceTests: XCTestCase {

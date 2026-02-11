@@ -43,7 +43,7 @@ final class StyleAnalysisServiceTests: XCTestCase {
         XCTAssertTrue(issues.isEmpty)
     }
 
-    func testDetectStyleIssues_LongLine() {
+    func testDetectStyleIssues_LongLine() throws {
         // Given Swift code with a long line
         let longLine = String(repeating: "x", count: 125)
         let code = """
@@ -65,13 +65,13 @@ final class StyleAnalysisServiceTests: XCTestCase {
 
         XCTAssertNotNil(longLineIssue)
         XCTAssertNotNil(docIssue)
-        XCTAssertEqual(longLineIssue!.severity, IssueSeverity.low)
-        XCTAssertEqual(longLineIssue!.category, IssueCategory.style)
-        XCTAssertTrue(longLineIssue!.description.contains("146 characters"))
-        XCTAssertEqual(longLineIssue!.line, 3)
+        XCTAssertEqual(longLineIssue?.severity, IssueSeverity.low)
+        XCTAssertEqual(longLineIssue?.category, IssueCategory.style)
+        XCTAssertTrue(try XCTUnwrap(longLineIssue?.description.contains("146 characters")))
+        XCTAssertEqual(longLineIssue?.line, 3)
     }
 
-    func testDetectStyleIssues_MultipleLongLines() {
+    func testDetectStyleIssues_MultipleLongLines() throws {
         // Given Swift code with multiple long lines
         let longLine1 = String(repeating: "a", count: 130)
         let longLine2 = String(repeating: "b", count: 140)
@@ -100,8 +100,8 @@ final class StyleAnalysisServiceTests: XCTestCase {
         XCTAssertNotNil(line1Issue)
         XCTAssertNotNil(line2Issue)
         XCTAssertNotNil(docIssue)
-        XCTAssertTrue(line1Issue!.description.contains("152 characters"))
-        XCTAssertTrue(line2Issue!.description.contains("162 characters"))
+        XCTAssertTrue(try XCTUnwrap(line1Issue?.description.contains("152 characters")))
+        XCTAssertTrue(try XCTUnwrap(line2Issue?.description.contains("162 characters")))
     }
 
     func testDetectStyleIssues_LineExactly120Chars() {
@@ -250,7 +250,7 @@ final class StyleAnalysisServiceTests: XCTestCase {
         XCTAssertTrue(issues[0].description.contains("125 characters"))
     }
 
-    func testDetectStyleIssues_LineWithTabs() {
+    func testDetectStyleIssues_LineWithTabs() throws {
         // Given code with tabs that might affect line length
         let code = """
         class Test {
@@ -271,8 +271,8 @@ final class StyleAnalysisServiceTests: XCTestCase {
 
         XCTAssertNotNil(longLineIssue)
         XCTAssertNotNil(docIssue)
-        XCTAssertEqual(longLineIssue!.line, 3)
-        XCTAssertTrue(longLineIssue!.description.contains("147 characters"))
+        XCTAssertEqual(longLineIssue?.line, 3)
+        XCTAssertTrue(try XCTUnwrap(longLineIssue?.description.contains("147 characters")))
     }
 
     // MARK: - Documentation Edge Cases
