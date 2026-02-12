@@ -66,7 +66,8 @@ public final class PDFReportExporter {
                 .line { color: #666; font-size: 12px; }
                 .description { margin: 10px 0; }
                 .category { background: #e0e0e0; padding: 2px 8px; border-radius: 4px; font-size: 11px; }
-                .fix { background: #e8f5e9; padding: 10px; border-radius: 4px; font-family: monospace; font-size: 12px; margin-top: 10px; }
+                .fix { background: #e8f5e9; padding: 10px; border-radius: 4px; } +
+                "font-family: monospace; font-size: 12px; margin-top: 10px;"
             </style>
         </head>
         <body>

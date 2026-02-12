@@ -95,7 +95,7 @@ struct ChatHeader: View {
             Spacer()
 
             // Model selector
-            Button(action: { isModelPickerPresented.toggle() }) {
+            Button(action: { isModelPickerPresented.toggle() }, label: {
                 HStack(spacing: 4) {
                     Circle()
                         .fill(viewModel.isConnected ? .green : .red)
@@ -104,15 +104,15 @@ struct ChatHeader: View {
                         .font(.system(size: 10, design: .monospaced))
                         .lineLimit(1)
                 }
-            }
+            })
             .buttonStyle(.bordered)
             .controlSize(.mini)
 
             // Clear chat
-            Button(action: { viewModel.clearChat() }) {
+            Button(action: { viewModel.clearChat() }, label: {
                 Image(systemName: "trash")
                     .font(.system(size: 11))
-            }
+            })
             .buttonStyle(.borderless)
             .help("Clear Chat")
         }
@@ -232,22 +232,22 @@ struct ChatInputView: View {
 
                 // Send / Stop button
                 if viewModel.isGenerating {
-                    Button(action: { viewModel.stopGenerating() }) {
+                    Button(action: { viewModel.stopGenerating() }, label: {
                         Image(systemName: "stop.circle.fill")
                             .font(.system(size: 20))
                             .foregroundStyle(.red)
-                    }
+                    })
                     .buttonStyle(.borderless)
                     .help("Stop Generating")
                 } else {
                     Button(action: {
                         let context = includeContext ? editorVM.activeFile?.content : nil
                         Task { await viewModel.sendMessage(context: context) }
-                    }) {
+                    }, label: {
                         Image(systemName: "arrow.up.circle.fill")
                             .font(.system(size: 20))
                             .foregroundStyle(Color.accentColor)
-                    }
+                    })
                     .buttonStyle(.borderless)
                     .disabled(
                         viewModel.inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -279,7 +279,7 @@ struct ModelPickerView: View {
                     Button(action: {
                         viewModel.selectedModel = model
                         viewModel.saveSelectedModel()
-                    }) {
+                    }, label: {
                         HStack {
                             Text(model)
                                 .font(.system(size: 12, design: .monospaced))
@@ -289,7 +289,7 @@ struct ModelPickerView: View {
                                     .foregroundStyle(Color.accentColor)
                             }
                         }
-                    }
+                    })
                     .buttonStyle(.plain)
                     .padding(.vertical, 2)
                 }

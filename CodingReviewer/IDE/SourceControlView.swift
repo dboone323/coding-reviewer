@@ -87,26 +87,26 @@ struct SourceControlHeader: View {
             Spacer()
 
             // Refresh button
-            Button(action: { Task { await viewModel.refreshStatus() } }) {
+            Button(action: { Task { await viewModel.refreshStatus() } }, label: {
                 Image(systemName: "arrow.clockwise")
                     .font(.system(size: 11))
-            }
+            })
             .buttonStyle(.borderless)
             .help("Refresh")
 
             // Pull button
-            Button(action: { Task { await viewModel.pull() } }) {
+            Button(action: { Task { await viewModel.pull() } }, label: {
                 Image(systemName: "arrow.down.circle")
                     .font(.system(size: 11))
-            }
+            })
             .buttonStyle(.borderless)
             .help("Pull")
 
             // Push button
-            Button(action: { Task { await viewModel.push() } }) {
+            Button(action: { Task { await viewModel.push() } }, label: {
                 Image(systemName: "arrow.up.circle")
                     .font(.system(size: 11))
-            }
+            })
             .buttonStyle(.borderless)
             .help("Push")
             .disabled((viewModel.status?.staged.isEmpty ?? true))
@@ -336,13 +336,13 @@ struct CommitSection: View {
             // Commit button
             HStack {
                 Spacer()
-                Button(action: { Task { await viewModel.commit() } }) {
+                Button(action: { Task { await viewModel.commit() } }, label: {
                     HStack(spacing: 4) {
                         Image(systemName: "checkmark.circle.fill")
                         Text("Commit")
                     }
                     .font(.system(size: 11, weight: .medium))
-                }
+                })
                 .buttonStyle(.borderedProminent)
                 .controlSize(.small)
                 .disabled(

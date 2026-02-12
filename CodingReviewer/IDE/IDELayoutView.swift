@@ -349,7 +349,7 @@ struct ReviewActionButton: View {
     let color: Color
 
     var body: some View {
-        Button(action: {}) {
+        Button(action: {}, label: {
             HStack {
                 Image(systemName: icon)
                     .foregroundStyle(color)
@@ -365,7 +365,7 @@ struct ReviewActionButton: View {
             .padding(.vertical, 8)
             .background(Color(nsColor: .controlBackgroundColor))
             .clipShape(RoundedRectangle(cornerRadius: 6))
-        }
+        })
         .buttonStyle(.plain)
     }
 }

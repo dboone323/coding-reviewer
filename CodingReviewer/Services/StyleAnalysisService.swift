@@ -22,7 +22,8 @@ struct StyleAnalysisService {
             let lines = code.components(separatedBy: .newlines)
             for (index, line) in lines.enumerated() where line.count > 120 {
                 issues.append(CodeIssue(
-                    description: "Line \(index + 1) is too long (\(line.count) characters). Maximum allowed is 120 characters.",
+                    description: "Line \(index + 1) is too long (\(line.count) characters). " +
+                        "Maximum allowed is 120 characters.",
                     severity: .low,
                     line: index + 1,
                     category: .style
@@ -32,7 +33,8 @@ struct StyleAnalysisService {
             // Check for missing documentation (Swift only)
             if code.contains("func "), !code.contains("///") {
                 issues.append(CodeIssue(
-                    description: "Code contains functions without documentation comments. Consider adding /// comments for public functions.",
+                    description: "Code contains functions without documentation comments. " +
+                        "Consider adding /// comments for public functions.",
                     severity: .low,
                     line: nil,
                     category: .style

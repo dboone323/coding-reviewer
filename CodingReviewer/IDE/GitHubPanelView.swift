@@ -93,10 +93,10 @@ struct GitHubHeader: View {
             Spacer()
 
             // Refresh button
-            Button(action: { Task { await viewModel.detectCurrentRepo() } }) {
+            Button(action: { Task { await viewModel.detectCurrentRepo() } }, label: {
                 Image(systemName: "arrow.clockwise")
                     .font(.system(size: 11))
-            }
+            })
             .buttonStyle(.borderless)
             .help("Refresh")
         }
@@ -175,13 +175,13 @@ struct GitHubPRRow: View {
             }
 
             // Open in browser button
-            Button(action: { openURL(pr.htmlUrl) }) {
+            Button(action: { openURL(pr.htmlUrl) }, label: {
                 HStack(spacing: 4) {
                     Image(systemName: "arrow.up.forward.square")
                     Text("Open in Browser")
                 }
                 .font(.system(size: 10))
-            }
+            })
             .buttonStyle(.bordered)
             .controlSize(.mini)
         }
@@ -207,13 +207,13 @@ struct IssuesList: View {
             // Create issue button
             HStack {
                 Spacer()
-                Button(action: { showingCreateIssue = true }) {
+                Button(action: { showingCreateIssue = true }, label: {
                     HStack(spacing: 4) {
                         Image(systemName: "plus.circle.fill")
                         Text("New Issue")
                     }
                     .font(.system(size: 10))
-                }
+                })
                 .buttonStyle(.bordered)
                 .controlSize(.small)
             }
@@ -283,13 +283,13 @@ struct GitHubIssueRow: View {
             }
 
             // Open in browser button
-            Button(action: { openURL(issue.htmlUrl) }) {
+            Button(action: { openURL(issue.htmlUrl) }, label: {
                 HStack(spacing: 4) {
                     Image(systemName: "arrow.up.forward.square")
                     Text("Open in Browser")
                 }
                 .font(.system(size: 10))
-            }
+            })
             .buttonStyle(.bordered)
             .controlSize(.mini)
         }

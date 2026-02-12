@@ -50,8 +50,7 @@ public class CodeReviewService: CodeReviewServiceProtocol {
 
     private func ensureAIService() {
         if aiService == nil {
-            let generator: (String, String, Double) async throws -> String = {
-                model, prompt, temp in
+            let generator: (String, String, Double) async throws -> String = { model, prompt, temp in
                 try await OllamaClient().generate(model: model, prompt: prompt, temperature: temp)
             }
             aiService = AIEnhancedCodeAnalysisService(llmGenerate: generator)
@@ -329,9 +328,12 @@ public class CodeReviewService: CodeReviewServiceProtocol {
                     let jitter = Double.random(in: 0...0.1) * backoff
                     let delay = backoff + jitter
 
-                    logger.warning(
-                        "Operation '\(operation)' failed (attempt \(attempt)/\(attempts)): \(error.localizedDescription). Retrying in \(String(format: "%.1f", delay))s..."
-                    )
+                    // swiftlint:disable line_length
+                    logger
+                        .warning(
+                            "'\(operation)' failed (\(attempt)/\(attempts)): \(error.localizedDescription). Retry \(String(format: "%.1f", delay))s"
+                        )
+                    // swiftlint:enable line_length
 
                     try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
                 } else {

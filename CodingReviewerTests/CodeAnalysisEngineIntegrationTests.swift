@@ -41,8 +41,10 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
                 return result
             }
 
-            func longFunctionNameThatExceedsNormalLineLengthLimitsAndShouldBeConsideredAStyleIssue(parameter1: String, parameter2: Int, parameter3: Bool) -> String {
-                return "This is a very long line that definitely exceeds the recommended line length limit for code style and should be flagged as a style issue in the analysis"
+            func longFunctionNameThatExceedsNormalLineLengthLimitsAndShouldBeConsideredAStyleIssue(
+                parameter1: String, parameter2: Int, parameter3: Bool) -> String {
+                return "This is a very long line that definitely exceeds the recommended " +
+                    "line length limit for code style and should be flagged as a style issue in the analysis"
             }
         }
         """
@@ -102,8 +104,10 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
         }
 
         // Very long function name that exceeds line length limits and should be flagged as a style issue
-        function thisIsAVeryLongFunctionNameThatDefinitelyExceedsTheRecommendedLineLengthLimitForJavaScriptCode(parameter1, parameter2, parameter3, parameter4, parameter5) {
-            return "This line is also very long and should be detected as a style issue because it exceeds normal line length recommendations for readable code";
+        function thisIsAVeryLongFunctionNameThatDefinitelyExceedsTheRecommendedLineLengthLimitForJavaScriptCode(
+            parameter1, parameter2, parameter3, parameter4, parameter5) {
+            return "This line is also very long and should be detected as a style issue because " +
+                "it exceeds normal line length recommendations for readable code";
         }
         """
 
@@ -355,7 +359,8 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
                 }
 
                 // Style issue - very long line
-                func veryLongFunctionNameThatExceedsRecommendedLineLength(parameter1: String, parameter2: Int, parameter3: Bool, parameter4: Double, parameter5: Date) -> String {
+                func veryLongFunctionNameThatExceedsRecommendedLineLength(parameter1: String, parameter2: Int,
+                    parameter3: Bool, parameter4: Double, parameter5: Date) -> String {
                     return "This is an extremely long line that definitely exceeds the maximum recommended " +
                         "line length for Swift code and should be flagged as a style violation by the " +
                         "StyleAnalysisService"

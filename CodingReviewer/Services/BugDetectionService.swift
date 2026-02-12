@@ -24,67 +24,88 @@ struct BugDetectionService {
         let lines = code.components(separatedBy: .newlines)
 
         // Check for common bug patterns
-        if language == "Swift" || language == "JavaScript" {
-            // Check for TODO comments - create separate issues for each
-            for (index, line) in lines.enumerated() where line.contains("TODO") {
-                issues.append(CodeIssue(
-                    description: "TODO comment found - this should be addressed",
-                    severity: .medium,
-                    line: index + 1,
-                    category: .bug
-                ))
-            }
-
-            // Check for FIXME comments - create separate issues for each
-            for (index, line) in lines.enumerated() where line.contains("FIXME") {
-                issues.append(CodeIssue(
-                    description: "FIXME comment found - this should be addressed",
-                    severity: .high, // FIXED is usually higher severity than DONE
-                    line: index + 1,
-                    category: .bug
-                ))
-            }
-        }
-
+        issues.append(contentsOf: detectTodoAndFixmeComments(in: lines))
         if language == "Swift" {
-            // Check for print statements
-            for (index, line) in lines.enumerated() where line.contains("print(") {
-                let trimmed = line.trimmingCharacters(in: .whitespaces)
-                if !trimmed.hasPrefix("//") {
-                    issues.append(CodeIssue(
-                        description: "Debug print statements found in production code",
-                        severity: .low,
-                        line: index + 1,
-                        category: .bug
-                    ))
-                    break // Only report once
-                }
-            }
-
-            // Check for force unwrap
-            for (index, line) in lines.enumerated() {
-                let trimmed = line.trimmingCharacters(in: .whitespaces)
-                // Ignore comments
-                guard !trimmed.hasPrefix("//") else { continue }
-
-                // Simple heuristic to ignore string literals would be complex without a parser,
-                // but we can improve the check to be slightly more robust
-                if line.contains("!") && !line.contains("!=") && !line.contains("?!") {
-                    // Check if it's likely a force unwrap (end of word or before dot)
-                    // This is still a heuristic
-                    if line.contains("!)") || line.contains("!.") || line.contains("! ") || line.hasSuffix("!") {
-                        issues.append(CodeIssue(
-                            description: "Force unwrapping detected - consider safe unwrapping",
-                            severity: .medium,
-                            line: index + 1,
-                            category: .bug
-                        ))
-                        break // Only report once
-                    }
-                }
-            }
+            issues.append(contentsOf: detectSwiftSpecificIssues(in: lines))
         }
 
         return issues
+    }
+
+    private func detectTodoAndFixmeComments(in lines: [String]) -> [CodeIssue] {
+        var issues: [CodeIssue] = []
+
+        // Check for TODO comments
+        for (index, line) in lines.enumerated() where line.contains("TODO") {
+            issues.append(CodeIssue(
+                description: "TODO comment found - this should be addressed",
+                severity: .medium,
+                line: index + 1,
+                category: .bug
+            ))
+        }
+
+        // Check for FIXME comments
+        for (index, line) in lines.enumerated() where line.contains("FIXME") {
+            issues.append(CodeIssue(
+                description: "FIXME comment found - this should be addressed",
+                severity: .high,
+                line: index + 1,
+                category: .bug
+            ))
+        }
+
+        return issues
+    }
+
+    private func detectSwiftSpecificIssues(in lines: [String]) -> [CodeIssue] {
+        var issues: [CodeIssue] = []
+
+        // Check for print statements
+        if let printIssue = detectPrintStatements(in: lines) {
+            issues.append(printIssue)
+        }
+
+        // Check for force unwrap
+        if let forceUnwrapIssue = detectForceUnwrap(in: lines) {
+            issues.append(forceUnwrapIssue)
+        }
+
+        return issues
+    }
+
+    private func detectPrintStatements(in lines: [String]) -> CodeIssue? {
+        for (index, line) in lines.enumerated() where line.contains("print(") {
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+            if !trimmed.hasPrefix("//") {
+                return CodeIssue(
+                    description: "Debug print statements found in production code",
+                    severity: .low,
+                    line: index + 1,
+                    category: .bug
+                )
+            }
+        }
+        return nil
+    }
+
+    private func detectForceUnwrap(in lines: [String]) -> CodeIssue? {
+        for (index, line) in lines.enumerated() {
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+            // Ignore comments
+            guard !trimmed.hasPrefix("//") else { continue }
+
+            if line.contains("!") && !line.contains("!=") && !line.contains("?!") {
+                if line.contains("!)") || line.contains("!.") || line.contains("! ") || line.hasSuffix("!") {
+                    return CodeIssue(
+                        description: "Force unwrapping detected - consider safe unwrapping",
+                        severity: .medium,
+                        line: index + 1,
+                        category: .bug
+                    )
+                }
+            }
+        }
+        return nil
     }
 }

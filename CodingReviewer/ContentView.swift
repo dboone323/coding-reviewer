@@ -103,8 +103,7 @@ public struct ContentView: View {
         }
         .keyboardShortcut("n", modifiers: .command)
         .keyboardShortcut("r", modifiers: .command)
-        .onReceive(NotificationCenter.default.publisher(for: NSWindow.didBecomeMainNotification)) {
-            _ in
+        .onReceive(NotificationCenter.default.publisher(for: NSWindow.didBecomeMainNotification)) { _ in
             // Handle window focus if needed
         }
     }

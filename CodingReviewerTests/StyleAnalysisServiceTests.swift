@@ -109,7 +109,8 @@ final class StyleAnalysisServiceTests: XCTestCase {
         let code = """
         class Calculator {
             func calculate() {
-                let result = "This is a string that should be exactly 120 characters or less when counted by the service"
+                let result = "This is a string that should be exactly 120 characters or less " +
+                    "when counted by the service"
             }
         }
         """
@@ -255,7 +256,8 @@ final class StyleAnalysisServiceTests: XCTestCase {
         let code = """
         class Test {
         \t\tfunc method() {
-        \t\t\tlet veryLongVariableName = "This is a very long string that will definitely exceed the line limit when combined with indentation and extra text"
+        \t\t\tlet veryLongVariableName = "This is a very long string that will definitely " +
+            "exceed the line limit when combined with indentation and extra text"
         \t\t}
         }
         """

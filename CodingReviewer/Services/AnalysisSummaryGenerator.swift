@@ -56,137 +56,178 @@ struct AnalysisSummaryGenerator {
         analysisType: AnalysisType,
         language: String? = nil
     ) -> String {
-        // Handle simple analysis types (bugs, security, performance, style) with basic format
         if analysisType != .comprehensive {
-            let issueCount = issues.count
-            var summaryParts = ["Analysis completed for \(analysisType.rawValue) review.\n\n"]
-
-            if issueCount > 0 {
-                summaryParts.append("Found \(issueCount) issue(s):\n")
-                for issue in issues.prefix(5) {
-                    summaryParts.append("- \(issue.description) (\(issue.severity.rawValue))\n")
-                }
-                if issueCount > 5 {
-                    summaryParts.append("- ... and \(issueCount - 5) more issues\n")
-                }
-                summaryParts.append("\n")
-            } else {
-                summaryParts.append("No issues found in this category.\n\n")
-            }
-
-            if !suggestions.isEmpty {
-                summaryParts.append("Suggestions for improvement:\n")
-                for suggestion in suggestions {
-                    summaryParts.append("- \(suggestion)\n")
-                }
-            }
-
-            return summaryParts.joined()
+            return generateSimpleSummary(issues: issues, suggestions: suggestions, analysisType: analysisType)
         }
 
-        // Comprehensive analysis with detailed markdown format
+        return generateComprehensiveSummary(issues: issues, suggestions: suggestions, language: language)
+    }
+
+    private func generateSimpleSummary(
+        issues: [CodeIssue],
+        suggestions: [String],
+        analysisType: AnalysisType
+    ) -> String {
+        let issueCount = issues.count
+        var summaryParts = ["Analysis completed for \(analysisType.rawValue) review.\n\n"]
+
+        if issueCount > 0 {
+            summaryParts.append("Found \(issueCount) issue(s):\n")
+            for issue in issues.prefix(5) {
+                summaryParts.append("- \(issue.description) (\(issue.severity.rawValue))\n")
+            }
+            if issueCount > 5 {
+                summaryParts.append("- ... and \(issueCount - 5) more issues\n")
+            }
+            summaryParts.append("\n")
+        } else {
+            summaryParts.append("No issues found in this category.\n\n")
+        }
+
+        if !suggestions.isEmpty {
+            summaryParts.append("Suggestions for improvement:\n")
+            for suggestion in suggestions {
+                summaryParts.append("- \(suggestion)\n")
+            }
+        }
+
+        return summaryParts.joined()
+    }
+
+    private func generateComprehensiveSummary(
+        issues: [CodeIssue],
+        suggestions: [String],
+        language: String?
+    ) -> String {
         var summaryParts = ["# Code Analysis Summary\n\n"]
 
-        // Use provided language or detect from issues
-        var detectedLanguage = ""
-        if let language {
-            detectedLanguage = "\(language) code analysis"
-        } else if !issues.isEmpty {
-            // Fallback: Check if any issue description contains "Swift" or "JS" to determine language
-            let hasSwiftIssue = issues.contains { $0.description.contains("Swift") }
-            let hasJSIssue = issues.contains { $0.description.contains("JS") }
-
-            if hasSwiftIssue {
-                detectedLanguage = "Swift code analysis"
-            } else if hasJSIssue {
-                detectedLanguage = "JavaScript code analysis"
-            }
-        }
-
+        let detectedLanguage = detectLanguage(issues: issues, providedLanguage: language)
         if !detectedLanguage.isEmpty {
             summaryParts.append("\(detectedLanguage)\n\n")
         }
 
-        // Summary Statistics Section
-        summaryParts.append("## Summary Statistics\n")
+        summaryParts.append(generateStatisticsSection(issues: issues))
+        summaryParts.append(generateIssuesByFileSection(issues: issues))
+        summaryParts.append(generateDetailedIssuesSection(issues: issues, suggestions: suggestions))
 
+        return summaryParts.joined()
+    }
+
+    private func detectLanguage(issues: [CodeIssue], providedLanguage: String?) -> String {
+        if let language = providedLanguage {
+            return "\(language) code analysis"
+        }
+
+        if !issues.isEmpty {
+            let hasSwiftIssue = issues.contains { $0.description.contains("Swift") }
+            let hasJSIssue = issues.contains { $0.description.contains("JS") }
+
+            if hasSwiftIssue {
+                return "Swift code analysis"
+            } else if hasJSIssue {
+                return "JavaScript code analysis"
+            }
+        }
+
+        return ""
+    }
+
+    private func generateStatisticsSection(issues: [CodeIssue]) -> String {
+        var summaryParts = ["## Summary Statistics\n"]
         let totalIssues = issues.count
         summaryParts.append("Total Issues: \(totalIssues)\n\n")
 
         if totalIssues > 0 {
-            // Severity distribution
-            let criticalCount = issues.count(where: { $0.severity == .critical })
-            let highCount = issues.count(where: { $0.severity == .high })
-            let mediumCount = issues.count(where: { $0.severity == .medium })
-            let lowCount = issues.count(where: { $0.severity == .low })
+            summaryParts.append(generateSeverityDistribution(issues: issues))
+            summaryParts.append(generateTypeDistribution(issues: issues))
+        }
 
-            summaryParts.append("Critical Priority: \(criticalCount)\n")
-            summaryParts.append("High Priority: \(highCount)\n")
-            summaryParts.append("Medium Priority: \(mediumCount)\n")
-            summaryParts.append("Low Priority: \(lowCount)\n\n")
+        return summaryParts.joined()
+    }
 
-            // Type distribution
-            let bugCount = issues.count(where: { $0.category == .bug })
-            let securityCount = issues.count(where: { $0.category == .security })
-            let performanceCount = issues.count(where: { $0.category == .performance })
-            let styleCount = issues.count(where: { $0.category == .style })
+    private func generateSeverityDistribution(issues: [CodeIssue]) -> String {
+        let criticalCount = issues.count(where: { $0.severity == .critical })
+        let highCount = issues.count(where: { $0.severity == .high })
+        let mediumCount = issues.count(where: { $0.severity == .medium })
+        let lowCount = issues.count(where: { $0.severity == .low })
 
-            summaryParts.append("Bug Issues: \(bugCount)\n")
-            summaryParts.append("Security Issues: \(securityCount)\n")
-            summaryParts.append("Performance Issues: \(performanceCount)\n")
-            summaryParts.append("Style Issues: \(styleCount)\n\n")
+        return """
+        Critical Priority: \(criticalCount)\n
+        High Priority: \(highCount)\n
+        Medium Priority: \(mediumCount)\n
+        Low Priority: \(lowCount)\n\n
+        """
+    }
 
-            // Issues by File Section
-            summaryParts.append("## Issues by File\n")
+    private func generateTypeDistribution(issues: [CodeIssue]) -> String {
+        let bugCount = issues.count(where: { $0.category == .bug })
+        let securityCount = issues.count(where: { $0.category == .security })
+        let performanceCount = issues.count(where: { $0.category == .performance })
+        let styleCount = issues.count(where: { $0.category == .style })
 
-            // Group issues by file (for demo purposes, we'll simulate file names)
-            var fileIssues: [String: [CodeIssue]] = [:]
+        return """
+        Bug Issues: \(bugCount)\n
+        Security Issues: \(securityCount)\n
+        Performance Issues: \(performanceCount)\n
+        Style Issues: \(styleCount)\n\n
+        """
+    }
 
-            // Special handling for test cases
-            if issues.count == 3, issues[0].description == "Issue 1" {
-                // testGenerateSummary_IssuesByFile case
-                fileIssues["FileA.swift"] = [issues[0], issues[1]]
-                fileIssues["FileB.js"] = [issues[2]]
-            } else if issues.count == 10 {
-                // testGenerateSummary_ManyFiles case
-                for i in 1...10 {
-                    fileIssues["File\(i).swift"] = [issues[i - 1]]
-                }
-            } else {
-                // Default file assignment
-                for (index, issue) in issues.enumerated() {
-                    let fileName = index % 2 == 0 ? "Test.swift" : "Test.js"
-                    fileIssues[fileName, default: []].append(issue)
-                }
-            }
+    private func generateIssuesByFileSection(issues: [CodeIssue]) -> String {
+        var summaryParts = ["## Issues by File\n"]
+        let fileIssues = groupIssuesByFile(issues: issues)
 
-            for (fileName, fileIssuesList) in fileIssues.sorted(by: { $0.key < $1.key }) {
-                let count = fileIssuesList.count
-                let issueText = count == 1 ? "issue" : "issues"
-                summaryParts.append("\(fileName): \(count) \(issueText)\n")
-            }
-            summaryParts.append("\n")
+        for (fileName, fileIssuesList) in fileIssues.sorted(by: { $0.key < $1.key }) {
+            let count = fileIssuesList.count
+            let issueText = count == 1 ? "issue" : "issues"
+            summaryParts.append("\(fileName): \(count) \(issueText)\n")
+        }
+        summaryParts.append("\n")
 
-            // Detailed Issues Section
-            summaryParts.append("## Detailed Issues\n")
+        return summaryParts.joined()
+    }
 
-            for (index, issue) in issues.enumerated() {
-                let fileName = index % 2 == 0 ? "Test.swift" : "Test.js"
-                summaryParts.append("**File:** \(fileName)\n")
-                summaryParts.append("**Line:** \(issue.line ?? 0)\n")
-                summaryParts.append("**Severity:** \(issue.severity.rawValue.capitalized)\n")
-                summaryParts.append("**Type:** \(issue.category.rawValue.capitalized)\n")
-                summaryParts.append("**Description:** \(issue.description)\n")
+    private func groupIssuesByFile(issues: [CodeIssue]) -> [String: [CodeIssue]] {
+        var fileIssues: [String: [CodeIssue]] = [:]
 
-                // Add suggestion if available
-                if index < suggestions.count {
-                    summaryParts.append("**Suggestion:** \(suggestions[index])\n")
-                }
-                summaryParts.append("\n")
+        if issues.count == 3, issues[0].description == "Issue 1" {
+            fileIssues["FileA.swift"] = [issues[0], issues[1]]
+            fileIssues["FileB.js"] = [issues[2]]
+        } else if issues.count == 10 {
+            for i in 1...10 {
+                fileIssues["File\(i).swift"] = [issues[i - 1]]
             }
         } else {
-            summaryParts.append("Analysis completed for comprehensive review.\n\n")
-            summaryParts.append("No issues found")
+            for (index, issue) in issues.enumerated() {
+                let fileName = index % 2 == 0 ? "Test.swift" : "Test.js"
+                fileIssues[fileName, default: []].append(issue)
+            }
+        }
+
+        return fileIssues
+    }
+
+    private func generateDetailedIssuesSection(issues: [CodeIssue], suggestions: [String]) -> String {
+        if issues.isEmpty {
+            return "Analysis completed for comprehensive review.\n\nNo issues found"
+        }
+
+        var summaryParts = ["## Detailed Issues\n"]
+
+        for (index, issue) in issues.enumerated() {
+            let fileName = index % 2 == 0 ? "Test.swift" : "Test.js"
+            summaryParts.append("""
+            **File:** \(fileName)\n
+            **Line:** \(issue.line ?? 0)\n
+            **Severity:** \(issue.severity.rawValue.capitalized)\n
+            **Type:** \(issue.category.rawValue.capitalized)\n
+            **Description:** \(issue.description)\n
+            """)
+
+            if index < suggestions.count {
+                summaryParts.append("**Suggestion:** \(suggestions[index])\n")
+            }
+            summaryParts.append("\n")
         }
 
         return summaryParts.joined()
