@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ReviewHistoryView: View {
-    // Mock data for now
+    /// Mock data for now
     struct ReviewItem: Identifiable {
         let id = UUID()
         let fileName: String

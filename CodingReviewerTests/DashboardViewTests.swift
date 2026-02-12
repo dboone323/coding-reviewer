@@ -4,7 +4,7 @@
 //
 
 import XCTest
-@testable import CodingReviewerCore
+@testable import CodingReviewer
 
 final class DashboardViewTests: XCTestCase {
     // MARK: - View Initialization Tests

@@ -2,7 +2,7 @@
 //  CodingReviewer.swift
 //  CodingReviewer
 //
-//  Main SwiftUI application for CodingReviewer
+//  Main SwiftUI application for CodingReviewer IDE
 //
 
 import os
@@ -10,15 +10,17 @@ import SwiftUI
 
 @main
 public struct CodingReviewer: App {
-    private let logger = Logger(subsystem: "com.quantum.codingreviewer", category: "CodingReviewerApp")
+    private let logger = Logger(
+        subsystem: "com.quantum.codingreviewer", category: "CodingReviewerApp"
+    )
 
     @State private var showNewReviewSheet = false
     @State private var showAboutWindow = false
 
     public var body: some Scene {
         WindowGroup {
-            ContentView()
-                .frame(minWidth: 800, minHeight: 600)
+            IDELayoutView()
+                .frame(minWidth: 1000, minHeight: 650)
                 .sheet(isPresented: $showNewReviewSheet) {
                     NewReviewView()
                 }
@@ -26,7 +28,7 @@ public struct CodingReviewer: App {
         .windowStyle(.hiddenTitleBar)
         .windowToolbarStyle(.unified)
         .commands {
-            // Add standard menu commands
+            // File menu
             CommandGroup(replacing: .newItem) {
                 Button("New Review") {
                     showNewReviewSheet = true
@@ -35,7 +37,7 @@ public struct CodingReviewer: App {
             }
 
             CommandGroup(replacing: .saveItem) {
-                Button("Save Review") {
+                Button("Save File") {
                     saveCurrentReview()
                 }
                 .keyboardShortcut("s", modifiers: .command)
@@ -63,11 +65,13 @@ public struct CodingReviewer: App {
     }
 
     public init() {
-        logger.info("CodingReviewer application initialized")
+        logger.info("CodingReviewer IDE initialized")
     }
 
     private func saveCurrentReview() {
-        logger.info("Save review action triggered")
-        NotificationCenter.default.post(name: Notification.Name("SaveReviewNotification"), object: nil)
+        logger.info("Save action triggered")
+        NotificationCenter.default.post(
+            name: Notification.Name("SaveReviewNotification"), object: nil
+        )
     }
 }

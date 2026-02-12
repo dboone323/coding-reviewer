@@ -10,8 +10,10 @@ import Foundation
 actor ConcurrencyManager {
     static let shared = ConcurrencyManager()
 
-    func performConcurrentAnalysis(files: [String],
-                                   analyzer: @escaping @Sendable (String) async -> [CodeIssue]) async -> [String: [
+    func performConcurrentAnalysis(
+        files: [String],
+        analyzer: @escaping @Sendable (String) async -> [CodeIssue]
+    ) async -> [String: [
         CodeIssue
     ]] {
         await withTaskGroup(of: (String, [CodeIssue]).self) { group in

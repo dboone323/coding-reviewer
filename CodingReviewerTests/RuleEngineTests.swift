@@ -6,8 +6,7 @@
 //
 
 import XCTest
-
-@testable import CodingReviewerCore
+@testable import CodingReviewer
 
 final class RuleEngineTests: XCTestCase {
     var engine: RuleEngine!

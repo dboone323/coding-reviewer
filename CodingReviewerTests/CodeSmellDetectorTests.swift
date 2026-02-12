@@ -4,7 +4,7 @@
 //
 
 import XCTest
-@testable import CodingReviewerCore
+@testable import CodingReviewer
 
 final class CodeSmellDetectorTests: XCTestCase {
     let detector = CodeSmellDetector()
@@ -22,7 +22,7 @@ final class CodeSmellDetectorTests: XCTestCase {
     func testDetectLongMethod() {
         // Create a fake long method
         var code = "func longMethod() {\n"
-        for i in 0 ..< 60 {
+        for i in 0..<60 {
             code += "    print(\(i))\n"
         }
         code += "}\n"
@@ -48,14 +48,14 @@ final class CodeSmellDetectorTests: XCTestCase {
     func testMultipleMethods_CheckReset() {
         var code = "func method1() {\n"
         // 10 lines
-        for _ in 0 ..< 10 {
+        for _ in 0..<10 {
             code += "\n"
         }
         code += "}\n"
 
         code += "func method2() {\n"
         // 10 lines
-        for _ in 0 ..< 10 {
+        for _ in 0..<10 {
             code += "\n"
         }
         code += "}\n"

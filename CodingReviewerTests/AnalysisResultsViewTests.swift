@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import CodingReviewerCore
+@testable import CodingReviewer
 
 final class AnalysisResultsViewTests: XCTestCase {
     // MARK: - Initialization Tests
@@ -64,7 +64,7 @@ final class AnalysisResultsViewTests: XCTestCase {
 
     func testEdgeCases() {
         // Large issues list should still reflect correctly in the VM
-        let manyIssues = (0 ..< 50).map { idx in
+        let manyIssues = (0..<50).map { idx in
             CodeIssue(description: "Issue #\(idx)", severity: .medium, line: idx + 1, category: .general)
         }
         let result = CodeAnalysisResult(

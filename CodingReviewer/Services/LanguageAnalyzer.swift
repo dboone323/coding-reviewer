@@ -32,7 +32,15 @@ enum LanguageAnalyzerFactory {
 struct GenericAnalyzer: LanguageAnalyzer {
     let language: String
 
-    func detectSecurityIssues(code: String) -> [CodeIssue] { [] }
-    func detectStyleIssues(code: String) -> [CodeIssue] { [] }
-    func detectBugs(code: String) -> [CodeIssue] { [] }
+    func detectSecurityIssues(code: String) -> [CodeIssue] {
+        []
+    }
+
+    func detectStyleIssues(code: String) -> [CodeIssue] {
+        []
+    }
+
+    func detectBugs(code: String) -> [CodeIssue] {
+        []
+    }
 }

@@ -47,7 +47,8 @@ class RuleEngine {
         }
 
         logger.info(
-            "Analyzing with \(applicableRules.count) applicable rules for language: \(language)")
+            "Analyzing with \(applicableRules.count) applicable rules for language: \(language)"
+        )
 
         for rule in applicableRules {
             let matches = PatternMatcher.findMatches(pattern: rule.pattern, in: code, timeout: 10.0)
@@ -58,7 +59,8 @@ class RuleEngine {
                         severity: rule.severity,
                         line: match.line,
                         category: rule.category
-                    ))
+                    )
+                )
             }
         }
 

@@ -7,7 +7,7 @@
 
 import SwiftUI
 import XCTest
-@testable import CodingReviewerCore
+@testable import CodingReviewer
 
 final class WelcomeViewTests: XCTestCase {
     // MARK: - Initialization Tests

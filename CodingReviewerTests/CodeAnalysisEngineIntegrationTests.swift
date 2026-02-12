@@ -6,8 +6,7 @@
 //
 
 import XCTest
-
-@testable import CodingReviewerCore
+@testable import CodingReviewer
 
 final class CodeAnalysisEngineIntegrationTests: XCTestCase {
     var analysisEngine: CodeAnalysisEngine!
@@ -190,7 +189,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
     // MARK: - Analysis Result Structure Tests
 
-    func testAnalyzeCode_ResultStructure() {
+    func testAnalyzeCode_ResultStructure() throws {
         // Given simple code with one issue
         let code = "// TODO: Fix this"
 
@@ -204,7 +203,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
         XCTAssertEqual(result.issues.count, 1)
         XCTAssertFalse(result.analysis.isEmpty)
 
-        let issue = result.issues.first!
+        let issue = try XCTUnwrap(result.issues.first)
         XCTAssertEqual(issue.category, IssueCategory.bug)
         XCTAssertEqual(issue.severity, IssueSeverity.medium) // TODO: is typically medium severity
         XCTAssertTrue(issue.description.contains("TODO"))
@@ -398,7 +397,8 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
             print("DEBUG: Analysis result: \(result.analysis)")
             print(
-                "DEBUG: Issues found: \(result.issues.map { "\($0.category): \($0.description)" })")
+                "DEBUG: Issues found: \(result.issues.map { "\($0.category): \($0.description)" })"
+            )
             print("DEBUG: Total issues count: \(result.issues.count)")
             print("DEBUG: Result object: \(result)")
 

@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import CodingReviewerCore
+@testable import CodingReviewer
 
 final class AnalysisSummaryGeneratorTests: XCTestCase {
     var summaryGenerator: AnalysisSummaryGenerator!
@@ -344,7 +344,7 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
     func testGenerateSummary_ManyFiles() {
         // Given issues across many files
         var issues: [CodeIssue] = []
-        for issueIndex in 1 ... 10 {
+        for issueIndex in 1...10 {
             issues.append(CodeIssue(
                 description: "Issue \(issueIndex)",
                 severity: IssueSeverity.high,
@@ -361,7 +361,7 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
         )
 
         // Then all files should be listed
-        for issueIndex in 1 ... 10 {
+        for issueIndex in 1...10 {
             XCTAssertTrue(summary.contains("File\(issueIndex).swift: 1 issue"))
         }
     }

@@ -5,7 +5,7 @@
 //  Unit tests for PerformanceAnalysisService
 //
 import XCTest
-@testable import CodingReviewerCore
+@testable import CodingReviewer
 
 final class PerformanceAnalysisServiceTests: XCTestCase {
     var performanceAnalyzer: PerformanceAnalysisService!

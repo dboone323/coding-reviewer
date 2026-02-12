@@ -23,7 +23,6 @@ struct StaticAnalysisIntegrator {
         // process.arguments = ["lint", "--path", fileURL.path]
         // ...
 
-        let issues: [CodeIssue] = []
-        return issues
+        return []
     }
 }

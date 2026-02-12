@@ -28,7 +28,8 @@ func findMatches(pattern: String, in code: String, options: NSRegularExpression.
                     Match(
                         line: index + 1, content: line.trimmingCharacters(in: .whitespaces),
                         range: swiftRange
-                    ))
+                    )
+                )
             }
         }
     }

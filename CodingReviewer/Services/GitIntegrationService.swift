@@ -31,7 +31,7 @@ enum GitError: Error {
     case unauthorized
 }
 
-// Mock GitHub Implementation
+/// Mock GitHub Implementation
 class GitHubProvider: GitProvider {
     private let token: String
 

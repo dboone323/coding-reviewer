@@ -2,9 +2,9 @@ import Foundation
 import OSLog
 import SwiftUI
 
-/// AI-Enhanced Code Analysis Service
-/// Integrates Ollama models for intelligent code review and analysis
-/// Part of the CodingReviewer AI Enhancement Suite
+// AI-Enhanced Code Analysis Service
+// Integrates Ollama models for intelligent code review and analysis
+// Part of the CodingReviewer AI Enhancement Suite
 
 @MainActor
 public class AIEnhancedCodeAnalysisService: ObservableObject {
@@ -95,11 +95,13 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
                     type: .codeAnalysis,
                     result: result,
                     timestamp: Date()
-                ))
+                )
+            )
         }
 
         logger.info(
-            "AI code analysis completed with \(result.recommendations.count) recommendations")
+            "AI code analysis completed with \(result.recommendations.count) recommendations"
+        )
         return result
     }
 
@@ -158,7 +160,8 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
                     type: .codeGeneration,
                     result: result,
                     timestamp: Date()
-                ))
+                )
+            )
         }
 
         logger.info("AI code generation completed for prompt: \(prompt.prefix(50))...")
@@ -224,7 +227,8 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
                     type: .refactoring,
                     result: result,
                     timestamp: Date()
-                ))
+                )
+            )
         }
 
         logger.info("AI code refactoring completed for goal: \(refactoringGoal.description)")
@@ -278,7 +282,8 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
                     type: .documentation,
                     result: result,
                     timestamp: Date()
-                ))
+                )
+            )
         }
 
         logger.info("AI documentation generation completed")
@@ -331,11 +336,13 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
                     type: .testGeneration,
                     result: result,
                     timestamp: Date()
-                ))
+                )
+            )
         }
 
         logger.info(
-            "AI test generation completed with estimated coverage: \(result.estimatedCoverage)%")
+            "AI test generation completed with estimated coverage: \(result.estimatedCoverage)%"
+        )
         return result
     }
 
@@ -389,7 +396,8 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
                         qualityRating: extractQualityRating(from: reviewResponse),
                         topImprovements: extractTopImprovements(from: reviewResponse),
                         reviewTimestamp: Date()
-                    ))
+                    )
+                )
             } catch {
                 logger.error("Failed to review file \(filePath): \(error.localizedDescription)")
             }
@@ -436,7 +444,8 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
                     type: .codeReview,
                     result: result,
                     timestamp: Date()
-                ))
+                )
+            )
         }
 
         logger.info("AI code review completed for \(files.count) files")

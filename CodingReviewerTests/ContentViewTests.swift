@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import CodingReviewerCore
+@testable import CodingReviewer
 
 final class ContentViewTests: XCTestCase {
     // MARK: - Initialization Tests
