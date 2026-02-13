@@ -26,10 +26,12 @@ struct SwiftAnalyzer: LanguageAnalyzer {
             )
         }
 
-        // Force Unwrapping
-        let forceUnwrapMatches = PatternMatcher.findMatches(pattern: "[a-zA-Z0-9_]+\\s*!", in: code)
-        // Filter out != and checks
-        for match in forceUnwrapMatches where !match.matchedText.contains("!=") {
+        // Force unwrapping: match `identifier!` but exclude comparison operators like `!=`.
+        let forceUnwrapMatches = PatternMatcher.findMatches(
+            pattern: "[a-zA-Z0-9_]+\\s*!(?!=)",
+            in: code
+        )
+        for match in forceUnwrapMatches {
             issues.append(
                 CodeIssue(
                     description: "Force unwrapping found. Use optional binding (if let/guard let).",
@@ -84,22 +86,28 @@ struct SwiftAnalyzer: LanguageAnalyzer {
         var issues: [CodeIssue] = []
         let lines = code.components(separatedBy: .newlines)
 
+        // Detect empty catch blocks across lines, e.g.:
+        // catch {
+        // }
+        let emptyCatchMatches = PatternMatcher.findMatches(
+            pattern: "catch\\s*\\{\\s*\\}",
+            in: code
+        )
+        for match in emptyCatchMatches {
+            issues.append(
+                CodeIssue(
+                    description: "Empty catch block - errors should be handled or logged",
+                    severity: .high,
+                    line: match.line,
+                    category: .bug
+                )
+            )
+        }
+
         // Detect common Swift bugs
         for (index, line) in lines.enumerated() {
             let trimmed = line.trimmingCharacters(in: .whitespaces)
             guard !trimmed.hasPrefix("//") else { continue }
-
-            // Detect empty catch blocks (swallowed errors)
-            if trimmed.contains("catch") && trimmed.contains("{ }") {
-                issues.append(
-                    CodeIssue(
-                        description: "Empty catch block - errors should be handled or logged",
-                        severity: .high,
-                        line: index + 1,
-                        category: .bug
-                    )
-                )
-            }
 
             // Detect potential retain cycles in closures
             if trimmed.contains("[self]") && !trimmed.contains("[weak self]")

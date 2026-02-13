@@ -8,7 +8,7 @@
 import Foundation
 
 /// Match result from pattern matching
-public struct PatternMatch {
+public struct PatternMatch: Sendable {
     public let range: Range<String.Index>
     public let line: Int?
     public let matchedText: String
@@ -35,45 +35,42 @@ public class PatternMatcher {
         in code: String,
         timeout: TimeInterval = defaultTimeout
     ) -> [PatternMatch] {
-        var matches: [PatternMatch] = []
-
+        guard timeout > 0 else {
+            return []
+        }
         guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
-            return matches // Invalid regex pattern
+            return [] // Invalid regex pattern
         }
 
         let nsString = code as NSString
         let nsRange = NSRange(location: 0, length: nsString.length)
+        let deadline = Date().addingTimeInterval(timeout)
+        var didTimeout = false
+        var matches: [PatternMatch] = []
 
-        // Perform matching with timeout protection
-        let semaphore = DispatchSemaphore(value: 0)
-
-        DispatchQueue.global(qos: .userInitiated).async {
-            regex.enumerateMatches(in: code, options: [], range: nsRange) { match, _, _ in
-                guard let match else { return }
-
-                if let matchRange = Range(match.range, in: code) {
-                    let matchedText = String(code[matchRange])
-                    let lineNumber = calculateLineNumber(in: code, at: matchRange.lowerBound)
-
-                    matches.append(
-                        PatternMatch(
-                            range: matchRange,
-                            line: lineNumber,
-                            matchedText: matchedText
-                        )
-                    )
-                }
+        regex.enumerateMatches(in: code, options: [], range: nsRange) { match, _, stop in
+            if Date() > deadline {
+                didTimeout = true
+                stop.pointee = true
+                return
             }
-            semaphore.signal()
+
+            guard let match, let matchRange = Range(match.range, in: code) else {
+                return
+            }
+
+            let matchedText = String(code[matchRange])
+            let lineNumber = calculateLineNumber(in: code, at: matchRange.lowerBound)
+            matches.append(
+                PatternMatch(
+                    range: matchRange,
+                    line: lineNumber,
+                    matchedText: matchedText
+                )
+            )
         }
 
-        // Wait for completion or timeout
-        let result = semaphore.wait(timeout: .now() + timeout)
-        if result == .timedOut {
-            return [] // Pattern matching timed out
-        }
-
-        return matches
+        return didTimeout ? [] : matches
     }
 
     /// Calculate line number for a string index

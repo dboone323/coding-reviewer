@@ -87,6 +87,6 @@ struct CrashTests {
         }
 
         // If we get here without crashing, the test passes
-        #expect(true, "Concurrent operations completed without crashing")
+        #expect(Bool(true), "Concurrent operations completed without crashing")
     }
 }

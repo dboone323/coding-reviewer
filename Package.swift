@@ -13,31 +13,38 @@ let package = Package(
     products: [
         .library(
             name: "CodingReviewerCore",
-            targets: ["CodingReviewerCore"]
+            targets: ["CodingReviewer"]
         )
     ],
     dependencies: [
         // SwiftSyntax for AST-based code analysis
         .package(
-            url: "https://github.com/apple/swift-syntax.git",
+            url: "https://github.com/swiftlang/swift-syntax.git",
             from: "509.0.0"
         ),
-        // CodeEditSourceEditor for syntax-highlighted code editing
         .package(
-            url: "https://github.com/CodeEditApp/CodeEditSourceEditor.git",
-            from: "0.15.0"
+            url: "https://github.com/pointfreeco/swift-snapshot-testing.git",
+            from: "1.16.0"
         ),
     ],
     targets: [
         .target(
-            name: "CodingReviewerCore",
+            name: "CodingReviewer",
             dependencies: [
                 .product(name: "SwiftSyntax", package: "swift-syntax"),
                 .product(name: "SwiftParser", package: "swift-syntax"),
                 .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
-                .product(name: "CodeEditSourceEditor", package: "CodeEditSourceEditor"),
             ],
             path: "CodingReviewer",
+            exclude: [
+                "Temp",
+                "Tools",
+                "MainApp",
+                "Assets.xcassets",
+                "AppLifecycleCoordinator.swift",
+                "KeyboardShortcuts.swift",
+                "CodingReviewer.entitlements",
+            ],
             sources: [
                 "Services",
                 "Models",
@@ -62,8 +69,15 @@ let package = Package(
         ),
         .testTarget(
             name: "CodingReviewerTests",
-            dependencies: ["CodingReviewerCore"],
-            path: "CodingReviewerTests"
+            dependencies: [
+                "CodingReviewer",
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+            ],
+            path: "CodingReviewerTests",
+            resources: [
+                .copy("Fixtures"),
+                .copy("__Snapshots__"),
+            ]
         ),
     ]
 )

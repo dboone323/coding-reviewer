@@ -130,7 +130,7 @@ public final class GitHubPanelViewModel {
         // Handle HTTPS: https://github.com/owner/repo.git
         // Handle SSH: git@github.com:owner/repo.git
 
-        var cleanURL =
+        let cleanURL =
             urlString
                 .replacingOccurrences(of: ".git", with: "")
                 .replacingOccurrences(of: "git@github.com:", with: "https://github.com/")

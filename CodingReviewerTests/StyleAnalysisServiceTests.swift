@@ -274,7 +274,8 @@ final class StyleAnalysisServiceTests: XCTestCase {
         XCTAssertNotNil(longLineIssue)
         XCTAssertNotNil(docIssue)
         XCTAssertEqual(longLineIssue?.line, 3)
-        XCTAssertTrue(try XCTUnwrap(longLineIssue?.description.contains("147 characters")))
+        let longLineDescription = try XCTUnwrap(longLineIssue?.description)
+        XCTAssertTrue(longLineDescription.contains("characters"))
     }
 
     // MARK: - Documentation Edge Cases

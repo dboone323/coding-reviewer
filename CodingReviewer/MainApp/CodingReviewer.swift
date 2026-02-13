@@ -7,6 +7,11 @@
 
 import os
 import SwiftUI
+import AppIntents
+
+#if os(macOS)
+import AppKit
+#endif
 
 @main
 public struct CodingReviewer: App {
@@ -21,6 +26,7 @@ public struct CodingReviewer: App {
         WindowGroup {
             IDELayoutView()
                 .frame(minWidth: 1000, minHeight: 650)
+                .codingReviewerAccessibilityDefaults()
                 .sheet(isPresented: $showNewReviewSheet) {
                     NewReviewView()
                 }
@@ -33,14 +39,14 @@ public struct CodingReviewer: App {
                 Button("New Review") {
                     showNewReviewSheet = true
                 }
-                .keyboardShortcut("n", modifiers: .command)
+                .keyboardShortcut(CodingReviewerKeyboardShortcuts.analyze)
             }
 
             CommandGroup(replacing: .saveItem) {
                 Button("Save File") {
                     saveCurrentReview()
                 }
-                .keyboardShortcut("s", modifiers: .command)
+                .keyboardShortcut(CodingReviewerKeyboardShortcuts.documentation)
             }
 
             CommandGroup(replacing: CommandGroupPlacement.appInfo) {
@@ -58,6 +64,21 @@ public struct CodingReviewer: App {
         .windowResizability(.contentSize)
         .defaultPosition(.center)
 
+        MenuBarExtra("CodingReviewer", systemImage: "doc.text.magnifyingglass") {
+            Button("New Review") {
+                showNewReviewSheet = true
+                NSApplication.shared.activate(ignoringOtherApps: true)
+            }
+            Button("About CodingReviewer") {
+                showAboutWindow = true
+                NSApplication.shared.activate(ignoringOtherApps: true)
+            }
+            Divider()
+            Button("Quit") {
+                NSApplication.shared.terminate(nil)
+            }
+        }
+
         // Settings (Preferences)
         Settings {
             SettingsView()
@@ -65,6 +86,7 @@ public struct CodingReviewer: App {
     }
 
     public init() {
+        CodingReviewerLifecycleCoordinator.configureOnLaunch()
         logger.info("CodingReviewer IDE initialized")
     }
 

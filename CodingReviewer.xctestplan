@@ -1,0 +1,54 @@
+{
+  "configurations" : [
+    {
+      "id" : "311D32B2-F563-4E4B-A9A1-44BF60C17E8E",
+      "name" : "Default Configuration",
+      "options" : {
+
+      }
+    },
+    {
+      "id" : "C8CF3F42-496A-4C38-B98A-9327BBA10A22",
+      "name" : "UI Regression",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "gatherCoverageData" : true,
+      "targets" : [
+        {
+          "containerPath" : "container:CodingReviewer.xcodeproj",
+          "identifier" : "688DD4A62E282B6D0020150F",
+          "name" : "CodingReviewer"
+        }
+      ]
+    },
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:CodingReviewer.xcodeproj",
+      "identifier" : "688DD4A62E282B6D0020150F",
+      "name" : "CodingReviewer"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:CodingReviewer.xcodeproj",
+        "identifier" : "688DD4B52E282B6F0020150F",
+        "name" : "CodingReviewerTests"
+      }
+    },
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:CodingReviewer.xcodeproj",
+        "identifier" : "688DD4BF2E282B6F0020150F",
+        "name" : "CodingReviewerUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -133,7 +133,7 @@ public final class ChatViewModel {
         }
 
         // Create assistant placeholder for streaming
-        var assistantMessage = ChatMessage(role: .assistant, content: "", isStreaming: true)
+        let assistantMessage = ChatMessage(role: .assistant, content: "", isStreaming: true)
         messages.append(assistantMessage)
         let assistantIndex = messages.count - 1
 

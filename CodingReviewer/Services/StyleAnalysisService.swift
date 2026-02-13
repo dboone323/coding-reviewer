@@ -20,14 +20,35 @@ struct StyleAnalysisService {
         if language == "Swift" {
             // Check for long lines (Swift only)
             let lines = code.components(separatedBy: .newlines)
-            for (index, line) in lines.enumerated() where line.count > 120 {
-                issues.append(CodeIssue(
-                    description: "Line \(index + 1) is too long (\(line.count) characters). " +
-                        "Maximum allowed is 120 characters.",
-                    severity: .low,
-                    line: index + 1,
-                    category: .style
-                ))
+            var lineIndex = 0
+
+            while lineIndex < lines.count {
+                var logicalLine = lines[lineIndex]
+                var continuationIndex = lineIndex
+
+                while continuationIndex + 1 < lines.count,
+                      logicalLine.trimmingCharacters(in: .whitespacesAndNewlines).hasSuffix("+")
+                {
+                    let trimmedCurrent = logicalLine.trimmingCharacters(in: .whitespacesAndNewlines)
+                    let currentWithoutPlus = String(trimmedCurrent.dropLast())
+                        .trimmingCharacters(in: .whitespacesAndNewlines)
+                    let nextTrimmed = lines[continuationIndex + 1]
+                        .trimmingCharacters(in: .whitespacesAndNewlines)
+                    logicalLine = currentWithoutPlus + nextTrimmed
+                    continuationIndex += 1
+                }
+
+                if logicalLine.count > 120 {
+                    issues.append(CodeIssue(
+                        description: "Line \(lineIndex + 1) is too long (\(logicalLine.count) characters). " +
+                            "Maximum allowed is 120 characters.",
+                        severity: .low,
+                        line: lineIndex + 1,
+                        category: .style
+                    ))
+                }
+
+                lineIndex = continuationIndex + 1
             }
 
             // Check for missing documentation (Swift only)
