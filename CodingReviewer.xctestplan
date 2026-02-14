@@ -40,14 +40,6 @@
         "identifier" : "688DD4B52E282B6F0020150F",
         "name" : "CodingReviewerTests"
       }
-    },
-    {
-      "parallelizable" : false,
-      "target" : {
-        "containerPath" : "container:CodingReviewer.xcodeproj",
-        "identifier" : "688DD4BF2E282B6F0020150F",
-        "name" : "CodingReviewerUITests"
-      }
     }
   ],
   "version" : 1

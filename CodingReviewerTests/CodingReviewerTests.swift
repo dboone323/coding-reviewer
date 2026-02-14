@@ -6,19 +6,17 @@
 //
 
 import Foundation
-import Testing
+import XCTest
 @testable import CodingReviewer
 
-struct CodingReviewerTests {
-    @Test
-    func appInitialization() {
+class CodingReviewerTests: XCTestCase {
+    func testAppInitialization() {
         // Test that the app can be initialized without crashing
         // This is a basic smoke test
-        #expect(true, "App should initialize successfully")
+        XCTAssertTrue(true, "App should initialize successfully")
     }
 
-    @Test
-    func modelTypesExist() {
+    func testModelTypesExist() {
         // Test that our model types are properly defined
         let issue = CodeIssue(
             description: "Test issue",
@@ -28,33 +26,31 @@ struct CodingReviewerTests {
             suggestedFix: "Fix it"
         )
 
-        #expect(issue.id != UUID())
-        #expect(issue.description == "Test issue")
-        #expect(issue.severity == .low)
-        #expect(issue.category == .general)
+        XCTAssertNotEqual(issue.id, UUID())
+        XCTAssertEqual(issue.description, "Test issue")
+        XCTAssertEqual(issue.severity, .low)
+        XCTAssertEqual(issue.category, .general)
     }
 
-    @Test
-    func issueSeverityEnum() {
+    func testIssueSeverityEnum() {
         // Test that IssueSeverity enum works correctly
-        #expect(IssueSeverity.low.rawValue == "Low")
-        #expect(IssueSeverity.medium.rawValue == "Medium")
-        #expect(IssueSeverity.high.rawValue == "High")
-        #expect(IssueSeverity.critical.rawValue == "Critical")
+        XCTAssertEqual(IssueSeverity.low.rawValue, "Low")
+        XCTAssertEqual(IssueSeverity.medium.rawValue, "Medium")
+        XCTAssertEqual(IssueSeverity.high.rawValue, "High")
+        XCTAssertEqual(IssueSeverity.critical.rawValue, "Critical")
 
-        #expect(IssueSeverity.allCases.count == 4)
+        XCTAssertEqual(IssueSeverity.allCases.count, 4)
     }
 
-    @Test
-    func issueCategoryEnum() {
+    func testIssueCategoryEnum() {
         // Test that IssueCategory enum works correctly
-        #expect(IssueCategory.bug.rawValue == "Bug")
-        #expect(IssueCategory.security.rawValue == "Security")
-        #expect(IssueCategory.performance.rawValue == "Performance")
-        #expect(IssueCategory.style.rawValue == "Style")
-        #expect(IssueCategory.maintainability.rawValue == "Maintainability")
-        #expect(IssueCategory.general.rawValue == "General")
+        XCTAssertEqual(IssueCategory.bug.rawValue, "Bug")
+        XCTAssertEqual(IssueCategory.security.rawValue, "Security")
+        XCTAssertEqual(IssueCategory.performance.rawValue, "Performance")
+        XCTAssertEqual(IssueCategory.style.rawValue, "Style")
+        XCTAssertEqual(IssueCategory.maintainability.rawValue, "Maintainability")
+        XCTAssertEqual(IssueCategory.general.rawValue, "General")
 
-        #expect(IssueCategory.allCases.count == 6)
+        XCTAssertEqual(IssueCategory.allCases.count, 6)
     }
 }
