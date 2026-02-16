@@ -14,6 +14,8 @@ public struct SidebarView: View {
     @Binding var currentView: ContentViewType
     private let presenter: SidebarViewPresenter
 
+    @State private var showHistorySheet = false
+
     init(
         selectedFileURL: Binding<URL?>,
         showFilePicker: Binding<Bool>,
@@ -77,6 +79,15 @@ public struct SidebarView: View {
                 .accessibilityHint("Generate unit tests for the selected file")
             }
 
+            Section("History") {
+                Button(action: { showHistorySheet = true }) {
+                    Label("Review History", systemImage: "clock.arrow.circlepath")
+                }
+                .buttonStyle(.borderless)
+                .accessibilityLabel("Review History")
+                .accessibilityHint("View past code reviews")
+            }
+
             Section("Settings") {
                 Button(action: presenter.preferencesAction()) {
                     Label("Preferences", systemImage: "gear")
@@ -88,6 +99,10 @@ public struct SidebarView: View {
         }
         .listStyle(.sidebar)
         .frame(minWidth: 200)
+        .sheet(isPresented: $showHistorySheet) {
+            ReviewHistoryView()
+                .environment(\.managedObjectContext, CoreDataStack.shared.context)
+        }
     }
 }
 

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="Model" userDefinedModelVersionIdentifier="1" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18122" systemVersion="22G74" minimumToolsVersion="Automatic" sourceLanguage="Swift">
+    <entity name="ReviewSession" representedClassName="ReviewSession" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="summary" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="issues" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ReviewIssue" inverseName="session" inverseEntity="ReviewIssue" syncable="YES"/>
+    </entity>
+    <entity name="ReviewIssue" representedClassName="ReviewIssue" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="severity" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="session" optional="YES" toMany="NO" deletionRule="Nullify" destinationEntity="ReviewSession" inverseName="issues" inverseEntity="ReviewSession" syncable="YES"/>
+    </entity>
+</model>

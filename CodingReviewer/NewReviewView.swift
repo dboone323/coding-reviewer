@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct NewReviewView: View {
+
     @Environment(\.dismiss) private var dismiss
     @State private var projectName = ""
     @State private var repositoryURL = ""
     @State private var branchName = "main"
+    @State private var showError = false
+    @State private var errorMessage = ""
 
     var body: some View {
         NavigationStack {
@@ -24,12 +27,7 @@ struct NewReviewView: View {
 
                 Section {
                     Button("Create Review") {
-                        // In a real app, this would create a project configuration
-                        // For now, we'll just log the action and dismiss
-                        print("Creating review for project: \(projectName)")
-                        print("Repository: \(repositoryURL)")
-                        print("Branch: \(branchName)")
-                        dismiss()
+                        createReviewSession()
                     }
                     .disabled(projectName.isEmpty || repositoryURL.isEmpty)
                 }
@@ -43,7 +41,28 @@ struct NewReviewView: View {
                 }
             }
         }
+        .alert("Error", isPresented: $showError) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(errorMessage)
+        }
         .frame(width: 400, height: 300)
+    }
+
+    private func createReviewSession() {
+        let context = CoreDataStack.shared.context
+        let newSession = ReviewSession(context: context)
+        newSession.id = UUID()
+        newSession.date = Date()
+        newSession.summary = "Project: \(projectName), Repo: \(repositoryURL), Branch: \(branchName)"
+        // Optionally, add initial issues or other properties here
+        do {
+            try context.save()
+            dismiss()
+        } catch {
+            errorMessage = "Failed to save review session: \(error.localizedDescription)"
+            showError = true
+        }
     }
 }
 

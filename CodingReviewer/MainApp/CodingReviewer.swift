@@ -5,12 +5,12 @@
 //  Main SwiftUI application for CodingReviewer IDE
 //
 
+import AppIntents
 import os
 import SwiftUI
-import AppIntents
 
 #if os(macOS)
-import AppKit
+    import AppKit
 #endif
 
 @main
@@ -29,6 +29,7 @@ public struct CodingReviewer: App {
                 .codingReviewerAccessibilityDefaults()
                 .sheet(isPresented: $showNewReviewSheet) {
                     NewReviewView()
+                        .environment(\.managedObjectContext, CoreDataStack.shared.context)
                 }
         }
         .windowStyle(.hiddenTitleBar)

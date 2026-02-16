@@ -416,7 +416,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
     func testAnalyzeCode_ServiceFailureHandling() {
         // Given code that might cause issues in individual services
-        let code = String(repeating: "a", count: 10_000) // Large enough to stress analyzers without hanging
+        let code = String(repeating: "a", count: 10000) // Large enough to stress analyzers without hanging
 
         // When analyzing
         let result = analysisEngine.analyzeCode(

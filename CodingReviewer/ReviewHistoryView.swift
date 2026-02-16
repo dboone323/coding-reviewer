@@ -5,35 +5,31 @@
 // View for displaying past review history
 //
 
+import CoreData
 import SwiftUI
 
 struct ReviewHistoryView: View {
-    /// Mock data for now
-    struct ReviewItem: Identifiable {
-        let id = UUID()
-        let fileName: String
-        let date: Date
-        let issuesCount: Int
-    }
-
-    let history: [ReviewItem] = [
-        ReviewItem(fileName: "AppDelegate.swift", date: Date(), issuesCount: 3),
-        ReviewItem(fileName: "ContentView.swift", date: Date().addingTimeInterval(-86400), issuesCount: 0),
-    ]
+    @FetchRequest(
+        entity: ReviewSession.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \ReviewSession.date, ascending: false)]
+    ) var sessions: FetchedResults<ReviewSession>
 
     var body: some View {
-        List(history) { item in
+        List(sessions, id: \ReviewSession.id) { session in
             HStack {
                 VStack(alignment: .leading) {
-                    Text(item.fileName)
+                    Text(session.summary ?? "(No summary)")
                         .font(.headline)
-                    Text(item.date.formatted())
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                    if let date = session.date {
+                        Text(date.formatted())
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 Spacer()
-                Text("\(item.issuesCount) issues")
-                    .foregroundColor(item.issuesCount > 0 ? .red : .green)
+                let count = (session.issues as? Set<ReviewIssue>)?.count ?? 0
+                Text("\(count) issues")
+                    .foregroundColor(count > 0 ? .red : .green)
             }
             .padding(.vertical, 4)
         }
