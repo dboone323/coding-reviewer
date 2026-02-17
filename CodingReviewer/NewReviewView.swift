@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct NewReviewView: View {
-
     @Environment(\.dismiss) private var dismiss
     @State private var projectName = ""
     @State private var repositoryURL = ""
