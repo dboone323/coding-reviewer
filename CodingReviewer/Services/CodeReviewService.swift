@@ -12,6 +12,9 @@ public class OllamaClient {
 //  CodeReviewService.swift
 //  CodingReviewer
 //
+//  Created on February 10, 2026
+//  Phase 7: Advanced Features Integration
+//
 //  Implementation of code review service with basic analysis
 //
 
@@ -30,10 +33,15 @@ public class CodeReviewService: CodeReviewServiceProtocol {
     // Analysis engine that can be used from background threads
     private let analysisEngine = CodeAnalysisEngine()
     private var aiService: AIEnhancedCodeAnalysisService?
+    private let orchestrator: ReviewOrchestrator
 
     public init(config: ServiceConfig = .default) {
         self.config = config
         self.aiService = nil
+        self.orchestrator = ReviewOrchestrator(agents: [
+            SecurityAgent(),
+            LogicAgent(),
+        ])
     }
 
     /// Preference-backed AI toggle with env fallback
@@ -50,7 +58,9 @@ public class CodeReviewService: CodeReviewServiceProtocol {
 
     private func ensureAIService() {
         if aiService == nil {
-            let generator: (String, String, Double) async throws -> String = { model, prompt, temp in
+            // swiftlint:disable:next closure_parameter_position
+            let generator: (String, String, Double) async throws -> String = {
+                model, prompt, temp in
                 try await OllamaClient().generate(model: model, prompt: prompt, temperature: temp)
             }
             aiService = AIEnhancedCodeAnalysisService(llmGenerate: generator)
@@ -136,11 +146,30 @@ public class CodeReviewService: CodeReviewServiceProtocol {
             try await aiService.analyzeCodeWithAI(code, language: language)
         }
 
+        // Multi-agent review via Orchestrator (2026 upgrade)
+        let agentResults = await orchestrator.runReview(code: code, language: language)
+
         // Record success in circuit breaker
         await circuitBreaker.recordSuccess()
 
         // Convert AI result to CodeAnalysisResult
         var issues: [CodeIssue] = []
+
+        // Add issues from Orchestrator agents
+        for agentResult in agentResults {
+            for (_, desc) in agentResult.detail {
+                let category: IssueCategory =
+                    (agentResult.agentId.contains("security") ? .security : .maintainability)
+                issues.append(
+                    CodeIssue(
+                        description: desc,
+                        severity: .medium,
+                        line: nil,
+                        category: category
+                    )
+                )
+            }
+        }
 
         for secIssue in result.securityIssues {
             issues.append(
@@ -328,12 +357,9 @@ public class CodeReviewService: CodeReviewServiceProtocol {
                     let jitter = Double.random(in: 0...0.1) * backoff
                     let delay = backoff + jitter
 
-                    // swiftlint:disable line_length
-                    logger
-                        .warning(
-                            "'\(operation)' failed (\(attempt)/\(attempts)): \(error.localizedDescription). Retry \(String(format: "%.1f", delay))s"
-                        )
-                    // swiftlint:enable line_length
+                    logger.warning(
+                        "'\(operation)' failed (\(attempt)/\(attempts)): \(error.localizedDescription). Retry \(String(format: "%.1f", delay))s"
+                    )
 
                     try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
                 } else {
@@ -350,7 +376,9 @@ public class CodeReviewService: CodeReviewServiceProtocol {
 
     // MARK: - Timeout Wrapper
 
-    private func withTimeout<T: Sendable>(seconds: TimeInterval, body: @escaping () async throws -> T)
+    private func withTimeout<T: Sendable>(
+        seconds: TimeInterval, body: @escaping () async throws -> T
+    )
         async throws -> T
     {
         // Simple timeout implementation without complex concurrency

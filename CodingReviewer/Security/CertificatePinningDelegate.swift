@@ -1,7 +1,7 @@
 import Foundation
 
 /// Certificate pinning delegate for URLSession
-class CertificatePinningDelegate: NSObject, URLSessionDelegate {
+final class CertificatePinningDelegate: NSObject, URLSessionDelegate {
     // Replace with your actual certificate data (DER format)
     private let pinnedCertificateData: Data = {
         // Load from bundle or hardcode for demo

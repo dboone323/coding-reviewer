@@ -8,7 +8,7 @@ let package = Package(
     name: "CodingReviewer",
     defaultLocalization: "en",
     platforms: [
-        .macOS(.v14),
+        .macOS(.v14)
     ],
     products: [
         .library(
@@ -26,11 +26,13 @@ let package = Package(
             url: "https://github.com/pointfreeco/swift-snapshot-testing.git",
             from: "1.16.0"
         ),
+        .package(path: "../shared-kit"),
     ],
     targets: [
         .target(
             name: "CodingReviewer",
             dependencies: [
+                .product(name: "SharedKit", package: "shared-kit"),
                 .product(name: "SwiftSyntax", package: "swift-syntax"),
                 .product(name: "SwiftParser", package: "swift-syntax"),
                 .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
@@ -48,8 +50,15 @@ let package = Package(
             sources: [
                 "Services",
                 "Models",
+                "Persistence/CoreDataStack.swift",
+                "Persistence/ReviewIssue+CoreDataClass.swift",
+                "Persistence/ReviewIssue+CoreDataProperties.swift",
+                "Persistence/ReviewSession+CoreDataClass.swift",
+                "Persistence/ReviewSession+CoreDataProperties.swift",
+                "Security",
                 "Utilities",
                 "IDE",
+                "KeychainManager.swift",
                 "ContentView.swift",
                 "CodeReviewView.swift",
                 "SidebarView.swift",
@@ -65,6 +74,9 @@ let package = Package(
                 "ReviewHistoryView.swift",
                 "IssueRow.swift",
                 "AppDelegate.swift",
+            ],
+            resources: [
+                .process("Persistence/Model.xcdatamodeld")
             ]
         ),
         .testTarget(

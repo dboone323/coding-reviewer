@@ -1,6 +1,7 @@
 import CoreData
 import Foundation
 
+@MainActor
 final class CoreDataStack {
     static let shared = CoreDataStack()
 
