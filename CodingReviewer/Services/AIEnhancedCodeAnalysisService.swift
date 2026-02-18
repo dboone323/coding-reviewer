@@ -10,6 +10,7 @@ import SwiftUI
 public class AIEnhancedCodeAnalysisService: ObservableObject {
     private let logger = Logger(subsystem: "CodingReviewer", category: "AIAnalysis")
     private let fileManager = FileManager.default
+    private let ollamaService = OllamaService()
     private let llmGenerate: ((String, String, Double) async throws -> String)?
 
     @Published public var isAnalyzing = false
@@ -36,10 +37,8 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         currentAnalysisTask = "Analyzing code with AI models..."
 
         defer {
-            Task { @MainActor in
-                isAnalyzing = false
-                currentAnalysisTask = ""
-            }
+            isAnalyzing = false
+            currentAnalysisTask = ""
         }
 
         // Use cloud models for comprehensive analysis
@@ -88,16 +87,14 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
             analysisTimestamp: Date()
         )
 
-        await MainActor.run {
-            self.analysisResults.append(
-                AIAnalysisResult(
-                    id: UUID(),
-                    type: .codeAnalysis,
-                    result: result,
-                    timestamp: Date()
-                )
+        self.analysisResults.append(
+            AIAnalysisResult(
+                id: UUID(),
+                type: .codeAnalysis,
+                result: result,
+                timestamp: Date()
             )
-        }
+        )
 
         logger.info(
             "AI code analysis completed with \(result.recommendations.count) recommendations"
@@ -153,16 +150,14 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
             generationTimestamp: Date()
         )
 
-        await MainActor.run {
-            self.analysisResults.append(
-                AIAnalysisResult(
-                    id: UUID(),
-                    type: .codeGeneration,
-                    result: result,
-                    timestamp: Date()
-                )
+        self.analysisResults.append(
+            AIAnalysisResult(
+                id: UUID(),
+                type: .codeGeneration,
+                result: result,
+                timestamp: Date()
             )
-        }
+        )
 
         logger.info("AI code generation completed for prompt: \(prompt.prefix(50))...")
         return result
@@ -220,16 +215,14 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
             refactoringTimestamp: Date()
         )
 
-        await MainActor.run {
-            self.analysisResults.append(
-                AIAnalysisResult(
-                    id: UUID(),
-                    type: .refactoring,
-                    result: result,
-                    timestamp: Date()
-                )
+        self.analysisResults.append(
+            AIAnalysisResult(
+                id: UUID(),
+                type: .refactoring,
+                result: result,
+                timestamp: Date()
             )
-        }
+        )
 
         logger.info("AI code refactoring completed for goal: \(refactoringGoal.description)")
         return result
@@ -275,16 +268,14 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
             generationTimestamp: Date()
         )
 
-        await MainActor.run {
-            self.analysisResults.append(
-                AIAnalysisResult(
-                    id: UUID(),
-                    type: .documentation,
-                    result: result,
-                    timestamp: Date()
-                )
+        self.analysisResults.append(
+            AIAnalysisResult(
+                id: UUID(),
+                type: .documentation,
+                result: result,
+                timestamp: Date()
             )
-        }
+        )
 
         logger.info("AI documentation generation completed")
         return result
@@ -329,16 +320,14 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
             generationTimestamp: Date()
         )
 
-        await MainActor.run {
-            self.analysisResults.append(
-                AIAnalysisResult(
-                    id: UUID(),
-                    type: .testGeneration,
-                    result: result,
-                    timestamp: Date()
-                )
+        self.analysisResults.append(
+            AIAnalysisResult(
+                id: UUID(),
+                type: .testGeneration,
+                result: result,
+                timestamp: Date()
             )
-        }
+        )
 
         logger.info(
             "AI test generation completed with estimated coverage: \(result.estimatedCoverage)%"
@@ -437,16 +426,14 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
             reviewTimestamp: Date()
         )
 
-        await MainActor.run {
-            self.analysisResults.append(
-                AIAnalysisResult(
-                    id: UUID(),
-                    type: .codeReview,
-                    result: result,
-                    timestamp: Date()
-                )
+        self.analysisResults.append(
+            AIAnalysisResult(
+                id: UUID(),
+                type: .codeReview,
+                result: result,
+                timestamp: Date()
             )
-        }
+        )
 
         logger.info("AI code review completed for \(files.count) files")
         return result
@@ -464,28 +451,12 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
             return try await llmGenerate(mappedModel, prompt, temperature)
         }
 
-        // Fallback: invoke local ollama CLI (stdin prompt)
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/opt/homebrew/bin/ollama")
-        process.arguments = ["run", mappedModel]
-
-        let inputPipe = Pipe()
-        let outputPipe = Pipe()
-
-        process.standardInput = inputPipe
-        process.standardOutput = outputPipe
-
-        try process.run()
-
-        let inputData = prompt.data(using: .utf8)!
-        inputPipe.fileHandleForWriting.write(inputData)
-        inputPipe.fileHandleForWriting.closeFile()
-
-        let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
-        let response = String(data: outputData, encoding: .utf8) ?? "No response"
-
-        process.waitUntilExit()
-        return response.trimmingCharacters(in: .whitespacesAndNewlines)
+        // Use the actor-based service instead of CLI
+        return try await ollamaService.generate(
+            model: mappedModel,
+            prompt: prompt,
+            temperature: temperature
+        )
     }
 
     private func mapToFreeModel(_ requested: String) -> String {
@@ -584,27 +555,28 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
 
     private func extractQualityScore(from analysis: String) -> Int {
         // Extract quality score from analysis text using NSRegularExpression
-        guard let regex = try? NSRegularExpression(pattern: #"(\d+)/10|\b(\d)\s*out\s*of\s*10"#)
-        else {
-            return 7
-        }
+        let patterns = [
+            #"(\d+)/10"#,
+            #"\b(\d)\s*out\s*of\s*10"#,
+            #"Quality Rating:\s*(\d+)"#,
+            #"Score:\s*(\d+)"#,
+        ]
 
-        let range = NSRange(analysis.startIndex..., in: analysis)
-        let matches = regex.matches(in: analysis, range: range)
-
-        for match in matches {
-            for i in 1..<match.numberOfRanges {
-                let matchRange = match.range(at: i)
-                if matchRange.location != NSNotFound,
-                   let range = Range(matchRange, in: analysis)
+        for pattern in patterns {
+            if let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) {
+                let range = NSRange(analysis.startIndex..., in: analysis)
+                if let match = regex.firstMatch(in: analysis, range: range),
+                   match.numberOfRanges > 1,
+                   let range = Range(match.range(at: 1), in: analysis),
+                   let number = Int(analysis[range])
                 {
-                    if let number = Int(analysis[range]) {
-                        return number
-                    }
+                    return min(max(number, 1), 10)
                 }
             }
         }
-        return 7
+
+        // Default to a neutral score if no specific rating found
+        return 0
     }
 
     private func extractSecurityIssues(from analysis: String) -> [SecurityIssue] {
@@ -715,24 +687,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
     }
 
     private func extractQualityRating(from response: String) -> Int {
-        // Extract quality rating using NSRegularExpression
-        guard let regex = try? NSRegularExpression(pattern: #"(\d+)/10"#) else {
-            return 7
-        }
-
-        let range = NSRange(response.startIndex..., in: response)
-        let matches = regex.matches(in: response, range: range)
-
-        for match in matches where match.numberOfRanges > 1 {
-            let captureRange = match.range(at: 1)
-            if captureRange.location != NSNotFound,
-               let range = Range(captureRange, in: response),
-               let number = Int(response[range])
-            {
-                return number
-            }
-        }
-        return 7
+        extractQualityScore(from: response)
     }
 
     private func extractTopImprovements(from response: String) -> [String] {

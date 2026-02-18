@@ -71,15 +71,9 @@ struct SettingsView: View {
 
     private func checkOllamaStatus() {
         Task {
-            do {
-                let client = OllamaClient()
-                _ = try await client.generate(
-                    model: "llama3.1:8b", prompt: "test", temperature: 0.0
-                )
-                ollamaStatus = "✓ Connected"
-            } catch {
-                ollamaStatus = "⚠️ Not available"
-            }
+            let service = OllamaService()
+            let available = await service.isAvailable()
+            ollamaStatus = available ? "✓ Connected" : "⚠️ Not available"
         }
     }
 }

@@ -25,11 +25,13 @@ struct DashboardView: View {
                 }
 
                 DashboardCard(title: "Review History", icon: "clock", color: .orange) {
-                    // Navigate to history
+                    print("Navigate to History")
+                    // In a full app, this would trigger a NavigationLink or switch a tab
                 }
 
                 DashboardCard(title: "AI Status", icon: "cpu", color: useAI ? .green : .secondary) {
-                    // Open settings or show info
+                    print("Show AI Service Status")
+                    // Trigger status modal or settings
                 }
             }
             .padding()
@@ -69,16 +71,23 @@ struct DashboardCard: View {
 
 struct RecentFilesList: View {
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 10) {
             Text("Recent Files")
                 .font(.headline)
 
-            List {
-                Text("No recent files")
+            VStack {
+                Image(systemName: "doc.text.magnifyingglass")
+                    .font(.system(size: 30))
+                    .foregroundColor(.secondary)
+                Text("No recent analysis found")
+                    .font(.subheadline)
                     .foregroundColor(.secondary)
             }
-            .frame(height: 200)
-            .accessibilityLabel("Recent files list")
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(Color(nsColor: .controlBackgroundColor).opacity(0.5))
+            .cornerRadius(8)
+            .accessibilityLabel("Recent files empty state")
         }
     }
 }

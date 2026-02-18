@@ -35,15 +35,15 @@ final class CertificatePinningDelegate: NSObject, URLSessionDelegate {
         let policy = SecPolicyCreateSSL(true, challenge.protectionSpace.host as CFString)
         SecTrustSetPolicies(serverTrust, policy)
 
-        var secresult = SecTrustResultType.invalid
-        let status = SecTrustEvaluate(serverTrust, &secresult)
-
-        guard status == errSecSuccess else {
+        var error: CFError?
+        guard SecTrustEvaluateWithError(serverTrust, &error) else {
             completionHandler(.cancelAuthenticationChallenge, nil)
             return
         }
 
-        guard let serverCert = SecTrustGetCertificateAtIndex(serverTrust, 0) else {
+        guard let chain = SecTrustCopyCertificateChain(serverTrust) as? [SecCertificate],
+              let serverCert = chain.first
+        else {
             completionHandler(.cancelAuthenticationChallenge, nil)
             return
         }

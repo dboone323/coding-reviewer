@@ -28,7 +28,9 @@ final class RuleEngineTests: XCTestCase {
         )
 
         engine.addRule(rule)
-        XCTAssertTrue(true) // No crash
+        XCTAssertEqual(
+            engine.rules.count, 1, "Engine should contain exactly one rule after addition."
+        )
     }
 
     // MARK: - Analysis Tests
@@ -56,10 +58,9 @@ final class RuleEngineTests: XCTestCase {
         }
         """
 
-        _ = engine.analyze(code: code, language: "swift")
-        // Test that analyze runs without crashing
-        // Actual matching depends on PatternMatcher implementation
-        XCTAssertTrue(true)
+        let issues = engine.analyze(code: code, language: "swift")
+        // Verify analysis runs and find issues if pattern matches
+        XCTAssertNotNil(issues, "Analysis should return an issues array.")
     }
 
     func testAnalyzeFiltersLanguage() {
@@ -93,8 +94,8 @@ final class RuleEngineTests: XCTestCase {
 
         // Universal rules should apply regardless of language
         let code = "// FIXME: broken"
-        _ = engine.analyze(code: code, language: "any")
-        XCTAssertTrue(true)
+        let issues = engine.analyze(code: code, language: "any")
+        XCTAssertNotNil(issues, "Wildcard analysis should return an issues array.")
     }
 
     // MARK: - Rule Loading Tests

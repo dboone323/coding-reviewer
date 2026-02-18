@@ -11,16 +11,28 @@ import XCTest
 final class CodeReviewViewTests: XCTestCase {
     // MARK: - Initialization Tests
 
-    func testInitialization() {
-        // Test basic initialization
-        XCTAssertTrue(true, "Initialization test placeholder")
+    func testTitleFormatting() {
+        let presenter = ResultsPanelPresenter(currentView: .analysis, isAnalyzing: false)
+        XCTAssertEqual(presenter.title, "Analysis Results")
+
+        let docsPresenter = ResultsPanelPresenter(currentView: .documentation, isAnalyzing: false)
+        XCTAssertEqual(docsPresenter.title, "Documentation")
+
+        let testsPresenter = ResultsPanelPresenter(currentView: .tests, isAnalyzing: false)
+        XCTAssertEqual(testsPresenter.title, "Generated Tests")
     }
 
     // MARK: - Property Tests
 
-    func testProperties() {
-        // Test property access and validation
-        XCTAssertTrue(true, "Property test placeholder")
+    func testEmptyStateMessages() {
+        let presenter = ResultsPanelPresenter(currentView: .analysis, isAnalyzing: false)
+        XCTAssertEqual(
+            presenter.emptyStateMessage(hasResult: false), "Click Analyze to start code analysis"
+        )
+        XCTAssertNil(presenter.emptyStateMessage(hasResult: true))
+
+        let analyzingPresenter = ResultsPanelPresenter(currentView: .analysis, isAnalyzing: true)
+        XCTAssertNil(analyzingPresenter.emptyStateMessage(hasResult: false))
     }
 
     // MARK: - Method Tests

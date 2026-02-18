@@ -265,7 +265,7 @@ struct BottomPanel: View {
             Divider()
 
             // Placeholder for terminal (Phase 4)
-            Text("Terminal coming in Phase 4")
+            Text("Terminal: Feature under development")
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -286,7 +286,7 @@ struct AgentsPlaceholderView: View {
             Text("Docker Agents")
                 .font(.headline)
                 .foregroundStyle(.secondary)
-            Text("Agent management coming in Phase 5")
+            Text("Agent Management: Feature under development")
                 .font(.caption)
                 .foregroundStyle(.tertiary)
             Spacer()
@@ -305,7 +305,7 @@ struct GitHubPlaceholderView: View {
             Text("GitHub Integration")
                 .font(.headline)
                 .foregroundStyle(.secondary)
-            Text("Source control coming in Phase 3")
+            Text("Source Control: Feature under development")
                 .font(.caption)
                 .foregroundStyle(.tertiary)
             Spacer()
@@ -349,23 +349,26 @@ struct ReviewActionButton: View {
     let color: Color
 
     var body: some View {
-        Button(action: {}, label: {
-            HStack {
-                Image(systemName: icon)
-                    .foregroundStyle(color)
-                    .frame(width: 20)
-                Text(title)
-                    .font(.system(size: 12))
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 10))
-                    .foregroundStyle(.tertiary)
+        Button(
+            action: {},
+            label: {
+                HStack {
+                    Image(systemName: icon)
+                        .foregroundStyle(color)
+                        .frame(width: 20)
+                    Text(title)
+                        .font(.system(size: 12))
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 10))
+                        .foregroundStyle(.tertiary)
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+                .background(Color(nsColor: .controlBackgroundColor))
+                .clipShape(RoundedRectangle(cornerRadius: 6))
             }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            .background(Color(nsColor: .controlBackgroundColor))
-            .clipShape(RoundedRectangle(cornerRadius: 6))
-        })
+        )
         .buttonStyle(.plain)
     }
 }

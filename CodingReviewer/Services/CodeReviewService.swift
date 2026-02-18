@@ -1,15 +1,6 @@
 import Foundation
 import os
 
-public class OllamaClient {
-    public func generate(model: String, prompt: String, temperature: Double) async throws -> String {
-        // Stub implementation
-        "Stub response from OllamaClient"
-    }
-}
-
-//
-//  CodeReviewService.swift
 //  CodingReviewer
 //
 //  Created on February 10, 2026
@@ -58,12 +49,7 @@ public class CodeReviewService: CodeReviewServiceProtocol {
 
     private func ensureAIService() {
         if aiService == nil {
-            // swiftlint:disable:next closure_parameter_position
-            let generator: (String, String, Double) async throws -> String = {
-                model, prompt, temp in
-                try await OllamaClient().generate(model: model, prompt: prompt, temperature: temp)
-            }
-            aiService = AIEnhancedCodeAnalysisService(llmGenerate: generator)
+            aiService = AIEnhancedCodeAnalysisService()
         }
     }
 
@@ -377,27 +363,21 @@ public class CodeReviewService: CodeReviewServiceProtocol {
     // MARK: - Timeout Wrapper
 
     private func withTimeout<T: Sendable>(
-        seconds: TimeInterval, body: @escaping () async throws -> T
-    )
-        async throws -> T
-    {
-        // Simple timeout implementation without complex concurrency
-        let timeoutTask = Task {
-            try await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
-            throw ServiceError.timeout(operation: "operation")
-        }
-
-        let operationTask = Task {
-            try await body()
-        }
-
-        do {
-            let result = try await operationTask.value
-            timeoutTask.cancel()
+        seconds: TimeInterval, body: @escaping @Sendable () async throws -> T
+    ) async throws -> T {
+        try await withThrowingTaskGroup(of: T.self) { group in
+            group.addTask {
+                try await body()
+            }
+            group.addTask {
+                try await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
+                throw ServiceError.timeout(operation: "operation")
+            }
+            guard let result = try await group.next() else {
+                throw ServiceError.unknown(message: "Task group failed to return result")
+            }
+            group.cancelAll()
             return result
-        } catch {
-            timeoutTask.cancel()
-            throw error
         }
     }
 }

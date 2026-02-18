@@ -43,6 +43,7 @@ public enum ServiceError: Error, LocalizedError {
     case aiUnavailable(reason: String)
     case invalidInput(message: String)
     case analysisFailure(message: String)
+    case unknown(message: String)
 
     public var errorDescription: String? {
         switch self {
@@ -58,6 +59,8 @@ public enum ServiceError: Error, LocalizedError {
             "Invalid input: \(message)"
         case let .analysisFailure(message):
             "Analysis failed: \(message)"
+        case let .unknown(message):
+            "An unknown error occurred: \(message)"
         }
     }
 }

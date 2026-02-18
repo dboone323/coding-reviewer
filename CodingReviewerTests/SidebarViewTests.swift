@@ -11,16 +11,23 @@ import XCTest
 final class SidebarViewTests: XCTestCase {
     // MARK: - Initialization Tests
 
-    func testInitialization() {
-        // Test basic initialization
-        XCTAssertTrue(true, "Initialization test placeholder")
+    func testFileNodeIcon() {
+        let fileURL = URL(fileURLWithPath: "/test/file.swift")
+        let node = FileNode(url: fileURL, isDirectory: false)
+        XCTAssertEqual(node.icon, "swift")
+        XCTAssertEqual(node.iconColor, .orange)
+
+        let dirURL = URL(fileURLWithPath: "/test/folder")
+        let dirNode = FileNode(url: dirURL, isDirectory: true)
+        XCTAssertEqual(dirNode.icon, "folder.fill")
     }
 
     // MARK: - Property Tests
 
-    func testProperties() {
-        // Test property access and validation
-        XCTAssertTrue(true, "Property test placeholder")
+    func testFileTreeBuilderGracefulFailure() {
+        let bogusURL = URL(fileURLWithPath: "/tmp/non_existent_folder_12345")
+        let node = FileTreeBuilder.buildTree(from: bogusURL)
+        XCTAssertNil(node)
     }
 
     // MARK: - Method Tests
