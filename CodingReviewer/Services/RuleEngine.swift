@@ -9,7 +9,7 @@ import Foundation
 import os
 
 class RuleEngine {
-    private var rules: [CustomRule] = []
+    var rules: [CustomRule] = []
     private let logger = Logger(subsystem: "com.quantum.codingreviewer", category: "RuleEngine")
 
     func loadRules(from url: URL) throws {

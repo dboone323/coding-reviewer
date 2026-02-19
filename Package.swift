@@ -1,4 +1,4 @@
-// swift-tools-version:6.0
+// swift-tools-version:6.2
 // Step 43: SwiftSyntax SPM Dependency
 // Package.swift
 
@@ -8,7 +8,7 @@ let package = Package(
     name: "CodingReviewer",
     defaultLocalization: "en",
     platforms: [
-        .macOS(.v14)
+        .macOS(.v15)
     ],
     products: [
         .library(
@@ -33,7 +33,6 @@ let package = Package(
             name: "CodingReviewer",
             dependencies: [
                 .product(name: "SharedKit", package: "shared-kit"),
-                .product(name: "SwiftSyntax", package: "swift-syntax"),
                 .product(name: "SwiftParser", package: "swift-syntax"),
                 .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
             ],

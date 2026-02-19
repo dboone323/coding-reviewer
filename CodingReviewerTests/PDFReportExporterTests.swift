@@ -10,14 +10,14 @@ import XCTest
 final class PDFReportExporterTests: XCTestCase {
     var sut: PDFReportExporter!
 
-    override func setUp() {
-        super.setUp()
-        sut = PDFReportExporter.shared
+    override func setUp() async throws {
+        try await super.setUp()
+        sut = await PDFReportExporter.shared
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         sut = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     // MARK: - PDF Generation Tests

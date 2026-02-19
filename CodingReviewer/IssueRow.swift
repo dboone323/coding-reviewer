@@ -44,10 +44,13 @@ public struct IssueRow: View {
 
                     if issue.suggestedFix != nil {
                         Spacer()
-                        Button(action: { onFix?() }, label: {
-                            Label("Fix", systemImage: "wand.and.stars")
-                                .font(.caption)
-                        })
+                        Button(
+                            action: { onFix?() },
+                            label: {
+                                Label("Fix", systemImage: "wand.and.stars")
+                                    .font(.caption)
+                            }
+                        )
                         .buttonStyle(.borderedProminent)
                         .controlSize(.small)
                     }
@@ -55,6 +58,21 @@ public struct IssueRow: View {
             }
         }
         .padding(.vertical, 4)
+        .padding(.horizontal, issue.severity == .critical ? 8 : 0)
+        .background(
+            issue.severity == .critical
+                ? Color.red.opacity(0.1)
+                : Color.clear
+        )
+        .cornerRadius(6)
+        .overlay(
+            RoundedRectangle(cornerRadius: 6)
+                .stroke(
+                    issue.severity == .critical
+                        ? Color.red.opacity(0.3)
+                        : Color.clear, lineWidth: 1
+                )
+        )
     }
 }
 
@@ -75,7 +93,10 @@ struct IssueRowPresenter {
     }
 
     private static let palette: [IssueSeverity: Palette] = [
-        .low: Palette(iconName: "info.circle.fill", iconColor: .blue, severityColor: .blue, colorIdentifier: "blue"),
+        .low: Palette(
+            iconName: "info.circle.fill", iconColor: .blue, severityColor: .blue,
+            colorIdentifier: "blue"
+        ),
         .medium: Palette(
             iconName: "exclamationmark.triangle.fill",
             iconColor: .orange,
@@ -88,7 +109,10 @@ struct IssueRowPresenter {
             severityColor: .red,
             colorIdentifier: "red"
         ),
-        .critical: Palette(iconName: "xmark.circle.fill", iconColor: .red, severityColor: .red, colorIdentifier: "red"),
+        .critical: Palette(
+            iconName: "xmark.circle.fill", iconColor: .red, severityColor: .red,
+            colorIdentifier: "red"
+        ),
     ]
 
     private var paletteForIssue: Palette {

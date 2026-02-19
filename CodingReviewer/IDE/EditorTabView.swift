@@ -116,6 +116,8 @@ public struct EditorPaneView: View {
                     }
                 )
 
+                // ...
+
                 // TODO: Integrate CodeEditSourceEditor properly with SourceEditorState/Configuration
                 // For now using basic TextEditor as placeholder
                 TextEditor(text: binding)
