@@ -81,7 +81,7 @@ struct DocumentationGenerator {
         _ trimmed: String,
         _ braceCount: inout Int,
         _ currentFunction: inout [String],
-        _ inFunction: inout Bool
+        _ inFunction: inout Bool,
     ) {
         inFunction = true
         currentFunction = [trimmed]

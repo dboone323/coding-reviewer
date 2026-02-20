@@ -1,10 +1,10 @@
 # Unified SwiftFormat Configuration
 # Version: 0.59.1
-# Swift: 6.0
+# Swift: 6.2
 # Updated: February 11, 2026
 
 # Swift version
---swiftversion 6.0
+--swiftversion 6.2
 
 # Indentation and Tabs
 --indent 4

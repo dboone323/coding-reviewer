@@ -72,7 +72,7 @@ public enum FileTreeBuilder {
                let contents = try? fm.contentsOfDirectory(
                    at: url,
                    includingPropertiesForKeys: [.isDirectoryKey],
-                   options: [.skipsHiddenFiles]
+                   options: [.skipsHiddenFiles],
                )
             {
                 children =
@@ -86,7 +86,7 @@ public enum FileTreeBuilder {
                                     ?? false
                             if aIsDir != bIsDir { return aIsDir }
                             return a.lastPathComponent.localizedCaseInsensitiveCompare(
-                                b.lastPathComponent
+                                b.lastPathComponent,
                             ) == .orderedAscending
                         }
                         .compactMap { childURL in
@@ -140,7 +140,7 @@ public struct FileTreeView: View {
                                 onFileSelected: { url in
                                     viewModel.openFile(url: url)
                                 },
-                                depth: 0
+                                depth: 0,
                             )
                         }
                     }
@@ -236,7 +236,7 @@ struct FileTreeNodeView: View {
                         node: child,
                         expandedNodes: $expandedNodes,
                         onFileSelected: onFileSelected,
-                        depth: depth + 1
+                        depth: depth + 1,
                     )
                 }
             }

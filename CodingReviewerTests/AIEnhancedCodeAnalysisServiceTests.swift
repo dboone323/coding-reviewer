@@ -82,13 +82,13 @@ final class AIEnhancedCodeAnalysisServiceTests: XCTestCase {
             recommendations: ["Consider adding error handling"],
             suggestedImprovements: [],
             technicalDebtEstimate: .low,
-            analysisTimestamp: Date()
+            analysisTimestamp: Date(),
         )
         service.analysisResults.append(AIAnalysisResult(
             id: UUID(),
             type: .codeAnalysis,
             result: dummyResult,
-            timestamp: Date()
+            timestamp: Date(),
         ))
         XCTAssertEqual(service.analysisResults.count, 1)
     }

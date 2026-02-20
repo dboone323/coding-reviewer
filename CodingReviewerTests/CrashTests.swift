@@ -21,7 +21,7 @@ struct CrashTests {
             severity: .high,
             line: 42,
             category: .bug,
-            suggestedFix: "Don't crash"
+            suggestedFix: "Don't crash",
         )
 
         #expect(issue.description == "Test crash prevention")
@@ -52,7 +52,7 @@ struct CrashTests {
                 severity: .medium,
                 line: i,
                 category: .performance,
-                suggestedFix: "Optimize memory usage"
+                suggestedFix: "Optimize memory usage",
             )
             issues.append(issue)
         }
@@ -78,7 +78,7 @@ struct CrashTests {
                         description: "Concurrent test \(i)",
                         severity: .low,
                         line: i,
-                        category: .general
+                        category: .general,
                     )
                     // Just create the object - no shared state to test
                     _ = issue.id

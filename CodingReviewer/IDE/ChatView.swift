@@ -82,8 +82,8 @@ struct ChatHeader: View {
                 "Mode",
                 selection: Binding(
                     get: { viewModel.currentMode },
-                    set: { viewModel.currentMode = $0 }
-                )
+                    set: { viewModel.currentMode = $0 },
+                ),
             ) {
                 ForEach(ChatMode.allCases, id: \.self) { mode in
                     Text(mode.rawValue).tag(mode)
@@ -177,7 +177,7 @@ struct ChatMessageBubble: View {
         .background(
             message.role == .user
                 ? Color(nsColor: .controlBackgroundColor)
-                : Color(nsColor: .textBackgroundColor)
+                : Color(nsColor: .textBackgroundColor),
         )
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
@@ -217,8 +217,8 @@ struct ChatInputView: View {
                 TextEditor(
                     text: Binding(
                         get: { viewModel.inputText },
-                        set: { viewModel.inputText = $0 }
-                    )
+                        set: { viewModel.inputText = $0 },
+                    ),
                 )
                 .font(.system(size: 12))
                 .frame(minHeight: 32, maxHeight: 120)
@@ -227,7 +227,7 @@ struct ChatInputView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color(nsColor: .separatorColor), lineWidth: 1)
+                        .stroke(Color(nsColor: .separatorColor), lineWidth: 1),
                 )
 
                 // Send / Stop button
@@ -250,7 +250,7 @@ struct ChatInputView: View {
                     })
                     .buttonStyle(.borderless)
                     .disabled(
-                        viewModel.inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                        viewModel.inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
                     )
                     .help("Send Message")
                 }

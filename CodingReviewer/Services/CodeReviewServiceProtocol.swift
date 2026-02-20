@@ -64,7 +64,7 @@ public struct CodeAnalysisResult: Codable, Identifiable, Sendable {
 
     public init(
         analysis: String, issues: [CodeIssue], suggestions: [String], language: String,
-        analysisType: AnalysisType
+        analysisType: AnalysisType,
     ) {
         self.id = UUID()
         self.analysis = analysis
@@ -99,7 +99,7 @@ public struct TestGenerationResult: Codable, Identifiable, Sendable {
     public let estimatedCoverage: Double
 
     public init(
-        testCode: String, language: String, testFramework: String, estimatedCoverage: Double
+        testCode: String, language: String, testFramework: String, estimatedCoverage: Double,
     ) {
         self.id = UUID()
         self.testCode = testCode

@@ -47,7 +47,7 @@ public enum CodingReviewerErrorHandler {
         context: String = "",
         file _: String = #file,
         function _: String = #function,
-        line _: Int = #line
+        line _: Int = #line,
     ) {
         let errorMessage = error.localizedDescription
         let fullContext = context.isEmpty ? "" : "[\(context)] "
@@ -75,7 +75,7 @@ public enum CodingReviewerErrorHandler {
         context: String = "",
         file: String = #file,
         function: String = #function,
-        line: Int = #line
+        line: Int = #line,
     ) {
         handle(error, showToUser: showToUser, context: context, file: file, function: function, line: line)
     }

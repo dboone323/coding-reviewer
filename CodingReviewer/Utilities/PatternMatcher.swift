@@ -33,7 +33,7 @@ public class PatternMatcher {
     public static func findMatches(
         pattern: String,
         in code: String,
-        timeout: TimeInterval = defaultTimeout
+        timeout: TimeInterval = defaultTimeout,
     ) -> [PatternMatch] {
         guard timeout > 0 else {
             return []
@@ -65,8 +65,8 @@ public class PatternMatcher {
                 PatternMatch(
                     range: matchRange,
                     line: lineNumber,
-                    matchedText: matchedText
-                )
+                    matchedText: matchedText,
+                ),
             )
         }
 

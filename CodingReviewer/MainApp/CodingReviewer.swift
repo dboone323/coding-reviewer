@@ -16,7 +16,7 @@ import SwiftUI
 @main
 public struct CodingReviewer: App {
     private let logger = Logger(
-        subsystem: "com.quantum.codingreviewer", category: "CodingReviewerApp"
+        subsystem: "com.quantum.codingreviewer", category: "CodingReviewerApp",
     )
 
     @State private var showNewReviewSheet = false
@@ -94,7 +94,7 @@ public struct CodingReviewer: App {
     private func saveCurrentReview() {
         logger.info("Save action triggered")
         NotificationCenter.default.post(
-            name: Notification.Name("SaveReviewNotification"), object: nil
+            name: Notification.Name("SaveReviewNotification"), object: nil,
         )
     }
 }

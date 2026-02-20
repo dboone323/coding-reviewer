@@ -144,7 +144,7 @@ public final class ChatViewModel {
                 let stream = await ollamaService.chatStream(
                     model: selectedModel,
                     messages: ollamaMessages,
-                    temperature: temperature
+                    temperature: temperature,
                 )
 
                 for try await chunk in stream {

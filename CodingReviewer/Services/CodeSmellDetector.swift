@@ -24,7 +24,7 @@ struct CodeSmellDetector {
                         description: "Long method detected (> 50 lines). Consider refactoring.",
                         severity: .low,
                         line: methodStartLine,
-                        category: .maintainability
+                        category: .maintainability,
                     ))
                 }
                 currentMethodLength = 0
@@ -40,7 +40,7 @@ struct CodeSmellDetector {
                 description: "Long method detected (> 50 lines). Consider refactoring.",
                 severity: .low,
                 line: methodStartLine,
-                category: .maintainability
+                category: .maintainability,
             ))
         }
 

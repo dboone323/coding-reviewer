@@ -43,7 +43,7 @@ public struct ContentView: View {
                 selectedFileURL: $selectedFileURL,
                 showFilePicker: $showFilePicker,
                 selectedAnalysisType: $selectedAnalysisType,
-                currentView: $currentView
+                currentView: $currentView,
             )
         } detail: {
             // Main content area
@@ -61,7 +61,7 @@ public struct ContentView: View {
                         onAnalyze: { await analyzeCode() },
                         onGenerateDocumentation: { await generateDocumentation() },
                         onGenerateTests: { await generateTests() },
-                        onCancel: { cancelCurrentTask() }
+                        onCancel: { cancelCurrentTask() },
                     )
                 } else {
                     WelcomeView(showFilePicker: $showFilePicker)
@@ -71,7 +71,7 @@ public struct ContentView: View {
         .fileImporter(
             isPresented: $showFilePicker,
             allowedContentTypes: [.swiftSource, .objectiveCSource, .cSource, .cHeader],
-            allowsMultipleSelection: false
+            allowsMultipleSelection: false,
         ) { result in
             handleFileSelection(result)
         }
@@ -89,7 +89,7 @@ public struct ContentView: View {
             Text(errorMessage)
         }
         .onReceive(
-            NotificationCenter.default.publisher(for: Notification.Name("SaveReviewNotification"))
+            NotificationCenter.default.publisher(for: Notification.Name("SaveReviewNotification")),
         ) { _ in
             prepareForSave()
         }
@@ -97,7 +97,7 @@ public struct ContentView: View {
             isPresented: $showSavePanel,
             document: JSONFileDocument(reviewData: reviewToSave),
             contentType: .json,
-            defaultFilename: "CodeReview_\(Date().formatted(date: .numeric, time: .omitted)).json"
+            defaultFilename: "CodeReview_\(Date().formatted(date: .numeric, time: .omitted)).json",
         ) { result in
             handleSaveResult(result)
         }
@@ -148,7 +148,7 @@ public struct ContentView: View {
                 let result = try await codeReviewService.analyzeCode(
                     codeContent,
                     language: language,
-                    analysisType: selectedAnalysisType
+                    analysisType: selectedAnalysisType,
                 )
                 analysisResult = result
                 logger.info("Code analysis completed successfully")
@@ -174,7 +174,7 @@ public struct ContentView: View {
             do {
                 let language = languageDetector.detectLanguage(from: selectedFileURL)
                 let result = try await codeReviewService.generateDocumentation(
-                    codeContent, language: language, includeExamples: true
+                    codeContent, language: language, includeExamples: true,
                 )
                 documentationResult = result
                 logger.info("Documentation generation completed successfully")
@@ -200,7 +200,7 @@ public struct ContentView: View {
             do {
                 let language = languageDetector.detectLanguage(from: selectedFileURL)
                 let result = try await codeReviewService.generateTests(
-                    codeContent, language: language, testFramework: "XCTest"
+                    codeContent, language: language, testFramework: "XCTest",
                 )
                 testResult = result
                 logger.info("Test generation completed successfully")
@@ -237,7 +237,7 @@ public struct ContentView: View {
             fileName: selectedFileURL?.lastPathComponent ?? "Unknown",
             code: codeContent,
             analysis: analysis,
-            timestamp: Date()
+            timestamp: Date(),
         )
         showSavePanel = true
     }

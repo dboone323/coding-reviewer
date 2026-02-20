@@ -47,7 +47,7 @@ class RuleEngine {
         }
 
         logger.info(
-            "Analyzing with \(applicableRules.count) applicable rules for language: \(language)"
+            "Analyzing with \(applicableRules.count) applicable rules for language: \(language)",
         )
 
         for rule in applicableRules {
@@ -58,8 +58,8 @@ class RuleEngine {
                         description: rule.description,
                         severity: rule.severity,
                         line: match.line,
-                        category: rule.category
-                    )
+                        category: rule.category,
+                    ),
                 )
             }
         }

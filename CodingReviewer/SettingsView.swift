@@ -16,8 +16,8 @@ struct SettingsView: View {
                         "Model",
                         selection: Binding(
                             get: { AIModelManager.shared.selectedModelId },
-                            set: { AIModelManager.shared.selectModel(id: $0) }
-                        )
+                            set: { AIModelManager.shared.selectModel(id: $0) },
+                        ),
                     ) {
                         ForEach(AIModelManager.shared.availableModels) { model in
                             Text(model.name).tag(model.id)
@@ -42,7 +42,7 @@ struct SettingsView: View {
                         .foregroundStyle(
                             ollamaStatus.contains("✓")
                                 ? .green
-                                : (ollamaStatus.contains("Checking") ? .secondary : .red)
+                                : (ollamaStatus.contains("Checking") ? .secondary : .red),
                         )
 
                     Spacer()

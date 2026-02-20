@@ -116,14 +116,14 @@ public actor OllamaService {
     public func chat(
         model: String,
         messages: [OllamaChatMessage],
-        temperature: Double = 0.7
+        temperature: Double = 0.7,
     ) async throws -> String {
         let url = baseURL.appendingPathComponent("api/chat")
         let request = OllamaChatRequest(
             model: model,
             messages: messages,
             stream: false,
-            options: OllamaOptions(temperature: temperature, num_predict: nil, top_p: nil)
+            options: OllamaOptions(temperature: temperature, num_predict: nil, top_p: nil),
         )
 
         var urlRequest = URLRequest(url: url)
@@ -145,7 +145,7 @@ public actor OllamaService {
     public func chatStream(
         model: String,
         messages: [OllamaChatMessage],
-        temperature: Double = 0.7
+        temperature: Double = 0.7,
     ) -> AsyncThrowingStream<String, Error> {
         AsyncThrowingStream { continuation in
             Task {
@@ -156,8 +156,8 @@ public actor OllamaService {
                         messages: messages,
                         stream: true,
                         options: OllamaOptions(
-                            temperature: temperature, num_predict: nil, top_p: nil
-                        )
+                            temperature: temperature, num_predict: nil, top_p: nil,
+                        ),
                     )
 
                     var urlRequest = URLRequest(url: url)
@@ -198,7 +198,7 @@ public actor OllamaService {
         model: String,
         prompt: String,
         system: String? = nil,
-        temperature: Double = 0.7
+        temperature: Double = 0.7,
     ) async throws -> String {
         let url = baseURL.appendingPathComponent("api/generate")
         let request = OllamaGenerateRequest(
@@ -206,7 +206,7 @@ public actor OllamaService {
             prompt: prompt,
             system: system,
             stream: false,
-            options: OllamaOptions(temperature: temperature, num_predict: nil, top_p: nil)
+            options: OllamaOptions(temperature: temperature, num_predict: nil, top_p: nil),
         )
 
         var urlRequest = URLRequest(url: url)
