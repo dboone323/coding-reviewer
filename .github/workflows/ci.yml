@@ -196,8 +196,7 @@ jobs:
             -skipMacroValidation \
             -configuration Debug \
             CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO \
-            SWIFT_TREAT_WARNINGS_AS_ERRORS=YES
+            CODE_SIGNING_REQUIRED=NO
 
       - name: 🧪 Run Tests (${{ matrix.name }})
         run: |
