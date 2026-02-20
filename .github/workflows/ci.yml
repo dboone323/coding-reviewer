@@ -52,6 +52,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-spm-
 
+      - name: 🔧 Install SwiftFormat (Pinned)
+        run: |
+          if ! command -v swiftformat >/dev/null 2>&1 || [ "$(swiftformat --version)" != "0.59.1" ]; then
+            brew install swiftformat
+          fi
+          swiftformat --version
+
       - name: 🎨 SwiftFormat Check
         run: |
           if command -v swiftformat >/dev/null 2>&1; then
