@@ -173,6 +173,19 @@ jobs:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
 
+      - name: 📦 Prepare shared-kit dependency
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SHARED_KIT_REPO="https://x-access-token:${GH_TOKEN}@github.com/dboone323/shared-kit.git"
+          SHARED_KIT_REF="${GITHUB_HEAD_REF:-main}"
+          if ! git clone --depth 1 --branch "$SHARED_KIT_REF" "$SHARED_KIT_REPO" "$RUNNER_TEMP/shared-kit"; then
+            echo "Falling back to default branch for shared-kit"
+            rm -rf "$RUNNER_TEMP/shared-kit"
+            git clone --depth 1 "$SHARED_KIT_REPO" "$RUNNER_TEMP/shared-kit"
+          fi
+          ln -sfn "$RUNNER_TEMP/shared-kit" "$GITHUB_WORKSPACE/../shared-kit"
+
       - name: 🔧 Setup Swift
         uses: swift-actions/setup-swift@7e293214cba9e9225c93ce3267f17f6efdb656a8
         with:
@@ -201,6 +214,7 @@ jobs:
       - name: 🧪 Run Tests (${{ matrix.name }})
         run: |
           echo "🧪 Running tests on ${{ matrix.name }}..."
+          rm -rf TestResults.xcresult
           xcodebuild test \
             -scheme ${{ matrix.scheme }} \
             -destination '${{ matrix.destination }}' \
@@ -246,6 +260,19 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           fetch-depth: 0
+
+      - name: 📦 Prepare shared-kit dependency
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SHARED_KIT_REPO="https://x-access-token:${GH_TOKEN}@github.com/dboone323/shared-kit.git"
+          SHARED_KIT_REF="${GITHUB_HEAD_REF:-main}"
+          if ! git clone --depth 1 --branch "$SHARED_KIT_REF" "$SHARED_KIT_REPO" "$RUNNER_TEMP/shared-kit"; then
+            echo "Falling back to default branch for shared-kit"
+            rm -rf "$RUNNER_TEMP/shared-kit"
+            git clone --depth 1 "$SHARED_KIT_REPO" "$RUNNER_TEMP/shared-kit"
+          fi
+          ln -sfn "$RUNNER_TEMP/shared-kit" "$GITHUB_WORKSPACE/../shared-kit"
 
       - name: 🔧 Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
