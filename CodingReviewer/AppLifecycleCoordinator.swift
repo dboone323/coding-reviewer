@@ -68,7 +68,7 @@ enum CodingReviewerSecureStore {
     }
 }
 
-struct CodingReviewerAccessibilityDefaultsModifier: ViewModifier {
+struct CRAccessibilityDefaultsModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .dynamicTypeSize(.xSmall ... .accessibility5)
@@ -78,6 +78,6 @@ struct CodingReviewerAccessibilityDefaultsModifier: ViewModifier {
 
 extension View {
     func codingReviewerAccessibilityDefaults() -> some View {
-        modifier(CodingReviewerAccessibilityDefaultsModifier())
+        modifier(CRAccessibilityDefaultsModifier())
     }
 }

@@ -64,7 +64,9 @@ public struct SidebarView: View {
                 .accessibilityLabel("Code Analysis")
                 .accessibilityHint("Run code analysis on the selected file")
 
-                Button(action: presenter.setViewAction(binding: $currentView, target: .documentation)) {
+                Button(
+                    action: presenter.setViewAction(binding: $currentView, target: .documentation)
+                ) {
                     Label("Documentation", systemImage: "doc.text")
                 }
                 .buttonStyle(.borderless)
@@ -80,7 +82,9 @@ public struct SidebarView: View {
             }
 
             Section("History") {
-                Button(action: { showHistorySheet = true }) {
+                Button {
+                    showHistorySheet = true
+                } label: {
                     Label("Review History", systemImage: "clock.arrow.circlepath")
                 }
                 .buttonStyle(.borderless)

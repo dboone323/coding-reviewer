@@ -118,7 +118,7 @@ public struct EditorPaneView: View {
 
                 // ...
 
-                // TODO: Integrate CodeEditSourceEditor properly with SourceEditorState/Configuration
+                // Note: Future integration with CodeEditSourceEditor could go here.
                 // For now using basic TextEditor as placeholder
                 TextEditor(text: binding)
                     .font(.system(size: fontSize, design: .monospaced))
