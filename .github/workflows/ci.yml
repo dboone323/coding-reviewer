@@ -160,7 +160,7 @@ jobs:
   build-and-test:
     name: 🏗️ Build & Test
     runs-on: macos-26
-    timeout-minutes: 45
+    timeout-minutes: 75
     needs: quality-checks
     strategy:
       fail-fast: false
@@ -193,20 +193,37 @@ jobs:
           xcode-select -p
           swift --version
 
-      - name: 📦 Cache DerivedData
+      - name: 📦 Cache SwiftPM Dependencies
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306
         with:
-          path: ~/Library/Developer/Xcode/DerivedData
-          key: ${{ runner.os }}-deriveddata-${{ hashFiles('**/*.swift', '**/*.xcodeproj') }}
+          path: |
+            ~/Library/Caches/org.swift.swiftpm
+            ~/Library/org.swift.swiftpm
+            .sourcepackages
+          key: ${{ runner.os }}-spm-${{ hashFiles('Package.resolved', 'CodingReviewer.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
           restore-keys: |
-            ${{ runner.os }}-deriveddata-
+            ${{ runner.os }}-spm-
+
+      - name: 📦 Resolve Package Dependencies
+        run: |
+          echo "📦 Resolving Swift package dependencies..."
+          mkdir -p "$PWD/.sourcepackages"
+          xcodebuild -resolvePackageDependencies \
+            -scheme ${{ matrix.scheme }} \
+            -destination '${{ matrix.destination }}' \
+            -clonedSourcePackagesDirPath "$PWD/.sourcepackages" \
+            -skipPackagePluginValidation \
+            -skipMacroValidation
 
       - name: 🏗️ Build (${{ matrix.name }})
         run: |
-          echo "🔨 Building ${{ matrix.name }}..."
-          xcodebuild build \
+          echo "🔨 Building for testing on ${{ matrix.name }}..."
+          DERIVED_DATA_PATH="$RUNNER_TEMP/DerivedData"
+          xcodebuild build-for-testing \
             -scheme ${{ matrix.scheme }} \
             -destination '${{ matrix.destination }}' \
+            -clonedSourcePackagesDirPath "$PWD/.sourcepackages" \
+            -derivedDataPath "$DERIVED_DATA_PATH" \
             -skipPackagePluginValidation \
             -skipMacroValidation \
             -configuration Debug \
@@ -217,10 +234,13 @@ jobs:
       - name: 🧪 Run Tests (${{ matrix.name }})
         run: |
           echo "🧪 Running tests on ${{ matrix.name }}..."
+          DERIVED_DATA_PATH="$RUNNER_TEMP/DerivedData"
           rm -rf TestResults.xcresult
-          xcodebuild test \
+          xcodebuild test-without-building \
             -scheme ${{ matrix.scheme }} \
             -destination '${{ matrix.destination }}' \
+            -clonedSourcePackagesDirPath "$PWD/.sourcepackages" \
+            -derivedDataPath "$DERIVED_DATA_PATH" \
             -skipPackagePluginValidation \
             -skipMacroValidation \
             -configuration Debug \
