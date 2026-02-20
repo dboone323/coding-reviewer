@@ -13,7 +13,7 @@ import os
 @MainActor
 public class CodeReviewService: CodeReviewServiceProtocol {
     public let serviceId = "code_review_service"
-    public let version = "1.0.1"  // Updated for resilience features
+    public let version = "1.0.1" // Updated for resilience features
 
     private let logger = Logger(
         subsystem: "com.quantum.codingreviewer", category: "CodeReviewService"
@@ -77,7 +77,7 @@ public class CodeReviewService: CodeReviewServiceProtocol {
             throw ServiceError.invalidInput(message: "Code cannot be empty")
         }
 
-        guard code.count < 500_000 else {  // 500KB limit
+        guard code.count < 500_000 else { // 500KB limit
             throw ServiceError.invalidInput(message: "Code size exceeds maximum limit (500KB)")
         }
 
@@ -194,9 +194,9 @@ public class CodeReviewService: CodeReviewServiceProtocol {
 
         let summary =
             "AI Quality: \(result.qualityScore)/10 • "
-            + "Security: \(result.securityIssues.count) • "
-            + "Performance: \(result.performanceIssues.count) • "
-            + "Style: \(result.bestPracticeViolations.count)"
+                + "Security: \(result.securityIssues.count) • "
+                + "Performance: \(result.performanceIssues.count) • "
+                + "Style: \(result.bestPracticeViolations.count)"
 
         return CodeAnalysisResult(
             analysis: summary,
