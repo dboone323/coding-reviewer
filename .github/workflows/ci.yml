@@ -219,7 +219,7 @@ jobs:
           xcrun xccov view --report --json TestResults.xcresult > coverage.json || true
 
       - name: 📤 Upload Coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           file: ./coverage.json
           flags: macos
