@@ -40,7 +40,7 @@ final class AnalysisCacheTests: XCTestCase {
                 description: "Test issue",
                 severity: .medium,
                 line: 1,
-                category: .general
+                category: .general,
             ),
         ]
 

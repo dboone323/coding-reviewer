@@ -44,7 +44,7 @@ struct StyleAnalysisService {
                             "Maximum allowed is 120 characters.",
                         severity: .low,
                         line: lineIndex + 1,
-                        category: .style
+                        category: .style,
                     ))
                 }
 
@@ -58,7 +58,7 @@ struct StyleAnalysisService {
                         "Consider adding /// comments for public functions.",
                     severity: .low,
                     line: nil,
-                    category: .style
+                    category: .style,
                 ))
             }
         }

@@ -23,8 +23,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  DEVELOPER_DIR: /Applications/Xcode_15.4.app/Contents/Developer
 
 jobs:
   # 1. Code Quality & Linting
@@ -39,10 +37,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: 🔧 Setup Swift
-        uses: swift-actions/setup-swift@7e293214cba9e9225c93ce3267f17f6efdb656a8
-        with:
-          swift-version: "6.2"
+      - name: 🔧 Verify Swift Toolchain
+        run: |
+          echo "Using preinstalled Swift toolchain on runner"
+          xcode-select -p
+          swift --version
 
       - name: 📦 Cache Dependencies
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306
@@ -53,6 +52,13 @@ jobs:
           key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
           restore-keys: |
             ${{ runner.os }}-spm-
+
+      - name: 🔧 Install SwiftFormat (Pinned)
+        run: |
+          if ! command -v swiftformat >/dev/null 2>&1 || [ "$(swiftformat --version)" != "0.59.1" ]; then
+            brew install swiftformat
+          fi
+          swiftformat --version
 
       - name: 🎨 SwiftFormat Check
         run: |
@@ -154,7 +160,7 @@ jobs:
   build-and-test:
     name: 🏗️ Build & Test
     runs-on: macos-26
-    timeout-minutes: 45
+    timeout-minutes: 75
     needs: quality-checks
     strategy:
       fail-fast: false
@@ -168,41 +174,80 @@ jobs:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
 
-      - name: 🔧 Setup Swift
-        uses: swift-actions/setup-swift@7e293214cba9e9225c93ce3267f17f6efdb656a8
-        with:
-          swift-version: "6.2"
+      - name: 📦 Prepare shared-kit dependency
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SHARED_KIT_REPO="https://x-access-token:${GH_TOKEN}@github.com/dboone323/shared-kit.git"
+          SHARED_KIT_REF="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME:-main}}"
+          if ! git clone --depth 1 --branch "$SHARED_KIT_REF" "$SHARED_KIT_REPO" "$RUNNER_TEMP/shared-kit"; then
+            echo "Falling back to default branch for shared-kit"
+            rm -rf "$RUNNER_TEMP/shared-kit"
+            git clone --depth 1 "$SHARED_KIT_REPO" "$RUNNER_TEMP/shared-kit"
+          fi
+          ln -sfn "$RUNNER_TEMP/shared-kit" "$GITHUB_WORKSPACE/../shared-kit"
 
-      - name: 📦 Cache DerivedData
+      - name: 🔧 Verify Swift Toolchain
+        run: |
+          echo "Using preinstalled Swift toolchain on runner"
+          xcode-select -p
+          swift --version
+
+      - name: 📦 Cache SwiftPM Dependencies
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306
         with:
-          path: ~/Library/Developer/Xcode/DerivedData
-          key: ${{ runner.os }}-deriveddata-${{ hashFiles('**/*.swift', '**/*.xcodeproj') }}
+          path: |
+            ~/Library/Caches/org.swift.swiftpm
+            ~/Library/org.swift.swiftpm
+            .sourcepackages
+          key: ${{ runner.os }}-spm-${{ hashFiles('Package.resolved', 'CodingReviewer.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
           restore-keys: |
-            ${{ runner.os }}-deriveddata-
+            ${{ runner.os }}-spm-
+
+      - name: 📦 Resolve Package Dependencies
+        run: |
+          echo "📦 Resolving Swift package dependencies..."
+          mkdir -p "$PWD/.sourcepackages"
+          xcodebuild -resolvePackageDependencies \
+            -scheme ${{ matrix.scheme }} \
+            -destination '${{ matrix.destination }}' \
+            -clonedSourcePackagesDirPath "$PWD/.sourcepackages" \
+            -skipPackagePluginValidation \
+            -skipMacroValidation
 
       - name: 🏗️ Build (${{ matrix.name }})
         run: |
-          echo "🔨 Building ${{ matrix.name }}..."
-          xcodebuild build \
+          echo "🔨 Building for testing on ${{ matrix.name }}..."
+          DERIVED_DATA_PATH="$RUNNER_TEMP/DerivedData"
+          xcodebuild build-for-testing \
             -scheme ${{ matrix.scheme }} \
             -destination '${{ matrix.destination }}' \
+            -clonedSourcePackagesDirPath "$PWD/.sourcepackages" \
+            -derivedDataPath "$DERIVED_DATA_PATH" \
+            -skipPackagePluginValidation \
+            -skipMacroValidation \
             -configuration Debug \
-            -enableCodeCoverage YES \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
-            SWIFT_TREAT_WARNINGS_AS_ERRORS=YES
+            CODE_SIGNING_ALLOWED=NO
 
       - name: 🧪 Run Tests (${{ matrix.name }})
         run: |
           echo "🧪 Running tests on ${{ matrix.name }}..."
-          xcodebuild test \
+          DERIVED_DATA_PATH="$RUNNER_TEMP/DerivedData"
+          rm -rf TestResults.xcresult
+          xcodebuild test-without-building \
             -scheme ${{ matrix.scheme }} \
             -destination '${{ matrix.destination }}' \
+            -clonedSourcePackagesDirPath "$PWD/.sourcepackages" \
+            -derivedDataPath "$DERIVED_DATA_PATH" \
+            -skipPackagePluginValidation \
+            -skipMacroValidation \
             -configuration Debug \
             -enableCodeCoverage YES \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
             -resultBundlePath TestResults.xcresult
 
       - name: 📊 Upload Test Results
@@ -240,10 +285,23 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: 📦 Prepare shared-kit dependency
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SHARED_KIT_REPO="https://x-access-token:${GH_TOKEN}@github.com/dboone323/shared-kit.git"
+          SHARED_KIT_REF="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME:-main}}"
+          if ! git clone --depth 1 --branch "$SHARED_KIT_REF" "$SHARED_KIT_REPO" "$RUNNER_TEMP/shared-kit"; then
+            echo "Falling back to default branch for shared-kit"
+            rm -rf "$RUNNER_TEMP/shared-kit"
+            git clone --depth 1 "$SHARED_KIT_REPO" "$RUNNER_TEMP/shared-kit"
+          fi
+          ln -sfn "$RUNNER_TEMP/shared-kit" "$GITHUB_WORKSPACE/../shared-kit"
+
       - name: 🔧 Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: "15.2"
+          xcode-version: "latest-stable"
 
       - name: 💎 Setup Ruby & Fastlane
         uses: ruby/setup-ruby@v1

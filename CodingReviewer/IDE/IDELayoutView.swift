@@ -46,7 +46,7 @@ public struct IDELayoutView: View {
             IDEToolbar(
                 panelState: panelState,
                 editorVM: editorVM,
-                chatVM: chatVM
+                chatVM: chatVM,
             )
 
             Divider()
@@ -70,7 +70,7 @@ public struct IDELayoutView: View {
                         chatVM: chatVM,
                         editorVM: editorVM,
                         sourceControlVM: sourceControlVM,
-                        githubVM: githubVM
+                        githubVM: githubVM,
                     )
                     .frame(minWidth: 280, idealWidth: 340, maxWidth: 500)
                 }
@@ -100,7 +100,7 @@ struct IDEToolbar: View {
             ToolbarToggle(
                 icon: "sidebar.leading",
                 isActive: panelState.showFileTree,
-                help: "Toggle File Tree"
+                help: "Toggle File Tree",
             ) {
                 panelState.showFileTree.toggle()
             }
@@ -136,7 +136,7 @@ struct IDEToolbar: View {
             ToolbarToggle(
                 icon: "bubble.left.and.bubble.right",
                 isActive: panelState.showRightPanel && panelState.rightPanelTab == .chat,
-                help: "Toggle Chat"
+                help: "Toggle Chat",
             ) {
                 if panelState.showRightPanel && panelState.rightPanelTab == .chat {
                     panelState.showRightPanel = false
@@ -149,7 +149,7 @@ struct IDEToolbar: View {
             ToolbarToggle(
                 icon: "terminal",
                 isActive: panelState.showBottomPanel,
-                help: "Toggle Terminal"
+                help: "Toggle Terminal",
             ) {
                 panelState.showBottomPanel.toggle()
             }
@@ -193,7 +193,7 @@ struct RightPanel: View {
                 ForEach(IDEPanelState.RightPanelTab.allCases, id: \.self) { tab in
                     PanelTabButton(
                         title: tab.rawValue,
-                        isActive: panelState.rightPanelTab == tab
+                        isActive: panelState.rightPanelTab == tab,
                     ) {
                         panelState.rightPanelTab = tab
                     }
@@ -252,7 +252,7 @@ struct BottomPanel: View {
                 ForEach(IDEPanelState.BottomPanelTab.allCases, id: \.self) { tab in
                     PanelTabButton(
                         title: tab.rawValue,
-                        isActive: panelState.bottomPanelTab == tab
+                        isActive: panelState.bottomPanelTab == tab,
                     ) {
                         panelState.bottomPanelTab = tab
                     }
@@ -367,7 +367,7 @@ struct ReviewActionButton: View {
                 .padding(.vertical, 8)
                 .background(Color(nsColor: .controlBackgroundColor))
                 .clipShape(RoundedRectangle(cornerRadius: 6))
-            }
+            },
         )
         .buttonStyle(.plain)
     }

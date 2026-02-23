@@ -36,7 +36,7 @@ public struct CodeIssue: Codable, Identifiable, Sendable {
 
     public init(
         description: String, severity: IssueSeverity, line: Int? = nil, category: IssueCategory,
-        suggestedFix: String? = nil
+        suggestedFix: String? = nil,
     ) {
         self.id = UUID()
         self.description = description

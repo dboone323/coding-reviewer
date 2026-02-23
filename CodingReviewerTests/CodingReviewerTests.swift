@@ -23,7 +23,7 @@ class CodingReviewerTests: XCTestCase {
             severity: .low,
             line: 1,
             category: .general,
-            suggestedFix: "Fix it"
+            suggestedFix: "Fix it",
         )
 
         XCTAssertNotEqual(issue.id, UUID())

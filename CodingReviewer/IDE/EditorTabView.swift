@@ -19,7 +19,7 @@ public struct EditorTabBar: View {
                         file: file,
                         isActive: file.id == viewModel.activeFileID,
                         onSelect: { viewModel.selectTab(id: file.id) },
-                        onClose: { viewModel.closeFile(id: file.id) }
+                        onClose: { viewModel.closeFile(id: file.id) },
                     )
                 }
             }
@@ -113,7 +113,7 @@ public struct EditorPaneView: View {
                     get: { viewModel.openFiles[activeIndex].content },
                     set: { newValue in
                         viewModel.updateContent(newValue, for: viewModel.openFiles[activeIndex].id)
-                    }
+                    },
                 )
 
                 // ...
@@ -128,7 +128,7 @@ public struct EditorPaneView: View {
                 // Status bar
                 EditorStatusBar(
                     file: viewModel.openFiles[activeIndex],
-                    lineCount: binding.wrappedValue.components(separatedBy: .newlines).count
+                    lineCount: binding.wrappedValue.components(separatedBy: .newlines).count,
                 )
             } else {
                 // No file open - show welcome

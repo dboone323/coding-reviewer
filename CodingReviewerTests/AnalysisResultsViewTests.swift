@@ -18,7 +18,7 @@ final class AnalysisResultsViewTests: XCTestCase {
             issues: [],
             suggestions: [],
             language: "swift",
-            analysisType: .comprehensive
+            analysisType: .comprehensive,
         )
         let vm = AnalysisResultsViewModel(result: empty)
         XCTAssertTrue(vm.shouldShowEmptyState)
@@ -36,7 +36,7 @@ final class AnalysisResultsViewTests: XCTestCase {
             issues: [issue],
             suggestions: ["Remove unused var"],
             language: "swift",
-            analysisType: .style
+            analysisType: .style,
         )
         let vm = AnalysisResultsViewModel(result: result)
         XCTAssertFalse(vm.shouldShowEmptyState)
@@ -53,7 +53,7 @@ final class AnalysisResultsViewTests: XCTestCase {
             issues: [],
             suggestions: [],
             language: "swift",
-            analysisType: .comprehensive
+            analysisType: .comprehensive,
         )
         let view = AnalysisResultsView(result: empty)
         // Compile-time construction is sufficient here
@@ -72,7 +72,7 @@ final class AnalysisResultsViewTests: XCTestCase {
             issues: manyIssues,
             suggestions: [],
             language: "swift",
-            analysisType: .comprehensive
+            analysisType: .comprehensive,
         )
         let vm = AnalysisResultsViewModel(result: result)
         XCTAssertEqual(vm.issues.count, 50)
@@ -96,7 +96,7 @@ final class AnalysisResultsViewTests: XCTestCase {
             issues: [],
             suggestions: ["Refactor function"],
             language: "swift",
-            analysisType: .maintainability
+            analysisType: .maintainability,
         )
         let vm = AnalysisResultsViewModel(result: result)
         XCTAssertTrue(vm.shouldShowEmptyState) // no issues

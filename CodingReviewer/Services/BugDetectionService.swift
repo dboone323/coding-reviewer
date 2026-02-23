@@ -41,7 +41,7 @@ struct BugDetectionService {
                 description: "TODO comment found - this should be addressed",
                 severity: .medium,
                 line: index + 1,
-                category: .bug
+                category: .bug,
             ))
         }
 
@@ -51,7 +51,7 @@ struct BugDetectionService {
                 description: "FIXME comment found - this should be addressed",
                 severity: .high,
                 line: index + 1,
-                category: .bug
+                category: .bug,
             ))
         }
 
@@ -82,7 +82,7 @@ struct BugDetectionService {
                     description: "Debug print statements found in production code",
                     severity: .low,
                     line: index + 1,
-                    category: .bug
+                    category: .bug,
                 )
             }
         }
@@ -101,7 +101,7 @@ struct BugDetectionService {
                         description: "Force unwrapping detected - consider safe unwrapping",
                         severity: .medium,
                         line: index + 1,
-                        category: .bug
+                        category: .bug,
                     )
                 }
             }

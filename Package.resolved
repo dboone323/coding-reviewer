@@ -1,6 +1,15 @@
 {
-  "originHash" : "c29cd66215c270ed390db99cc5aa861d2477c6c0a0e10efb8285e3d1b689220a",
+  "originHash" : "b4383ddbfecdc0d0c34ecfecd2a227865eef8f618221c2f29113aed329dfca46",
   "pins" : [
+    {
+      "identity" : "shared-kit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dboone323/shared-kit.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "23e528d664c4b288a207d496bbca78bc8f450252"
+      }
+    },
     {
       "identity" : "swift-atomics",
       "kind" : "remoteSourceControl",
@@ -33,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio.git",
       "state" : {
-        "revision" : "9b92dcd5c22ae17016ad867852e0850f1f9f93ed",
-        "version" : "2.94.1"
+        "revision" : "e932d3c4d8f77433c8f7093b5ebcbf91463948a0",
+        "version" : "2.95.0"
       }
     },
     {

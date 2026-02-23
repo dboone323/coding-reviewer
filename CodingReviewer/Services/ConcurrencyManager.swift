@@ -12,7 +12,7 @@ actor ConcurrencyManager {
 
     func performConcurrentAnalysis(
         files: [String],
-        analyzer: @escaping @Sendable (String) async -> [CodeIssue]
+        analyzer: @escaping @Sendable (String) async -> [CodeIssue],
     ) async -> [String: [
         CodeIssue
     ]] {

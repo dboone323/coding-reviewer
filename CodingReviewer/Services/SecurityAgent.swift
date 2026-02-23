@@ -11,7 +11,7 @@ public final class SecurityAgent: BaseAgent {
     public func execute(context: [String: Sendable]) async throws -> AgentResult {
         guard let code = context["code"] as? String else {
             return AgentResult(
-                agentId: id, success: false, summary: "No code provided for analysis"
+                agentId: id, success: false, summary: "No code provided for analysis",
             )
         }
 
@@ -41,7 +41,7 @@ public final class SecurityAgent: BaseAgent {
             success: true,
             summary: summary,
             detail: issues,
-            requiresApproval: !issues.isEmpty
+            requiresApproval: !issues.isEmpty,
         )
     }
 }

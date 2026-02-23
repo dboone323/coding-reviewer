@@ -13,7 +13,7 @@ struct SwiftAnalyzer: LanguageAnalyzer {
 
         // UserDefaults + Password (catch standard usage and common aliases)
         let passwordMatches = PatternMatcher.findMatches(
-            pattern: "(UserDefaults|defaults|standard).*password", in: code
+            pattern: "(UserDefaults|defaults|standard).*password", in: code,
         )
         for match in passwordMatches {
             issues.append(
@@ -21,15 +21,15 @@ struct SwiftAnalyzer: LanguageAnalyzer {
                     description: "Storing passwords in UserDefaults is insecure. Use Keychain.",
                     severity: .high,
                     line: match.line,
-                    category: .security
-                )
+                    category: .security,
+                ),
             )
         }
 
         // Force unwrapping: match `identifier!` but exclude comparison operators like `!=`.
         let forceUnwrapMatches = PatternMatcher.findMatches(
             pattern: "[a-zA-Z0-9_]+\\s*!(?!=)",
-            in: code
+            in: code,
         )
         for match in forceUnwrapMatches {
             issues.append(
@@ -37,8 +37,8 @@ struct SwiftAnalyzer: LanguageAnalyzer {
                     description: "Force unwrapping found. Use optional binding (if let/guard let).",
                     severity: .medium,
                     line: match.line,
-                    category: .security // Can cause crashes
-                )
+                    category: .security, // Can cause crashes
+                ),
             )
         }
 
@@ -61,8 +61,8 @@ struct SwiftAnalyzer: LanguageAnalyzer {
                         severity: .low,
                         line: index + 1,
                         category: .style,
-                        suggestedFix: fix
-                    )
+                        suggestedFix: fix,
+                    ),
                 )
             }
 
@@ -73,8 +73,8 @@ struct SwiftAnalyzer: LanguageAnalyzer {
                         description: "Resolve TODO item.",
                         severity: .low,
                         line: index + 1,
-                        category: .maintainability
-                    )
+                        category: .maintainability,
+                    ),
                 )
             }
         }
@@ -91,7 +91,7 @@ struct SwiftAnalyzer: LanguageAnalyzer {
         // }
         let emptyCatchMatches = PatternMatcher.findMatches(
             pattern: "catch\\s*\\{\\s*\\}",
-            in: code
+            in: code,
         )
         for match in emptyCatchMatches {
             issues.append(
@@ -99,8 +99,8 @@ struct SwiftAnalyzer: LanguageAnalyzer {
                     description: "Empty catch block - errors should be handled or logged",
                     severity: .high,
                     line: match.line,
-                    category: .bug
-                )
+                    category: .bug,
+                ),
             )
         }
 
@@ -118,8 +118,8 @@ struct SwiftAnalyzer: LanguageAnalyzer {
                         description: "Strong self capture in closure may cause retain cycle",
                         severity: .medium,
                         line: index + 1,
-                        category: .bug
-                    )
+                        category: .bug,
+                    ),
                 )
             }
         }

@@ -12,7 +12,7 @@ final class SnapshotSmokeTests: XCTestCase {
         _ snapshot: String,
         named name: String,
         file: StaticString = #filePath,
-        line: UInt = #line
+        line: UInt = #line,
     ) throws {
         let currentFile = URL(fileURLWithPath: String(describing: file))
         let snapshotURL = currentFile.deletingLastPathComponent()
@@ -24,7 +24,7 @@ final class SnapshotSmokeTests: XCTestCase {
         XCTAssertEqual(
             snapshot,
             expected.trimmingCharacters(in: .whitespacesAndNewlines),
-            line: line
+            line: line,
         )
     }
 }

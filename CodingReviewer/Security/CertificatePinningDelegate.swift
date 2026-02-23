@@ -9,7 +9,7 @@ final class CertificatePinningDelegate: NSObject, URLSessionDelegate {
               let data = try? Data(contentsOf: certURL)
         else {
             print(
-                "Warning: Pinned certificate 'server.cer' not found in bundle. Pinning disabled/failed."
+                "Warning: Pinned certificate 'server.cer' not found in bundle. Pinning disabled/failed.",
             )
             return Data()
         }
@@ -18,7 +18,7 @@ final class CertificatePinningDelegate: NSObject, URLSessionDelegate {
 
     func urlSession(
         _ session: URLSession, didReceive challenge: URLAuthenticationChallenge,
-        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void
+        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void,
     ) {
         // If we don't have a pinned cert, we can't pin.
         // In a strict app, you might want to cancel here.
