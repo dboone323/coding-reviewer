@@ -20,6 +20,10 @@ let package = Package(
         .library(
             name: "CodingReviewerCore",
             targets: ["CodingReviewer"]
+        ),
+        .executable(
+            name: "LiveReviewTest",
+            targets: ["LiveReviewTest"]
         )
     ],
     dependencies: [
@@ -95,6 +99,12 @@ let package = Package(
                 .copy("Fixtures"),
                 .copy("__Snapshots__"),
             ]
+        ),
+        .executableTarget(
+            name: "LiveReviewTest",
+            dependencies: ["CodingReviewer"],
+            path: "Tools",
+            sources: ["live_review_test.swift"]
         ),
     ]
 )
