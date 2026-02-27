@@ -1,0 +1,949 @@
+Building for debugging...
+[0/4] Write swift-version--58304C5D6DBC2206.txt
+Build complete! (0.23s)
+Test Suite 'All tests' started at 2026-02-25 09:35:19.898.
+Test Suite 'CodingReviewerPackageTests.xctest' started at 2026-02-25 09:35:19.902.
+Test Suite 'AIEnhancedCodeAnalysisServiceTests' started at 2026-02-25 09:35:19.902.
+Test Case '-[CodingReviewerTests.AIEnhancedCodeAnalysisServiceTests testEdgeCases]' started.
+Test Case '-[CodingReviewerTests.AIEnhancedCodeAnalysisServiceTests testEdgeCases]' passed (0.010 seconds).
+Test Case '-[CodingReviewerTests.AIEnhancedCodeAnalysisServiceTests testErrorHandling]' started.
+Test Case '-[CodingReviewerTests.AIEnhancedCodeAnalysisServiceTests testErrorHandling]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AIEnhancedCodeAnalysisServiceTests testInitialization]' started.
+Test Case '-[CodingReviewerTests.AIEnhancedCodeAnalysisServiceTests testInitialization]' passed (0.001 seconds).
+Test Case '-[CodingReviewerTests.AIEnhancedCodeAnalysisServiceTests testIntegration]' started.
+Test Case '-[CodingReviewerTests.AIEnhancedCodeAnalysisServiceTests testIntegration]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AIEnhancedCodeAnalysisServiceTests testProperties]' started.
+Test Case '-[CodingReviewerTests.AIEnhancedCodeAnalysisServiceTests testProperties]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AIEnhancedCodeAnalysisServiceTests testPublicMethods]' started.
+Test Case '-[CodingReviewerTests.AIEnhancedCodeAnalysisServiceTests testPublicMethods]' passed (0.001 seconds).
+Test Suite 'AIEnhancedCodeAnalysisServiceTests' passed at 2026-02-25 09:35:19.915.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.012 (0.013) seconds
+Test Suite 'AIServiceModelMappingTests' started at 2026-02-25 09:35:19.915.
+Test Case '-[CodingReviewerTests.AIServiceModelMappingTests testMapsCloudModelTagsToFreeOllamaModels]' started.
+Test Case '-[CodingReviewerTests.AIServiceModelMappingTests testMapsCloudModelTagsToFreeOllamaModels]' passed (0.004 seconds).
+Test Suite 'AIServiceModelMappingTests' passed at 2026-02-25 09:35:19.919.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.004 (0.004) seconds
+Test Suite 'AboutViewTests' started at 2026-02-25 09:35:19.919.
+Test Case '-[CodingReviewerTests.AboutViewTests testEdgeCases]' started.
+Test Case '-[CodingReviewerTests.AboutViewTests testEdgeCases]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AboutViewTests testErrorHandling]' started.
+Test Case '-[CodingReviewerTests.AboutViewTests testErrorHandling]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AboutViewTests testInitialization]' started.
+Test Case '-[CodingReviewerTests.AboutViewTests testInitialization]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AboutViewTests testIntegration]' started.
+Test Case '-[CodingReviewerTests.AboutViewTests testIntegration]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AboutViewTests testProperties]' started.
+Test Case '-[CodingReviewerTests.AboutViewTests testProperties]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AboutViewTests testPublicMethods]' started.
+Test Case '-[CodingReviewerTests.AboutViewTests testPublicMethods]' passed (0.000 seconds).
+Test Suite 'AboutViewTests' passed at 2026-02-25 09:35:19.920.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'AnalysisCacheTests' started at 2026-02-25 09:35:19.920.
+Test Case '-[CodingReviewerTests.AnalysisCacheTests testGetReturnsNilForUncachedCode]' started.
+Test Case '-[CodingReviewerTests.AnalysisCacheTests testGetReturnsNilForUncachedCode]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AnalysisCacheTests testMultipleEntriesCachedSeparately]' started.
+Test Case '-[CodingReviewerTests.AnalysisCacheTests testMultipleEntriesCachedSeparately]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AnalysisCacheTests testOverwritesCachedValue]' started.
+Test Case '-[CodingReviewerTests.AnalysisCacheTests testOverwritesCachedValue]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AnalysisCacheTests testSetAndGetRoundTrip]' started.
+Test Case '-[CodingReviewerTests.AnalysisCacheTests testSetAndGetRoundTrip]' passed (0.002 seconds).
+Test Case '-[CodingReviewerTests.AnalysisCacheTests testSetEmptyIssues]' started.
+Test Case '-[CodingReviewerTests.AnalysisCacheTests testSetEmptyIssues]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AnalysisCacheTests testSharedInstance]' started.
+Test Case '-[CodingReviewerTests.AnalysisCacheTests testSharedInstance]' passed (0.000 seconds).
+Test Suite 'AnalysisCacheTests' passed at 2026-02-25 09:35:19.924.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+Test Suite 'AnalysisResultsViewTests' started at 2026-02-25 09:35:19.924.
+Test Case '-[CodingReviewerTests.AnalysisResultsViewTests testEdgeCases]' started.
+Test Case '-[CodingReviewerTests.AnalysisResultsViewTests testEdgeCases]' passed (0.001 seconds).
+Test Case '-[CodingReviewerTests.AnalysisResultsViewTests testErrorHandling]' started.
+Test Case '-[CodingReviewerTests.AnalysisResultsViewTests testErrorHandling]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AnalysisResultsViewTests testInitialization]' started.
+Test Case '-[CodingReviewerTests.AnalysisResultsViewTests testInitialization]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AnalysisResultsViewTests testIntegration]' started.
+Test Case '-[CodingReviewerTests.AnalysisResultsViewTests testIntegration]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AnalysisResultsViewTests testProperties]' started.
+Test Case '-[CodingReviewerTests.AnalysisResultsViewTests testProperties]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AnalysisResultsViewTests testPublicMethods]' started.
+Test Case '-[CodingReviewerTests.AnalysisResultsViewTests testPublicMethods]' passed (0.001 seconds).
+Test Suite 'AnalysisResultsViewTests' passed at 2026-02-25 09:35:19.927.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'AnalysisSummaryGeneratorTests' started at 2026-02-25 09:35:19.927.
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_DetailedIssuesSection]' started.
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_DetailedIssuesSection]' passed (0.001 seconds).
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_EmptyIssues]' started.
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_EmptyIssues]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_IssuesByFile]' started.
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_IssuesByFile]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_IssuesWithoutSuggestions]' started.
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_IssuesWithoutSuggestions]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_JavaScriptLanguage]' started.
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_JavaScriptLanguage]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_ManyFiles]' started.
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_ManyFiles]' passed (0.001 seconds).
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_MultipleIssues]' started.
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_MultipleIssues]' passed (0.001 seconds).
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_NoEmptySections]' started.
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_NoEmptySections]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_SeverityDistribution]' started.
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_SeverityDistribution]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_SingleIssue]' started.
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_SingleIssue]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_SpecialCharactersInMessages]' started.
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_SpecialCharactersInMessages]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_Structure]' started.
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_Structure]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_SwiftLanguage]' started.
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_SwiftLanguage]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_TypeDistribution]' started.
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_TypeDistribution]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_VeryLongMessages]' started.
+Test Case '-[CodingReviewerTests.AnalysisSummaryGeneratorTests testGenerateSummary_VeryLongMessages]' passed (0.000 seconds).
+Test Suite 'AnalysisSummaryGeneratorTests' passed at 2026-02-25 09:35:19.934.
+	 Executed 15 tests, with 0 failures (0 unexpected) in 0.005 (0.008) seconds
+Test Suite 'AppDelegateTests' started at 2026-02-25 09:35:19.934.
+Test Case '-[CodingReviewerTests.AppDelegateTests testEdgeCases]' started.
+Test Case '-[CodingReviewerTests.AppDelegateTests testEdgeCases]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AppDelegateTests testErrorHandling]' started.
+Test Case '-[CodingReviewerTests.AppDelegateTests testErrorHandling]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AppDelegateTests testInitialization]' started.
+Test Case '-[CodingReviewerTests.AppDelegateTests testInitialization]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AppDelegateTests testIntegration]' started.
+Test Case '-[CodingReviewerTests.AppDelegateTests testIntegration]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AppDelegateTests testProperties]' started.
+Test Case '-[CodingReviewerTests.AppDelegateTests testProperties]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.AppDelegateTests testPublicMethods]' started.
+Test Case '-[CodingReviewerTests.AppDelegateTests testPublicMethods]' passed (0.000 seconds).
+Test Suite 'AppDelegateTests' passed at 2026-02-25 09:35:19.936.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'BugDetectionServiceTests' started at 2026-02-25 09:35:19.936.
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testCodeIssue_NoLineNumbers]' started.
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testCodeIssue_NoLineNumbers]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testCodeIssue_UniqueIDs]' started.
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testCodeIssue_UniqueIDs]' passed (0.001 seconds).
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testDetectBasicBugs_DebugPrintStatement]' started.
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testDetectBasicBugs_DebugPrintStatement]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testDetectBasicBugs_DebugPrintStatement_NonSwift]' started.
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testDetectBasicBugs_DebugPrintStatement_NonSwift]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testDetectBasicBugs_EmptyCode]' started.
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testDetectBasicBugs_EmptyCode]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testDetectBasicBugs_FIXMEComment]' started.
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testDetectBasicBugs_FIXMEComment]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testDetectBasicBugs_ForceUnwrap]' started.
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testDetectBasicBugs_ForceUnwrap]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testDetectBasicBugs_ForceUnwrap_NonSwift]' started.
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testDetectBasicBugs_ForceUnwrap_NonSwift]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testDetectBasicBugs_MultipleIssues]' started.
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testDetectBasicBugs_MultipleIssues]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testDetectBasicBugs_NoIssues]' started.
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testDetectBasicBugs_NoIssues]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testDetectBasicBugs_TODOComment]' started.
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testDetectBasicBugs_TODOComment]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testDetectBasicBugs_WhitespaceOnly]' started.
+Test Case '-[CodingReviewerTests.BugDetectionServiceTests testDetectBasicBugs_WhitespaceOnly]' passed (0.000 seconds).
+Test Suite 'BugDetectionServiceTests' passed at 2026-02-25 09:35:19.941.
+	 Executed 12 tests, with 0 failures (0 unexpected) in 0.003 (0.005) seconds
+Test Suite 'CodeAnalysisEngineIntegrationTests' started at 2026-02-25 09:35:19.941.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_AllServicesIntegration]' started.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_AllServicesIntegration]' passed (0.018 seconds).
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_EmptyAnalysisTypes]' started.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_EmptyAnalysisTypes]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_EmptyCode]' started.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_EmptyCode]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_FullAnalysis_JavaScriptCode]' started.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_FullAnalysis_JavaScriptCode]' passed (0.001 seconds).
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_FullAnalysis_SwiftCode]' started.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_FullAnalysis_SwiftCode]' passed (0.001 seconds).
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_LargeCodeFile]' started.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_LargeCodeFile]' passed (0.006 seconds).
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_MultipleIssuesSameLine]' started.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_MultipleIssuesSameLine]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_OnlyWhitespace]' started.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_OnlyWhitespace]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_PartialServiceFailure]' started.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_PartialServiceFailure]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_ResultStructure]' started.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_ResultStructure]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_SelectiveAnalysisTypes]' started.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_SelectiveAnalysisTypes]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_ServiceFailureHandling]' started.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_ServiceFailureHandling]' passed (2.576 seconds).
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_SupportedLanguages]' started.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_SupportedLanguages]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_UnsupportedLanguage]' started.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineIntegrationTests testAnalyzeCode_UnsupportedLanguage]' passed (0.000 seconds).
+Test Suite 'CodeAnalysisEngineIntegrationTests' passed at 2026-02-25 09:35:22.548.
+	 Executed 14 tests, with 0 failures (0 unexpected) in 2.605 (2.606) seconds
+Test Suite 'CodeAnalysisEngineTests' started at 2026-02-25 09:35:22.548.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineTests testAnalyzeMultipleFiles]' started.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineTests testAnalyzeMultipleFiles]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineTests testAnalyzeSwiftFile]' started.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineTests testAnalyzeSwiftFile]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineTests testEmptyFileHandling]' started.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineTests testEmptyFileHandling]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineTests testGenerateReport]' started.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineTests testGenerateReport]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineTests testPerformanceOnLargeFile]' started.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineTests testPerformanceOnLargeFile]' passed (0.023 seconds).
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineTests testSeverityClassification]' started.
+Test Case '-[CodingReviewerTests.CodeAnalysisEngineTests testSeverityClassification]' passed (0.000 seconds).
+Test Suite 'CodeAnalysisEngineTests' passed at 2026-02-25 09:35:22.573.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.024 (0.025) seconds
+Test Suite 'CodeReviewServiceProtocolTests' started at 2026-02-25 09:35:22.573.
+Test Case '-[CodingReviewerTests.CodeReviewServiceProtocolTests testEdgeCases]' started.
+Test Case '-[CodingReviewerTests.CodeReviewServiceProtocolTests testEdgeCases]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeReviewServiceProtocolTests testErrorHandling]' started.
+Test Case '-[CodingReviewerTests.CodeReviewServiceProtocolTests testErrorHandling]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeReviewServiceProtocolTests testInitialization]' started.
+Test Case '-[CodingReviewerTests.CodeReviewServiceProtocolTests testInitialization]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeReviewServiceProtocolTests testIntegration]' started.
+Test Case '-[CodingReviewerTests.CodeReviewServiceProtocolTests testIntegration]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeReviewServiceProtocolTests testProperties]' started.
+Test Case '-[CodingReviewerTests.CodeReviewServiceProtocolTests testProperties]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeReviewServiceProtocolTests testPublicMethods]' started.
+Test Case '-[CodingReviewerTests.CodeReviewServiceProtocolTests testPublicMethods]' passed (0.000 seconds).
+Test Suite 'CodeReviewServiceProtocolTests' passed at 2026-02-25 09:35:22.574.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'CodeReviewServiceTests' started at 2026-02-25 09:35:22.574.
+Test Case '-[CodingReviewerTests.CodeReviewServiceTests testEdgeCases]' started.
+Test Case '-[CodingReviewerTests.CodeReviewServiceTests testEdgeCases]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeReviewServiceTests testErrorHandling]' started.
+Test Case '-[CodingReviewerTests.CodeReviewServiceTests testErrorHandling]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeReviewServiceTests testInitialization]' started.
+Test Case '-[CodingReviewerTests.CodeReviewServiceTests testInitialization]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeReviewServiceTests testIntegration]' started.
+Test Case '-[CodingReviewerTests.CodeReviewServiceTests testIntegration]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeReviewServiceTests testProperties]' started.
+Test Case '-[CodingReviewerTests.CodeReviewServiceTests testProperties]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeReviewServiceTests testPublicMethods]' started.
+Test Case '-[CodingReviewerTests.CodeReviewServiceTests testPublicMethods]' passed (0.000 seconds).
+Test Suite 'CodeReviewServiceTests' passed at 2026-02-25 09:35:22.575.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'CodeReviewViewTests' started at 2026-02-25 09:35:22.575.
+Test Case '-[CodingReviewerTests.CodeReviewViewTests testEdgeCases]' started.
+Test Case '-[CodingReviewerTests.CodeReviewViewTests testEdgeCases]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeReviewViewTests testEmptyStateMessages]' started.
+Test Case '-[CodingReviewerTests.CodeReviewViewTests testEmptyStateMessages]' passed (0.001 seconds).
+Test Case '-[CodingReviewerTests.CodeReviewViewTests testErrorHandling]' started.
+Test Case '-[CodingReviewerTests.CodeReviewViewTests testErrorHandling]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeReviewViewTests testIntegration]' started.
+Test Case '-[CodingReviewerTests.CodeReviewViewTests testIntegration]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeReviewViewTests testPublicMethods]' started.
+Test Case '-[CodingReviewerTests.CodeReviewViewTests testPublicMethods]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeReviewViewTests testTitleFormatting]' started.
+Test Case '-[CodingReviewerTests.CodeReviewViewTests testTitleFormatting]' passed (0.000 seconds).
+Test Suite 'CodeReviewViewTests' passed at 2026-02-25 09:35:22.576.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'CodeSmellDetectorTests' started at 2026-02-25 09:35:22.576.
+Test Case '-[CodingReviewerTests.CodeSmellDetectorTests testDetectLongMethod]' started.
+Test Case '-[CodingReviewerTests.CodeSmellDetectorTests testDetectLongMethod]' passed (0.001 seconds).
+Test Case '-[CodingReviewerTests.CodeSmellDetectorTests testDetectShortMethod]' started.
+Test Case '-[CodingReviewerTests.CodeSmellDetectorTests testDetectShortMethod]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodeSmellDetectorTests testMultipleMethods_CheckReset]' started.
+Test Case '-[CodingReviewerTests.CodeSmellDetectorTests testMultipleMethods_CheckReset]' passed (0.000 seconds).
+Test Suite 'CodeSmellDetectorTests' passed at 2026-02-25 09:35:22.577.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'CodingReviewerTests' started at 2026-02-25 09:35:22.577.
+Test Case '-[CodingReviewerTests.CodingReviewerTests testAppInitialization]' started.
+Test Case '-[CodingReviewerTests.CodingReviewerTests testAppInitialization]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodingReviewerTests testIssueCategoryEnum]' started.
+Test Case '-[CodingReviewerTests.CodingReviewerTests testIssueCategoryEnum]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodingReviewerTests testIssueSeverityEnum]' started.
+Test Case '-[CodingReviewerTests.CodingReviewerTests testIssueSeverityEnum]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CodingReviewerTests testModelTypesExist]' started.
+Test Case '-[CodingReviewerTests.CodingReviewerTests testModelTypesExist]' passed (0.000 seconds).
+Test Suite 'CodingReviewerTests' passed at 2026-02-25 09:35:22.578.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'ContentViewTests' started at 2026-02-25 09:35:22.579.
+Test Case '-[CodingReviewerTests.ContentViewTests testEdgeCases]' started.
+Test Case '-[CodingReviewerTests.ContentViewTests testEdgeCases]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.ContentViewTests testErrorHandling]' started.
+Test Case '-[CodingReviewerTests.ContentViewTests testErrorHandling]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.ContentViewTests testInitialization]' started.
+Test Case '-[CodingReviewerTests.ContentViewTests testInitialization]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.ContentViewTests testIntegration]' started.
+Test Case '-[CodingReviewerTests.ContentViewTests testIntegration]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.ContentViewTests testProperties]' started.
+Test Case '-[CodingReviewerTests.ContentViewTests testProperties]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.ContentViewTests testPublicMethods]' started.
+Test Case '-[CodingReviewerTests.ContentViewTests testPublicMethods]' passed (0.000 seconds).
+Test Suite 'ContentViewTests' passed at 2026-02-25 09:35:22.579.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'CoreLogicTests' started at 2026-02-25 09:35:22.580.
+Test Case '-[CodingReviewerTests.CoreLogicTests testDetectFIXMEComments]' started.
+Test Case '-[CodingReviewerTests.CoreLogicTests testDetectFIXMEComments]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CoreLogicTests testDetectForceUnwrap]' started.
+Test Case '-[CodingReviewerTests.CoreLogicTests testDetectForceUnwrap]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CoreLogicTests testDetectMultipleIssues]' started.
+Test Case '-[CodingReviewerTests.CoreLogicTests testDetectMultipleIssues]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CoreLogicTests testDetectTODOComments]' started.
+Test Case '-[CodingReviewerTests.CoreLogicTests testDetectTODOComments]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CoreLogicTests testForceUnwrapHasMediumSeverity]' started.
+Test Case '-[CodingReviewerTests.CoreLogicTests testForceUnwrapHasMediumSeverity]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CoreLogicTests testHandlesMalformedCode]' started.
+Test Case '-[CodingReviewerTests.CoreLogicTests testHandlesMalformedCode]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.CoreLogicTests testHandlesVeryLongCode]' started.
+Test Case '-[CodingReviewerTests.CoreLogicTests testHandlesVeryLongCode]' passed (0.023 seconds).
+Test Case '-[CodingReviewerTests.CoreLogicTests testTODOHasMediumSeverity]' started.
+Test Case '-[CodingReviewerTests.CoreLogicTests testTODOHasMediumSeverity]' passed (0.000 seconds).
+Test Suite 'CoreLogicTests' passed at 2026-02-25 09:35:22.604.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.023 (0.024) seconds
+Test Suite 'DashboardViewTests' started at 2026-02-25 09:35:22.604.
+Test Case '-[CodingReviewerTests.DashboardViewTests testActivityTimeStamps]' started.
+Test Case '-[CodingReviewerTests.DashboardViewTests testActivityTimeStamps]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DashboardViewTests testCriticalIssuesCard]' started.
+Test Case '-[CodingReviewerTests.DashboardViewTests testCriticalIssuesCard]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DashboardViewTests testDashboardNavigation]' started.
+Test Case '-[CodingReviewerTests.DashboardViewTests testDashboardNavigation]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DashboardViewTests testDashboardViewInit]' started.
+Test Case '-[CodingReviewerTests.DashboardViewTests testDashboardViewInit]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DashboardViewTests testIssueDistributionChart]' started.
+Test Case '-[CodingReviewerTests.DashboardViewTests testIssueDistributionChart]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DashboardViewTests testIssuesFoundCard]' started.
+Test Case '-[CodingReviewerTests.DashboardViewTests testIssuesFoundCard]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DashboardViewTests testQuickActionButtons]' started.
+Test Case '-[CodingReviewerTests.DashboardViewTests testQuickActionButtons]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DashboardViewTests testRecentActivityList]' started.
+Test Case '-[CodingReviewerTests.DashboardViewTests testRecentActivityList]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DashboardViewTests testReviewTrendChart]' started.
+Test Case '-[CodingReviewerTests.DashboardViewTests testReviewTrendChart]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DashboardViewTests testTotalReviewsCard]' started.
+Test Case '-[CodingReviewerTests.DashboardViewTests testTotalReviewsCard]' passed (0.000 seconds).
+Test Suite 'DashboardViewTests' passed at 2026-02-25 09:35:22.605.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'DependenciesTests' started at 2026-02-25 09:35:22.605.
+Test Case '-[CodingReviewerTests.DependenciesTests testEdgeCases]' started.
+Test Case '-[CodingReviewerTests.DependenciesTests testEdgeCases]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DependenciesTests testErrorHandling]' started.
+Test Case '-[CodingReviewerTests.DependenciesTests testErrorHandling]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DependenciesTests testInitialization]' started.
+Test Case '-[CodingReviewerTests.DependenciesTests testInitialization]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DependenciesTests testIntegration]' started.
+Test Case '-[CodingReviewerTests.DependenciesTests testIntegration]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DependenciesTests testProperties]' started.
+Test Case '-[CodingReviewerTests.DependenciesTests testProperties]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DependenciesTests testPublicMethods]' started.
+Test Case '-[CodingReviewerTests.DependenciesTests testPublicMethods]' passed (0.000 seconds).
+Test Suite 'DependenciesTests' passed at 2026-02-25 09:35:22.606.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'DiffViewTests' started at 2026-02-25 09:35:22.606.
+Test Case '-[CodingReviewerTests.DiffViewTests testAddedLinesHighlight]' started.
+Test Case '-[CodingReviewerTests.DiffViewTests testAddedLinesHighlight]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DiffViewTests testDiffViewInit]' started.
+Test Case '-[CodingReviewerTests.DiffViewTests testDiffViewInit]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DiffViewTests testLineNumbers]' started.
+Test Case '-[CodingReviewerTests.DiffViewTests testLineNumbers]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DiffViewTests testModifiedLinesHighlight]' started.
+Test Case '-[CodingReviewerTests.DiffViewTests testModifiedLinesHighlight]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DiffViewTests testNextDiffNavigation]' started.
+Test Case '-[CodingReviewerTests.DiffViewTests testNextDiffNavigation]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DiffViewTests testPreviousDiffNavigation]' started.
+Test Case '-[CodingReviewerTests.DiffViewTests testPreviousDiffNavigation]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DiffViewTests testRemovedLinesHighlight]' started.
+Test Case '-[CodingReviewerTests.DiffViewTests testRemovedLinesHighlight]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DiffViewTests testSideBySideMode]' started.
+Test Case '-[CodingReviewerTests.DiffViewTests testSideBySideMode]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DiffViewTests testUnifiedMode]' started.
+Test Case '-[CodingReviewerTests.DiffViewTests testUnifiedMode]' passed (0.000 seconds).
+Test Suite 'DiffViewTests' passed at 2026-02-25 09:35:22.608.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'DocumentationGeneratorTests' started at 2026-02-25 09:35:22.608.
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_ComplexFunctionSignatures]' started.
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_ComplexFunctionSignatures]' passed (0.001 seconds).
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_EmptyCode]' started.
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_EmptyCode]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_ExamplesContent]' started.
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_ExamplesContent]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_ExamplesForDifferentLanguages]' started.
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_ExamplesForDifferentLanguages]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_FunctionExtraction]' started.
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_FunctionExtraction]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_FunctionsWithoutClass]' started.
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_FunctionsWithoutClass]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_FunctionWithWhitespace]' started.
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_FunctionWithWhitespace]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_MultipleClasses]' started.
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_MultipleClasses]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_NoExtraWhitespace]' started.
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_NoExtraWhitespace]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_NonSwiftLanguage]' started.
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_NonSwiftLanguage]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_OnlyNewlines]' started.
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_OnlyNewlines]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_Structure]' started.
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_Structure]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_Swift_NoFunctions]' started.
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_Swift_NoFunctions]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_Swift_WithExamples]' started.
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_Swift_WithExamples]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_Swift_WithoutExamples]' started.
+Test Case '-[CodingReviewerTests.DocumentationGeneratorTests testGenerateBasicDocumentation_Swift_WithoutExamples]' passed (0.000 seconds).
+Test Suite 'DocumentationGeneratorTests' passed at 2026-02-25 09:35:22.611.
+	 Executed 15 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+Test Suite 'DocumentationResultsViewTests' started at 2026-02-25 09:35:22.611.
+Test Case '-[CodingReviewerTests.DocumentationResultsViewTests testEdgeCases]' started.
+Test Case '-[CodingReviewerTests.DocumentationResultsViewTests testEdgeCases]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DocumentationResultsViewTests testErrorHandling]' started.
+Test Case '-[CodingReviewerTests.DocumentationResultsViewTests testErrorHandling]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DocumentationResultsViewTests testInitialization]' started.
+Test Case '-[CodingReviewerTests.DocumentationResultsViewTests testInitialization]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DocumentationResultsViewTests testIntegration]' started.
+Test Case '-[CodingReviewerTests.DocumentationResultsViewTests testIntegration]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DocumentationResultsViewTests testProperties]' started.
+Test Case '-[CodingReviewerTests.DocumentationResultsViewTests testProperties]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.DocumentationResultsViewTests testPublicMethods]' started.
+Test Case '-[CodingReviewerTests.DocumentationResultsViewTests testPublicMethods]' passed (0.000 seconds).
+Test Suite 'DocumentationResultsViewTests' passed at 2026-02-25 09:35:22.612.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'ErrorHandlerTests' started at 2026-02-25 09:35:22.612.
+Test Case '-[CodingReviewerTests.ErrorHandlerTests testEdgeCases]' started.
+Test Case '-[CodingReviewerTests.ErrorHandlerTests testEdgeCases]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.ErrorHandlerTests testErrorHandling]' started.
+Test Case '-[CodingReviewerTests.ErrorHandlerTests testErrorHandling]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.ErrorHandlerTests testInitialization]' started.
+Test Case '-[CodingReviewerTests.ErrorHandlerTests testInitialization]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.ErrorHandlerTests testIntegration]' started.
+Test Case '-[CodingReviewerTests.ErrorHandlerTests testIntegration]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.ErrorHandlerTests testProperties]' started.
+Test Case '-[CodingReviewerTests.ErrorHandlerTests testProperties]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.ErrorHandlerTests testPublicMethods]' started.
+Test Case '-[CodingReviewerTests.ErrorHandlerTests testPublicMethods]' passed (0.000 seconds).
+Test Suite 'ErrorHandlerTests' passed at 2026-02-25 09:35:22.613.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'GitIntegrationServiceTests' started at 2026-02-25 09:35:22.613.
+Test Case '-[CodingReviewerTests.GitIntegrationServiceTests testFetchPR_Configured_ReturnsContent]' started.
+Test Case '-[CodingReviewerTests.GitIntegrationServiceTests testFetchPR_Configured_ReturnsContent]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.GitIntegrationServiceTests testFetchPR_NotConfigured_ThrowsError]' started.
+Test Case '-[CodingReviewerTests.GitIntegrationServiceTests testFetchPR_NotConfigured_ThrowsError]' passed (0.000 seconds).
+Test Suite 'GitIntegrationServiceTests' passed at 2026-02-25 09:35:22.614.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'IntegrationBaselineTests' started at 2026-02-25 09:35:22.614.
+Test Case '-[CodingReviewerTests.IntegrationBaselineTests testUserDefaultsIntegrationBaseline]' started.
+Test Case '-[CodingReviewerTests.IntegrationBaselineTests testUserDefaultsIntegrationBaseline]' passed (0.001 seconds).
+Test Suite 'IntegrationBaselineTests' passed at 2026-02-25 09:35:22.615.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'IssueRowTests' started at 2026-02-25 09:35:22.615.
+Test Case '-[CodingReviewerTests.IssueRowTests testEdgeCases]' started.
+Test Case '-[CodingReviewerTests.IssueRowTests testEdgeCases]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.IssueRowTests testErrorHandling]' started.
+Test Case '-[CodingReviewerTests.IssueRowTests testErrorHandling]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.IssueRowTests testInitialization]' started.
+Test Case '-[CodingReviewerTests.IssueRowTests testInitialization]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.IssueRowTests testIntegration]' started.
+Test Case '-[CodingReviewerTests.IssueRowTests testIntegration]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.IssueRowTests testProperties]' started.
+Test Case '-[CodingReviewerTests.IssueRowTests testProperties]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.IssueRowTests testPublicMethods]' started.
+Test Case '-[CodingReviewerTests.IssueRowTests testPublicMethods]' passed (0.000 seconds).
+Test Suite 'IssueRowTests' passed at 2026-02-25 09:35:22.616.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'JavaScriptAnalyzerTests' started at 2026-02-25 09:35:22.616.
+Test Case '-[CodingReviewerTests.JavaScriptAnalyzerTests testDetectConsoleLog]' started.
+Test Case '-[CodingReviewerTests.JavaScriptAnalyzerTests testDetectConsoleLog]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.JavaScriptAnalyzerTests testDetectEval]' started.
+Test Case '-[CodingReviewerTests.JavaScriptAnalyzerTests testDetectEval]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.JavaScriptAnalyzerTests testDetectInnerHTML]' started.
+Test Case '-[CodingReviewerTests.JavaScriptAnalyzerTests testDetectInnerHTML]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.JavaScriptAnalyzerTests testNoFalsePositives]' started.
+Test Case '-[CodingReviewerTests.JavaScriptAnalyzerTests testNoFalsePositives]' passed (0.000 seconds).
+Test Suite 'JavaScriptAnalyzerTests' passed at 2026-02-25 09:35:22.617.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'LanguageDetectorTests' started at 2026-02-25 09:35:22.617.
+Test Case '-[CodingReviewerTests.LanguageDetectorTests testEdgeCases]' started.
+Test Case '-[CodingReviewerTests.LanguageDetectorTests testEdgeCases]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.LanguageDetectorTests testErrorHandling]' started.
+Test Case '-[CodingReviewerTests.LanguageDetectorTests testErrorHandling]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.LanguageDetectorTests testInitialization]' started.
+Test Case '-[CodingReviewerTests.LanguageDetectorTests testInitialization]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.LanguageDetectorTests testIntegration]' started.
+Test Case '-[CodingReviewerTests.LanguageDetectorTests testIntegration]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.LanguageDetectorTests testProperties]' started.
+Test Case '-[CodingReviewerTests.LanguageDetectorTests testProperties]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.LanguageDetectorTests testPublicMethods]' started.
+Test Case '-[CodingReviewerTests.LanguageDetectorTests testPublicMethods]' passed (0.000 seconds).
+Test Suite 'LanguageDetectorTests' passed at 2026-02-25 09:35:22.618.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'NewReviewViewTests' started at 2026-02-25 09:35:22.618.
+Test Case '-[CodingReviewerTests.NewReviewViewTests testEdgeCases]' started.
+Test Case '-[CodingReviewerTests.NewReviewViewTests testEdgeCases]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.NewReviewViewTests testErrorHandling]' started.
+Test Case '-[CodingReviewerTests.NewReviewViewTests testErrorHandling]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.NewReviewViewTests testInitialization]' started.
+Test Case '-[CodingReviewerTests.NewReviewViewTests testInitialization]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.NewReviewViewTests testIntegration]' started.
+Test Case '-[CodingReviewerTests.NewReviewViewTests testIntegration]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.NewReviewViewTests testProperties]' started.
+Test Case '-[CodingReviewerTests.NewReviewViewTests testProperties]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.NewReviewViewTests testPublicMethods]' started.
+Test Case '-[CodingReviewerTests.NewReviewViewTests testPublicMethods]' passed (0.000 seconds).
+Test Suite 'NewReviewViewTests' passed at 2026-02-25 09:35:22.619.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'PDFReportExporterTests' started at 2026-02-25 09:35:22.619.
+Test Case '-[CodingReviewerTests.PDFReportExporterTests testCodeSnippetFormatting]' started.
+Test Case '-[CodingReviewerTests.PDFReportExporterTests testCodeSnippetFormatting]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PDFReportExporterTests testEmptyReportGeneration]' started.
+Test Case '-[CodingReviewerTests.PDFReportExporterTests testEmptyReportGeneration]' passed (0.003 seconds).
+Test Case '-[CodingReviewerTests.PDFReportExporterTests testFileNaming]' started.
+Test Case '-[CodingReviewerTests.PDFReportExporterTests testFileNaming]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PDFReportExporterTests testGeneratePDFFromIssues]' started.
+Test Case '-[CodingReviewerTests.PDFReportExporterTests testGeneratePDFFromIssues]' passed (0.001 seconds).
+Test Case '-[CodingReviewerTests.PDFReportExporterTests testIssueFormatting]' started.
+Test Case '-[CodingReviewerTests.PDFReportExporterTests testIssueFormatting]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PDFReportExporterTests testReportHasSummary]' started.
+Test Case '-[CodingReviewerTests.PDFReportExporterTests testReportHasSummary]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PDFReportExporterTests testReportHasTimestamp]' started.
+Test Case '-[CodingReviewerTests.PDFReportExporterTests testReportHasTimestamp]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PDFReportExporterTests testReportHasTitle]' started.
+Test Case '-[CodingReviewerTests.PDFReportExporterTests testReportHasTitle]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PDFReportExporterTests testSaveToFile]' started.
+Test Case '-[CodingReviewerTests.PDFReportExporterTests testSaveToFile]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PDFReportExporterTests testSeverityColoring]' started.
+Test Case '-[CodingReviewerTests.PDFReportExporterTests testSeverityColoring]' passed (0.000 seconds).
+Test Suite 'PDFReportExporterTests' passed at 2026-02-25 09:35:22.625.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.006 (0.006) seconds
+Test Suite 'PerformanceAnalysisServiceTests' started at 2026-02-25 09:35:22.625.
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_AppendWithoutForEach]' started.
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_AppendWithoutForEach]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_BothIssues]' started.
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_BothIssues]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_CaseSensitivity]' started.
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_CaseSensitivity]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_ComplexCode]' started.
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_ComplexCode]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_EmptyCode]' started.
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_EmptyCode]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_FilterWithoutMap]' started.
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_FilterWithoutMap]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_ForEachWithAppend]' started.
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_ForEachWithAppend]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_ForEachWithoutAppend]' started.
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_ForEachWithoutAppend]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_IssueUniqueness]' started.
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_IssueUniqueness]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_MapWithoutFilter]' started.
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_MapWithoutFilter]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_MultipleArrayOperations]' started.
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_MultipleArrayOperations]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_NoIssues]' started.
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_NoIssues]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_NonSwiftLanguage]' started.
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_NonSwiftLanguage]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_WhitespaceOnly]' started.
+Test Case '-[CodingReviewerTests.PerformanceAnalysisServiceTests testDetectPerformanceIssues_WhitespaceOnly]' passed (0.000 seconds).
+Test Suite 'PerformanceAnalysisServiceTests' passed at 2026-02-25 09:35:22.629.
+	 Executed 14 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+Test Suite 'PerformanceBaselineTests' started at 2026-02-25 09:35:22.629.
+Test Case '-[CodingReviewerTests.PerformanceBaselineTests testSortingPerformanceBaseline]' started.
+/Users/danielstevens/github-projects/coding-reviewer/CodingReviewerTests/PerformanceBaselineTests.swift:8: Test Case '-[CodingReviewerTests.PerformanceBaselineTests testSortingPerformanceBaseline]' measured [Time, seconds] average: 0.008, relative standard deviation: 0.583%, values: [0.007744, 0.007653, 0.007759, 0.007701, 0.007748, 0.007791, 0.007647, 0.007759, 0.007731, 0.007756], performanceMetricID:com.apple.XCTPerformanceMetric_WallClockTime, baselineName: "", baselineAverage: , polarity: prefers smaller, maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.100, maxStandardDeviation: 0.100
+Test Case '-[CodingReviewerTests.PerformanceBaselineTests testSortingPerformanceBaseline]' passed (0.369 seconds).
+Test Suite 'PerformanceBaselineTests' passed at 2026-02-25 09:35:22.998.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.369 (0.369) seconds
+Test Suite 'PerformanceManagerTests' started at 2026-02-25 09:35:22.998.
+Test Case '-[CodingReviewerTests.PerformanceManagerTests testEdgeCases]' started.
+Test Case '-[CodingReviewerTests.PerformanceManagerTests testEdgeCases]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PerformanceManagerTests testErrorHandling]' started.
+Test Case '-[CodingReviewerTests.PerformanceManagerTests testErrorHandling]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PerformanceManagerTests testInitialization]' started.
+Test Case '-[CodingReviewerTests.PerformanceManagerTests testInitialization]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PerformanceManagerTests testIntegration]' started.
+Test Case '-[CodingReviewerTests.PerformanceManagerTests testIntegration]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PerformanceManagerTests testProperties]' started.
+Test Case '-[CodingReviewerTests.PerformanceManagerTests testProperties]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.PerformanceManagerTests testPublicMethods]' started.
+Test Case '-[CodingReviewerTests.PerformanceManagerTests testPublicMethods]' passed (0.000 seconds).
+Test Suite 'PerformanceManagerTests' passed at 2026-02-25 09:35:23.000.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'ReviewHistoryViewTests' started at 2026-02-25 09:35:23.000.
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testDeleteReview]' started.
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testDeleteReview]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testEmptyState]' started.
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testEmptyState]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testExportReview]' started.
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testExportReview]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testOpenReview]' started.
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testOpenReview]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testReviewFiltering]' started.
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testReviewFiltering]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testReviewHistoryViewInit]' started.
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testReviewHistoryViewInit]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testReviewIssueCount]' started.
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testReviewIssueCount]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testReviewItemDetails]' started.
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testReviewItemDetails]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testReviewListDisplay]' started.
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testReviewListDisplay]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testReviewSorting]' started.
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testReviewSorting]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testReviewTimestamp]' started.
+Test Case '-[CodingReviewerTests.ReviewHistoryViewTests testReviewTimestamp]' passed (0.000 seconds).
+Test Suite 'ReviewHistoryViewTests' passed at 2026-02-25 09:35:23.001.
+	 Executed 11 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'RuleEngineTests' started at 2026-02-25 09:35:23.001.
+Test Case '-[CodingReviewerTests.RuleEngineTests testAddRuleDoesNotCrash]' started.
+Test Case '-[CodingReviewerTests.RuleEngineTests testAddRuleDoesNotCrash]' passed (0.001 seconds).
+Test Case '-[CodingReviewerTests.RuleEngineTests testAnalyzeFiltersLanguage]' started.
+Test Case '-[CodingReviewerTests.RuleEngineTests testAnalyzeFiltersLanguage]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.RuleEngineTests testAnalyzeMatchesRule]' started.
+Test Case '-[CodingReviewerTests.RuleEngineTests testAnalyzeMatchesRule]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.RuleEngineTests testAnalyzeWildcardLanguage]' started.
+Test Case '-[CodingReviewerTests.RuleEngineTests testAnalyzeWildcardLanguage]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.RuleEngineTests testAnalyzeWithNoRules]' started.
+Test Case '-[CodingReviewerTests.RuleEngineTests testAnalyzeWithNoRules]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.RuleEngineTests testLoadRulesFromInvalidURLThrows]' started.
+Test Case '-[CodingReviewerTests.RuleEngineTests testLoadRulesFromInvalidURLThrows]' passed (0.003 seconds).
+Test Suite 'RuleEngineTests' passed at 2026-02-25 09:35:23.006.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.005 (0.005) seconds
+Test Suite 'SecurityAnalysisServiceTests' started at 2026-02-25 09:35:23.006.
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_CaseSensitivity]' started.
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_CaseSensitivity]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_ComplexJavaScript]' started.
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_ComplexJavaScript]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_ComplexSwift]' started.
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_ComplexSwift]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_EmptyCode]' started.
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_EmptyCode]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_JavaScript_Eval]' started.
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_JavaScript_Eval]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_JavaScript_InnerHTML]' started.
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_JavaScript_InnerHTML]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_JavaScript_MultipleVulnerabilities]' started.
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_JavaScript_MultipleVulnerabilities]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_NonJavaScript_NoIssues]' started.
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_NonJavaScript_NoIssues]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_NonSwift_NoIssues]' started.
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_NonSwift_NoIssues]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_Swift_Password_NoUserDefaults]' started.
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_Swift_Password_NoUserDefaults]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_Swift_UserDefaults_NoPassword]' started.
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_Swift_UserDefaults_NoPassword]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_Swift_UserDefaults_Password]' started.
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_Swift_UserDefaults_Password]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_WhitespaceOnly]' started.
+Test Case '-[CodingReviewerTests.SecurityAnalysisServiceTests testDetectSecurityIssues_WhitespaceOnly]' passed (0.000 seconds).
+Test Suite 'SecurityAnalysisServiceTests' passed at 2026-02-25 09:35:23.009.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'SentimentScoringServiceTests' started at 2026-02-25 09:35:23.009.
+Test Case '-[CodingReviewerTests.SentimentScoringServiceTests testKeywordFallbackPositiveAndNegative]' started.
+Test Case '-[CodingReviewerTests.SentimentScoringServiceTests testKeywordFallbackPositiveAndNegative]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SentimentScoringServiceTests testOllamaSentimentParsesJson]' started.
+Test Case '-[CodingReviewerTests.SentimentScoringServiceTests testOllamaSentimentParsesJson]' passed (0.001 seconds).
+Test Suite 'SentimentScoringServiceTests' passed at 2026-02-25 09:35:23.011.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'SettingsViewTests' started at 2026-02-25 09:35:23.011.
+Test Case '-[CodingReviewerTests.SettingsViewTests testAIEnabled]' started.
+Test Case '-[CodingReviewerTests.SettingsViewTests testAIEnabled]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SettingsViewTests testAIEndpointConfiguration]' started.
+Test Case '-[CodingReviewerTests.SettingsViewTests testAIEndpointConfiguration]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SettingsViewTests testAIModelSelection]' started.
+Test Case '-[CodingReviewerTests.SettingsViewTests testAIModelSelection]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SettingsViewTests testDefaultExportFormat]' started.
+Test Case '-[CodingReviewerTests.SettingsViewTests testDefaultExportFormat]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SettingsViewTests testEnabledAnalyzers]' started.
+Test Case '-[CodingReviewerTests.SettingsViewTests testEnabledAnalyzers]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SettingsViewTests testExportPath]' started.
+Test Case '-[CodingReviewerTests.SettingsViewTests testExportPath]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SettingsViewTests testMaxIssuesToShowSetting]' started.
+Test Case '-[CodingReviewerTests.SettingsViewTests testMaxIssuesToShowSetting]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SettingsViewTests testSettingsPersistence]' started.
+Test Case '-[CodingReviewerTests.SettingsViewTests testSettingsPersistence]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SettingsViewTests testSettingsReset]' started.
+Test Case '-[CodingReviewerTests.SettingsViewTests testSettingsReset]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SettingsViewTests testSettingsViewInitialization]' started.
+Test Case '-[CodingReviewerTests.SettingsViewTests testSettingsViewInitialization]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SettingsViewTests testSeverityThresholdSetting]' started.
+Test Case '-[CodingReviewerTests.SettingsViewTests testSeverityThresholdSetting]' passed (0.000 seconds).
+Test Suite 'SettingsViewTests' passed at 2026-02-25 09:35:23.012.
+	 Executed 11 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'SidebarViewTests' started at 2026-02-25 09:35:23.012.
+Test Case '-[CodingReviewerTests.SidebarViewTests testEdgeCases]' started.
+Test Case '-[CodingReviewerTests.SidebarViewTests testEdgeCases]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SidebarViewTests testErrorHandling]' started.
+Test Case '-[CodingReviewerTests.SidebarViewTests testErrorHandling]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SidebarViewTests testFileNodeIcon]' started.
+Test Case '-[CodingReviewerTests.SidebarViewTests testFileNodeIcon]' passed (0.001 seconds).
+Test Case '-[CodingReviewerTests.SidebarViewTests testFileTreeBuilderGracefulFailure]' started.
+Test Case '-[CodingReviewerTests.SidebarViewTests testFileTreeBuilderGracefulFailure]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SidebarViewTests testIntegration]' started.
+Test Case '-[CodingReviewerTests.SidebarViewTests testIntegration]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SidebarViewTests testPublicMethods]' started.
+Test Case '-[CodingReviewerTests.SidebarViewTests testPublicMethods]' passed (0.000 seconds).
+Test Suite 'SidebarViewTests' passed at 2026-02-25 09:35:23.015.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Test Suite 'SnapshotSmokeTests' started at 2026-02-25 09:35:23.015.
+Test Case '-[CodingReviewerTests.SnapshotSmokeTests testLineSnapshotIntegration]' started.
+Test Case '-[CodingReviewerTests.SnapshotSmokeTests testLineSnapshotIntegration]' passed (0.001 seconds).
+Test Suite 'SnapshotSmokeTests' passed at 2026-02-25 09:35:23.016.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'StyleAnalysisServiceTests' started at 2026-02-25 09:35:23.016.
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_EmptyCode]' started.
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_EmptyCode]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_HasDocumentation]' started.
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_HasDocumentation]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_LineExactly120Chars]' started.
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_LineExactly120Chars]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_LineWithTabs]' started.
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_LineWithTabs]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_LongLine]' started.
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_LongLine]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_MissingDocumentation]' started.
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_MissingDocumentation]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_MultipleIssues]' started.
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_MultipleIssues]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_MultipleLongLines]' started.
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_MultipleLongLines]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_NoFunctions]' started.
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_NoFunctions]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_NoIssues]' started.
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_NoIssues]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_NonSwiftLanguage]' started.
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_NonSwiftLanguage]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_OnlyComputedProperties]' started.
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_OnlyComputedProperties]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_OnlyNewlines]' started.
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_OnlyNewlines]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_SingleLongLine]' started.
+Test Case '-[CodingReviewerTests.StyleAnalysisServiceTests testDetectStyleIssues_SingleLongLine]' passed (0.000 seconds).
+Test Suite 'StyleAnalysisServiceTests' passed at 2026-02-25 09:35:23.018.
+	 Executed 14 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'SwiftSyntaxAnalyzerTests' started at 2026-02-25 09:35:23.018.
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testAnalyzerLanguage]' started.
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testAnalyzerLanguage]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testCatchWithHandlerNotFlagged]' started.
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testCatchWithHandlerNotFlagged]' passed (0.023 seconds).
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testDetectsEmptyCatch]' started.
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testDetectsEmptyCatch]' passed (0.003 seconds).
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testDetectsForceUnwrap]' started.
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testDetectsForceUnwrap]' passed (0.005 seconds).
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testDetectsPasswordInUserDefaults]' started.
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testDetectsPasswordInUserDefaults]' passed (0.002 seconds).
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testDetectsPrintStatements]' started.
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testDetectsPrintStatements]' passed (0.004 seconds).
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testDetectsStrongSelfInClosure]' started.
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testDetectsStrongSelfInClosure]' passed (0.003 seconds).
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testNoFalsePositiveForNotEqual]' started.
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testNoFalsePositiveForNotEqual]' passed (0.002 seconds).
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testPrintInCommentNotFlagged]' started.
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testPrintInCommentNotFlagged]' passed (0.001 seconds).
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testPrintSuggestedFix]' started.
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testPrintSuggestedFix]' passed (0.001 seconds).
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testWeakSelfNotFlagged]' started.
+Test Case '-[CodingReviewerTests.SwiftSyntaxAnalyzerTests testWeakSelfNotFlagged]' passed (0.001 seconds).
+Test Suite 'SwiftSyntaxAnalyzerTests' passed at 2026-02-25 09:35:23.063.
+	 Executed 11 tests, with 0 failures (0 unexpected) in 0.044 (0.045) seconds
+Test Suite 'TestGeneratorTests' started at 2026-02-25 09:35:23.063.
+Test Case '-[CodingReviewerTests.TestGeneratorTests testEstimateTestCoverage_BasicEstimation]' started.
+Test Case '-[CodingReviewerTests.TestGeneratorTests testEstimateTestCoverage_BasicEstimation]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.TestGeneratorTests testEstimateTestCoverage_EmptyCode]' started.
+Test Case '-[CodingReviewerTests.TestGeneratorTests testEstimateTestCoverage_EmptyCode]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.TestGeneratorTests testEstimateTestCoverage_EmptyTestCode]' started.
+Test Case '-[CodingReviewerTests.TestGeneratorTests testEstimateTestCoverage_EmptyTestCode]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.TestGeneratorTests testEstimateTestCoverage_EqualLines]' started.
+Test Case '-[CodingReviewerTests.TestGeneratorTests testEstimateTestCoverage_EqualLines]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.TestGeneratorTests testEstimateTestCoverage_HighRatio]' started.
+Test Case '-[CodingReviewerTests.TestGeneratorTests testEstimateTestCoverage_HighRatio]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.TestGeneratorTests testEstimateTestCoverage_LowRatio]' started.
+Test Case '-[CodingReviewerTests.TestGeneratorTests testEstimateTestCoverage_LowRatio]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.TestGeneratorTests testEstimateTestCoverage_NewlinesOnly]' started.
+Test Case '-[CodingReviewerTests.TestGeneratorTests testEstimateTestCoverage_NewlinesOnly]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.TestGeneratorTests testEstimateTestCoverage_SingleLine]' started.
+Test Case '-[CodingReviewerTests.TestGeneratorTests testEstimateTestCoverage_SingleLine]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.TestGeneratorTests testGenerateAndEstimateCoverage]' started.
+Test Case '-[CodingReviewerTests.TestGeneratorTests testGenerateAndEstimateCoverage]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.TestGeneratorTests testGenerateBasicTests_EmptyCode]' started.
+Test Case '-[CodingReviewerTests.TestGeneratorTests testGenerateBasicTests_EmptyCode]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.TestGeneratorTests testGenerateBasicTests_Swift_XCTest]' started.
+/Users/danielstevens/github-projects/coding-reviewer/CodingReviewerTests/TestGeneratorTests.swift:45: error: -[CodingReviewerTests.TestGeneratorTests testGenerateBasicTests_Swift_XCTest] : XCTAssertTrue failed
+Test Case '-[CodingReviewerTests.TestGeneratorTests testGenerateBasicTests_Swift_XCTest]' failed (0.001 seconds).
+Test Case '-[CodingReviewerTests.TestGeneratorTests testGenerateBasicTests_UnsupportedFramework]' started.
+Test Case '-[CodingReviewerTests.TestGeneratorTests testGenerateBasicTests_UnsupportedFramework]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.TestGeneratorTests testGenerateBasicTests_UnsupportedLanguage]' started.
+Test Case '-[CodingReviewerTests.TestGeneratorTests testGenerateBasicTests_UnsupportedLanguage]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.TestGeneratorTests testGeneratedTestCode_IsValidSwift]' started.
+Test Case '-[CodingReviewerTests.TestGeneratorTests testGeneratedTestCode_IsValidSwift]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.TestGeneratorTests testGeneratedTestCode_Structure]' started.
+/Users/danielstevens/github-projects/coding-reviewer/CodingReviewerTests/TestGeneratorTests.swift:254: error: -[CodingReviewerTests.TestGeneratorTests testGeneratedTestCode_Structure] : XCTAssertTrue failed
+/Users/danielstevens/github-projects/coding-reviewer/CodingReviewerTests/TestGeneratorTests.swift:255: error: -[CodingReviewerTests.TestGeneratorTests testGeneratedTestCode_Structure] : XCTAssertTrue failed
+Test Case '-[CodingReviewerTests.TestGeneratorTests testGeneratedTestCode_Structure]' failed (0.001 seconds).
+Test Suite 'TestGeneratorTests' failed at 2026-02-25 09:35:23.068.
+	 Executed 15 tests, with 3 failures (0 unexpected) in 0.003 (0.005) seconds
+Test Suite 'TestResultsViewTests' started at 2026-02-25 09:35:23.068.
+Test Case '-[CodingReviewerTests.TestResultsViewTests testEdgeCases]' started.
+Test Case '-[CodingReviewerTests.TestResultsViewTests testEdgeCases]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.TestResultsViewTests testErrorHandling]' started.
+Test Case '-[CodingReviewerTests.TestResultsViewTests testErrorHandling]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.TestResultsViewTests testInitialization]' started.
+Test Case '-[CodingReviewerTests.TestResultsViewTests testInitialization]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.TestResultsViewTests testIntegration]' started.
+Test Case '-[CodingReviewerTests.TestResultsViewTests testIntegration]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.TestResultsViewTests testProperties]' started.
+Test Case '-[CodingReviewerTests.TestResultsViewTests testProperties]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.TestResultsViewTests testPublicMethods]' started.
+Test Case '-[CodingReviewerTests.TestResultsViewTests testPublicMethods]' passed (0.000 seconds).
+Test Suite 'TestResultsViewTests' passed at 2026-02-25 09:35:23.069.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'VisualRegressionTests' started at 2026-02-25 09:35:23.069.
+Test Case '-[CodingReviewerTests.VisualRegressionTests testDashboardSnapshotBaseline]' started.
+Test Case '-[CodingReviewerTests.VisualRegressionTests testDashboardSnapshotBaseline]' passed (0.000 seconds).
+Test Suite 'VisualRegressionTests' passed at 2026-02-25 09:35:23.069.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+Test Suite 'WelcomeViewTests' started at 2026-02-25 09:35:23.069.
+Test Case '-[CodingReviewerTests.WelcomeViewTests testEdgeCases]' started.
+Test Case '-[CodingReviewerTests.WelcomeViewTests testEdgeCases]' passed (0.002 seconds).
+Test Case '-[CodingReviewerTests.WelcomeViewTests testErrorHandling]' started.
+Test Case '-[CodingReviewerTests.WelcomeViewTests testErrorHandling]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.WelcomeViewTests testInitialization]' started.
+Test Case '-[CodingReviewerTests.WelcomeViewTests testInitialization]' passed (0.005 seconds).
+Test Case '-[CodingReviewerTests.WelcomeViewTests testIntegration]' started.
+Test Case '-[CodingReviewerTests.WelcomeViewTests testIntegration]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.WelcomeViewTests testProperties]' started.
+Test Case '-[CodingReviewerTests.WelcomeViewTests testProperties]' passed (0.000 seconds).
+Test Case '-[CodingReviewerTests.WelcomeViewTests testPublicMethods]' started.
+Test Case '-[CodingReviewerTests.WelcomeViewTests testPublicMethods]' passed (0.000 seconds).
+Test Suite 'WelcomeViewTests' passed at 2026-02-25 09:35:23.078.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.008 (0.008) seconds
+Test Suite 'CodingReviewerPackageTests.xctest' failed at 2026-02-25 09:35:23.078.
+	 Executed 328 tests, with 3 failures (0 unexpected) in 3.147 (3.176) seconds
+Test Suite 'All tests' failed at 2026-02-25 09:35:23.078.
+	 Executed 328 tests, with 3 failures (0 unexpected) in 3.147 (3.180) seconds
+DEBUG: TEST STARTING - testAnalyzeCode_AllServicesIntegration
+DEBUG: Individual service results:
+DEBUG: Bugs: 2 issues
+DEBUG: Security: 3 issues
+DEBUG: Performance: 1 issues
+DEBUG: Style: 2 issues
+DEBUG: Analysis result: # Code Analysis Summary
+
+Swift code analysis
+
+## Summary Statistics
+Total Issues: 8
+
+Critical Priority: 0
+
+High Priority: 2
+
+Medium Priority: 4
+
+Low Priority: 2
+
+Bug Issues: 2
+
+Security Issues: 3
+
+Performance Issues: 1
+
+Style Issues: 2
+
+## Issues by File
+Test.js: 4 issues
+Test.swift: 4 issues
+
+## Detailed Issues
+**File:** Test.swift
+
+**Line:** 1
+
+**Severity:** Medium
+
+**Type:** Bug
+
+**Description:** TODO comment found - this should be addressed
+**Suggestion:** Add proper error handling for all operations
+
+**File:** Test.js
+
+**Line:** 8
+
+**Severity:** Medium
+
+**Type:** Bug
+
+**Description:** Force unwrapping detected - consider safe unwrapping
+**Suggestion:** Implement input validation for user-provided data
+
+**File:** Test.swift
+
+**Line:** 11
+
+**Severity:** High
+
+**Type:** Security
+
+**Description:** Storing passwords in UserDefaults is insecure. Use Keychain.
+**Suggestion:** Implement proper input sanitization
+
+**File:** Test.js
+
+**Line:** 13
+
+**Severity:** High
+
+**Type:** Security
+
+**Description:** Storing passwords in UserDefaults is insecure. Use Keychain.
+**Suggestion:** Use parameterized queries to prevent SQL injection
+
+**File:** Test.swift
+
+**Line:** 8
+
+**Severity:** Medium
+
+**Type:** Security
+
+**Description:** Force unwrapping found. Use optional binding (if let/guard let).
+**Suggestion:** Consider using lazy loading for large datasets
+
+**File:** Test.js
+
+**Line:** 1
+
+**Severity:** Medium
+
+**Type:** Performance
+
+**Description:** Performance issue: forEach with append can be optimized
+**Suggestion:** Profile code performance with Instruments
+
+**File:** Test.swift
+
+**Line:** 28
+
+**Severity:** Low
+
+**Type:** Style
+
+**Description:** Line 28 is too long (189 characters). Maximum allowed is 120 characters.
+**Suggestion:** Follow consistent naming conventions
+
+**File:** Test.js
+
+**Line:** 0
+
+**Severity:** Low
+
+**Type:** Style
+
+**Description:** Code contains functions without documentation comments. Consider adding /// comments for public functions.
+**Suggestion:** Add comprehensive documentation
+
+
+DEBUG: Issues found: ["bug: TODO comment found - this should be addressed", "bug: Force unwrapping detected - consider safe unwrapping", "security: Storing passwords in UserDefaults is insecure. Use Keychain.", "security: Storing passwords in UserDefaults is insecure. Use Keychain.", "security: Force unwrapping found. Use optional binding (if let/guard let).", "performance: Performance issue: forEach with append can be optimized", "style: Line 28 is too long (189 characters). Maximum allowed is 120 characters.", "style: Code contains functions without documentation comments. Consider adding /// comments for public functions."]
+DEBUG: Total issues count: 8
+DEBUG: Result object: CodeAnalysisResult(id: D3904F8D-E2C5-4547-8574-D98176A49AFB, analysis: "# Code Analysis Summary\n\nSwift code analysis\n\n## Summary Statistics\nTotal Issues: 8\n\nCritical Priority: 0\n\nHigh Priority: 2\n\nMedium Priority: 4\n\nLow Priority: 2\n\nBug Issues: 2\n\nSecurity Issues: 3\n\nPerformance Issues: 1\n\nStyle Issues: 2\n\n## Issues by File\nTest.js: 4 issues\nTest.swift: 4 issues\n\n## Detailed Issues\n**File:** Test.swift\n\n**Line:** 1\n\n**Severity:** Medium\n\n**Type:** Bug\n\n**Description:** TODO comment found - this should be addressed\n**Suggestion:** Add proper error handling for all operations\n\n**File:** Test.js\n\n**Line:** 8\n\n**Severity:** Medium\n\n**Type:** Bug\n\n**Description:** Force unwrapping detected - consider safe unwrapping\n**Suggestion:** Implement input validation for user-provided data\n\n**File:** Test.swift\n\n**Line:** 11\n\n**Severity:** High\n\n**Type:** Security\n\n**Description:** Storing passwords in UserDefaults is insecure. Use Keychain.\n**Suggestion:** Implement proper input sanitization\n\n**File:** Test.js\n\n**Line:** 13\n\n**Severity:** High\n\n**Type:** Security\n\n**Description:** Storing passwords in UserDefaults is insecure. Use Keychain.\n**Suggestion:** Use parameterized queries to prevent SQL injection\n\n**File:** Test.swift\n\n**Line:** 8\n\n**Severity:** Medium\n\n**Type:** Security\n\n**Description:** Force unwrapping found. Use optional binding (if let/guard let).\n**Suggestion:** Consider using lazy loading for large datasets\n\n**File:** Test.js\n\n**Line:** 1\n\n**Severity:** Medium\n\n**Type:** Performance\n\n**Description:** Performance issue: forEach with append can be optimized\n**Suggestion:** Profile code performance with Instruments\n\n**File:** Test.swift\n\n**Line:** 28\n\n**Severity:** Low\n\n**Type:** Style\n\n**Description:** Line 28 is too long (189 characters). Maximum allowed is 120 characters.\n**Suggestion:** Follow consistent naming conventions\n\n**File:** Test.js\n\n**Line:** 0\n\n**Severity:** Low\n\n**Type:** Style\n\n**Description:** Code contains functions without documentation comments. Consider adding /// comments for public functions.\n**Suggestion:** Add comprehensive documentation\n\n", issues: [CodingReviewer.CodeIssue(id: 80C828CC-D5CB-4C33-81CD-C59A3022D755, description: "TODO comment found - this should be addressed", severity: CodingReviewer.IssueSeverity.medium, line: Optional(1), category: CodingReviewer.IssueCategory.bug, suggestedFix: nil), CodingReviewer.CodeIssue(id: FB4F033B-6E79-4132-BE4D-6734F97C286B, description: "Force unwrapping detected - consider safe unwrapping", severity: CodingReviewer.IssueSeverity.medium, line: Optional(8), category: CodingReviewer.IssueCategory.bug, suggestedFix: nil), CodingReviewer.CodeIssue(id: B2B3E6A7-DF1C-4140-AF54-46F0F839568D, description: "Storing passwords in UserDefaults is insecure. Use Keychain.", severity: CodingReviewer.IssueSeverity.high, line: Optional(11), category: CodingReviewer.IssueCategory.security, suggestedFix: nil), CodingReviewer.CodeIssue(id: 0EBD391A-C62E-44D2-860E-9EDFFAF90150, description: "Storing passwords in UserDefaults is insecure. Use Keychain.", severity: CodingReviewer.IssueSeverity.high, line: Optional(13), category: CodingReviewer.IssueCategory.security, suggestedFix: nil), CodingReviewer.CodeIssue(id: 487EE50A-DD9A-4DC5-997A-9B61E6024710, description: "Force unwrapping found. Use optional binding (if let/guard let).", severity: CodingReviewer.IssueSeverity.medium, line: Optional(8), category: CodingReviewer.IssueCategory.security, suggestedFix: nil), CodingReviewer.CodeIssue(id: BFFB697C-5F62-43F3-9FC0-2B6B98480E17, description: "Performance issue: forEach with append can be optimized", severity: CodingReviewer.IssueSeverity.medium, line: Optional(1), category: CodingReviewer.IssueCategory.performance, suggestedFix: nil), CodingReviewer.CodeIssue(id: DD0F848D-21A0-49FC-8767-C191E0F1FCC3, description: "Line 28 is too long (189 characters). Maximum allowed is 120 characters.", severity: CodingReviewer.IssueSeverity.low, line: Optional(28), category: CodingReviewer.IssueCategory.style, suggestedFix: nil), CodingReviewer.CodeIssue(id: 89ED1DF1-D8F9-4167-B968-395C26CC7936, description: "Code contains functions without documentation comments. Consider adding /// comments for public functions.", severity: CodingReviewer.IssueSeverity.low, line: nil, category: CodingReviewer.IssueCategory.style, suggestedFix: nil)], suggestions: ["Add proper error handling for all operations", "Implement input validation for user-provided data", "Implement proper input sanitization", "Use parameterized queries to prevent SQL injection", "Consider using lazy loading for large datasets", "Profile code performance with Instruments", "Follow consistent naming conventions", "Add comprehensive documentation"], language: "Swift", analysisType: CodingReviewer.AnalysisType.comprehensive)
+[PDFExport] HTML saved to: file:///var/folders/5d/2rv91jzx16j4g9knxlbqh9rm0000gn/T/empty.html
+[PDFExport] HTML saved to: file:///var/folders/5d/2rv91jzx16j4g9knxlbqh9rm0000gn/T/test.html
+◇ Test run started.
+↳ Testing Library Version: 1501
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CrashTests started.
+◇ Test concurrentAccess() started.
+◇ Test memoryManagement() started.
+◇ Test enumValuesAreStable() started.
+◇ Test appDoesNotCrashOnLaunch() started.
+✔ Test concurrentAccess() passed after 0.001 seconds.
+✔ Test appDoesNotCrashOnLaunch() passed after 0.001 seconds.
+✔ Test enumValuesAreStable() passed after 0.001 seconds.
+✔ Test memoryManagement() passed after 0.001 seconds.
+✔ Suite CrashTests passed after 0.001 seconds.
+✔ Test run with 4 tests in 1 suite passed after 0.001 seconds.

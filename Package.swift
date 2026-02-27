@@ -30,7 +30,7 @@ let package = Package(
         // SwiftSyntax for AST-based code analysis
         .package(
             url: "https://github.com/swiftlang/swift-syntax.git",
-            from: "509.0.0"
+            from: "600.0.0"
         ),
         .package(
             url: "https://github.com/pointfreeco/swift-snapshot-testing.git",
