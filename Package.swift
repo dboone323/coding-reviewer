@@ -55,6 +55,7 @@ let package = Package(
                 "AppLifecycleCoordinator.swift",
                 "KeyboardShortcuts.swift",
                 "CodingReviewer.entitlements",
+                "Info.plist",
             ],
             sources: [
                 "Services",
@@ -104,6 +105,7 @@ let package = Package(
             name: "LiveReviewTest",
             dependencies: ["CodingReviewer"],
             path: "Tools",
+            exclude: ["ProjectScripts", "Automation"],
             sources: ["live_review_test.swift"]
         ),
     ]
