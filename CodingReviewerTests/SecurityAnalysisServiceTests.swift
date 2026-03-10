@@ -5,8 +5,8 @@
 //  Unit tests for SecurityAnalysisService
 //
 
-import XCTest
 @testable import CodingReviewer
+import XCTest
 
 final class SecurityAnalysisServiceTests: XCTestCase {
     var securityAnalyzer: SecurityAnalysisService!

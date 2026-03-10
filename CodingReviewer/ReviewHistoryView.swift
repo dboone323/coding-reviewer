@@ -11,7 +11,7 @@ import SwiftUI
 struct ReviewHistoryView: View {
     @FetchRequest(
         entity: ReviewSession.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \ReviewSession.date, ascending: false)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \ReviewSession.date, ascending: false)]
     ) var sessions: FetchedResults<ReviewSession>
 
     var body: some View {

@@ -22,7 +22,7 @@ struct PerformanceAnalysisService {
             issues.append(contentsOf: detectSwiftPerformanceIssues(in: code, addedDescriptions: &addedDescriptions))
         } else if language == "JavaScript" {
             let jsIssues = detectJavaScriptPerformanceIssues(
-                in: code, addedDescriptions: &addedDescriptions,
+                in: code, addedDescriptions: &addedDescriptions
             )
             issues.append(contentsOf: jsIssues)
         }
@@ -46,7 +46,7 @@ struct PerformanceAnalysisService {
         // Check multiline patterns on entire code
         for (pattern, description, severity) in multilinePatterns where code.range(
             of: pattern,
-            options: .regularExpression,
+            options: .regularExpression
         ) != nil {
             let fullDescription = "Performance issue: \(description) can be optimized"
             if !addedDescriptions.contains(fullDescription) {
@@ -54,7 +54,7 @@ struct PerformanceAnalysisService {
                     description: fullDescription,
                     severity: severity,
                     line: 1, // Approximate line for multiline patterns
-                    category: IssueCategory.performance,
+                    category: IssueCategory.performance
                 )
                 issues.append(issue)
                 addedDescriptions.insert(fullDescription)
@@ -66,7 +66,7 @@ struct PerformanceAnalysisService {
         for (lineIndex, line) in lines.enumerated() {
             for (pattern, description, severity) in linePatterns where line.range(
                 of: pattern,
-                options: .regularExpression,
+                options: .regularExpression
             ) != nil {
                 let fullDescription = "Performance issue: \(description) can be optimized"
                 if !addedDescriptions.contains(fullDescription) {
@@ -74,7 +74,7 @@ struct PerformanceAnalysisService {
                         description: fullDescription,
                         severity: severity,
                         line: lineIndex + 1,
-                        category: IssueCategory.performance,
+                        category: IssueCategory.performance
                     )
                     issues.append(issue)
                     addedDescriptions.insert(fullDescription)
@@ -99,7 +99,7 @@ struct PerformanceAnalysisService {
                 description: flatMapDescription,
                 severity: IssueSeverity.low,
                 line: 1, // Approximate line
-                category: IssueCategory.performance,
+                category: IssueCategory.performance
             )
             issues.append(issue)
             addedDescriptions.insert(flatMapDescription)
@@ -110,7 +110,7 @@ struct PerformanceAnalysisService {
 
     private func detectJavaScriptPerformanceIssues(
         in code: String,
-        addedDescriptions: inout Set<String>,
+        addedDescriptions: inout Set<String>
     ) -> [CodeIssue] {
         var issues: [CodeIssue] = []
 
@@ -129,7 +129,7 @@ struct PerformanceAnalysisService {
                         description: fullDescription,
                         severity: severity,
                         line: 1, // Approximate line for multiline patterns
-                        category: IssueCategory.performance,
+                        category: IssueCategory.performance
                     )
                     issues.append(issue)
                     addedDescriptions.insert(fullDescription)
@@ -147,7 +147,7 @@ struct PerformanceAnalysisService {
             ]
             for (pattern, description, severity) in singleLinePatterns where line.range(
                 of: pattern,
-                options: .regularExpression,
+                options: .regularExpression
             ) != nil {
                 let fullDescription = "Performance issue: \(description)"
                 if !addedDescriptions.contains(fullDescription) {
@@ -155,7 +155,7 @@ struct PerformanceAnalysisService {
                         description: fullDescription,
                         severity: severity,
                         line: lineIndex + 1,
-                        category: IssueCategory.performance,
+                        category: IssueCategory.performance
                     )
                     issues.append(issue)
                     addedDescriptions.insert(fullDescription)

@@ -3,8 +3,8 @@
 // CodingReviewerTests
 //
 
-import XCTest
 @testable import CodingReviewer
+import XCTest
 
 final class DashboardViewTests: XCTestCase {
     // MARK: - View Initialization Tests

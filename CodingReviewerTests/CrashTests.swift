@@ -5,9 +5,9 @@
 //  Created by GitHub Copilot on 2026-02-10.
 //
 
+@testable import CodingReviewer
 import Foundation
 import Testing
-@testable import CodingReviewer
 
 struct CrashTests {
     @Test
@@ -21,7 +21,7 @@ struct CrashTests {
             severity: .high,
             line: 42,
             category: .bug,
-            suggestedFix: "Don't crash",
+            suggestedFix: "Don't crash"
         )
 
         #expect(issue.description == "Test crash prevention")
@@ -46,13 +46,13 @@ struct CrashTests {
         // Test basic memory management to prevent leaks/crashes
         var issues: [CodeIssue] = []
 
-        for i in 0..<100 {
+        for i in 0 ..< 100 {
             let issue = CodeIssue(
                 description: "Memory test issue \(i)",
                 severity: .medium,
                 line: i,
                 category: .performance,
-                suggestedFix: "Optimize memory usage",
+                suggestedFix: "Optimize memory usage"
             )
             issues.append(issue)
         }
@@ -72,13 +72,13 @@ struct CrashTests {
         let iterations = 50
 
         await withTaskGroup(of: Void.self) { group in
-            for i in 0..<iterations {
+            for i in 0 ..< iterations {
                 group.addTask {
                     let issue = CodeIssue(
                         description: "Concurrent test \(i)",
                         severity: .low,
                         line: i,
-                        category: .general,
+                        category: .general
                     )
                     // Just create the object - no shared state to test
                     _ = issue.id

@@ -4,8 +4,8 @@
 //
 //  Unit tests for PerformanceAnalysisService
 //
-import XCTest
 @testable import CodingReviewer
+import XCTest
 
 final class PerformanceAnalysisServiceTests: XCTestCase {
     var performanceAnalyzer: PerformanceAnalysisService!

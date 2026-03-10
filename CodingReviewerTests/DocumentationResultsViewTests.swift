@@ -5,8 +5,8 @@
 //  Comprehensive test suite for DocumentationResultsView
 //
 
-import XCTest
 @testable import CodingReviewer
+import XCTest
 
 final class DocumentationResultsViewTests: XCTestCase {
     // MARK: - Initialization Tests

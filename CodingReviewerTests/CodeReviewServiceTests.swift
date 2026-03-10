@@ -5,8 +5,8 @@
 //  Comprehensive test suite for CodeReviewService
 //
 
-import XCTest
 @testable import CodingReviewer
+import XCTest
 
 final class CodeReviewServiceTests: XCTestCase {
     // MARK: - Initialization Tests

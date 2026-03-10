@@ -1,0 +1,446 @@
+[
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewerTests/CodingReviewerTests.swift",
+    "line" : 12,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewerTests/CodingReviewerTests.swift",
+    "line" : 27,
+    "reason" : "Add or remove trailing commas in comma-separated lists.",
+    "rule_id" : "trailingCommas"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewerTests/CodingReviewerTests.swift",
+    "line" : 41,
+    "reason" : "Add or remove trailing commas in comma-separated lists.",
+    "rule_id" : "trailingCommas"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Models/GitTypes.swift",
+    "line" : 16,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Models/GitTypes.swift",
+    "line" : 30,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/LogicAgent.swift",
+    "line" : 16,
+    "reason" : "Add or remove trailing commas in comma-separated lists.",
+    "rule_id" : "trailingCommas"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/IDE/ChatViewModel.swift",
+    "line" : 148,
+    "reason" : "Add or remove trailing commas in comma-separated lists.",
+    "rule_id" : "trailingCommas"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/IDE/SourceControlViewModel.swift",
+    "line" : 267,
+    "reason" : "Move inline await keyword(s) to start of expression.",
+    "rule_id" : "hoistAwait"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/GitService.swift",
+    "line" : 178,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/GitService.swift",
+    "line" : 180,
+    "reason" : "Wrap lines that exceed the specified maximum width.",
+    "rule_id" : "wrap"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/GitService.swift",
+    "line" : 181,
+    "reason" : "Add or remove trailing commas in comma-separated lists.",
+    "rule_id" : "trailingCommas"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/GitService.swift",
+    "line" : 181,
+    "reason" : "Wrap lines that exceed the specified maximum width.",
+    "rule_id" : "wrap"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/GitService.swift",
+    "line" : 182,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 48,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 48,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 51,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 51,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 53,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 53,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 62,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 62,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 117,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 117,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 119,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 119,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 122,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 122,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 130,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 130,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 178,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 178,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 181,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 181,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 184,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 184,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 191,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 191,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 242,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 242,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 245,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 245,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 254,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 254,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 294,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 294,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 297,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 297,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 305,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 305,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 357,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 357,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 361,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 361,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 370,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 370,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 399,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 399,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 402,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 402,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 405,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 405,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 459,
+    "reason" : "Add or remove trailing commas in comma-separated lists.",
+    "rule_id" : "trailingCommas"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 478,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 478,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 480,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 480,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 486,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 486,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 518,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 518,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 521,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 521,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 524,
+    "reason" : "Indent code in accordance with the scope level.",
+    "rule_id" : "indent"
+  },
+  {
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/AIEnhancedCodeAnalysisService.swift",
+    "line" : 524,
+    "reason" : "Remove trailing space at end of a line.",
+    "rule_id" : "trailingSpace"
+  }
+]

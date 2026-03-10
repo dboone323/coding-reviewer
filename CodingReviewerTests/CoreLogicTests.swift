@@ -1,5 +1,5 @@
-import XCTest
 @testable import CodingReviewer
+import XCTest
 
 final class CoreLogicTests: XCTestCase {
     var bugDetectionService: BugDetectionService!

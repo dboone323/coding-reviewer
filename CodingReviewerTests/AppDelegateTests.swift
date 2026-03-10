@@ -5,8 +5,8 @@
 //  Comprehensive test suite for AppDelegate
 //
 
-import XCTest
 @testable import CodingReviewer
+import XCTest
 
 final class AppDelegateTests: XCTestCase {
     // MARK: - Initialization Tests

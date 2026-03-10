@@ -5,8 +5,8 @@
 // Tests for analysis result caching
 //
 
-import XCTest
 @testable import CodingReviewer
+import XCTest
 
 final class AnalysisCacheTests: XCTestCase {
     var cache: AnalysisCache!
@@ -40,7 +40,7 @@ final class AnalysisCacheTests: XCTestCase {
                 description: "Test issue",
                 severity: .medium,
                 line: 1,
-                category: .general,
+                category: .general
             ),
         ]
 

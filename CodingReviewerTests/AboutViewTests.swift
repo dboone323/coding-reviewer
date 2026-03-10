@@ -5,8 +5,8 @@
 //  Comprehensive test suite for AboutView
 //
 
-import XCTest
 @testable import CodingReviewer
+import XCTest
 
 @MainActor
 final class AboutViewTests: XCTestCase {

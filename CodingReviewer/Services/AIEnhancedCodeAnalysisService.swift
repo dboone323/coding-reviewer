@@ -1,5 +1,6 @@
 import Foundation
 import OSLog
+import SharedKit
 import SwiftUI
 
 // AI-Enhanced Code Analysis Service
@@ -10,7 +11,7 @@ import SwiftUI
 public class AIEnhancedCodeAnalysisService: ObservableObject {
     private let logger = Logger(subsystem: "CodingReviewer", category: "AIAnalysis")
     private let fileManager = FileManager.default
-    private let ollamaService = OllamaService()
+    private let ollamaClient = OllamaClient()
     private let llmGenerate: ((String, String, Double) async throws -> String)?
 
     @Published public var isAnalyzing = false
@@ -31,7 +32,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
     // MARK: - AI-Powered Code Analysis
 
     public func analyzeCodeWithAI(
-        _ code: String, language: String = "swift", context: String? = nil,
+        _ code: String, language: String = "swift", context: String? = nil
     ) async throws -> AICodeAnalysisResult {
         isAnalyzing = true
         currentAnalysisTask = "Analyzing code with AI models..."
@@ -65,12 +66,12 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         let analysisResponse = try await callOllamaModel(
             model: "deepseek-v3.1:671b-cloud",
             prompt: analysisPrompt,
-            temperature: 0.3,
+            temperature: 0.3
         )
 
         // Generate code suggestions
         let suggestionsResponse = try await generateCodeSuggestions(
-            code, language: language, analysis: analysisResponse,
+            code, language: language, analysis: analysisResponse
         )
 
         // Parse results
@@ -84,7 +85,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
             recommendations: extractRecommendations(from: analysisResponse),
             suggestedImprovements: suggestionsResponse,
             technicalDebtEstimate: extractTechnicalDebt(from: analysisResponse),
-            analysisTimestamp: Date(),
+            analysisTimestamp: Date()
         )
 
         self.analysisResults.append(
@@ -92,12 +93,12 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
                 id: UUID(),
                 type: .codeAnalysis,
                 result: result,
-                timestamp: Date(),
-            ),
+                timestamp: Date()
+            )
         )
 
         logger.info(
-            "AI code analysis completed with \(result.recommendations.count) recommendations",
+            "AI code analysis completed with \(result.recommendations.count) recommendations"
         )
         return result
     }
@@ -107,7 +108,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
     public func generateCodeWithAI(
         prompt: String,
         language: String = "swift",
-        style: CodeStyle = .production,
+        style: CodeStyle = .production
     ) async throws -> AICodeGenerationResult {
         currentAnalysisTask = "Generating code with AI..."
 
@@ -133,12 +134,12 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         let generatedCode = try await callOllamaModel(
             model: "qwen3-coder:480b-cloud",
             prompt: codeGenPrompt,
-            temperature: 0.2,
+            temperature: 0.2
         )
 
         // Analyze the generated code for quality
         let qualityAnalysis = try await analyzeCodeWithAI(
-            generatedCode, language: language, context: "Generated code for: \(prompt)",
+            generatedCode, language: language, context: "Generated code for: \(prompt)"
         )
 
         let result = AICodeGenerationResult(
@@ -147,7 +148,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
             language: language,
             style: style,
             qualityAnalysis: qualityAnalysis,
-            generationTimestamp: Date(),
+            generationTimestamp: Date()
         )
 
         self.analysisResults.append(
@@ -155,8 +156,8 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
                 id: UUID(),
                 type: .codeGeneration,
                 result: result,
-                timestamp: Date(),
-            ),
+                timestamp: Date()
+            )
         )
 
         logger.info("AI code generation completed for prompt: \(prompt.prefix(50))...")
@@ -168,7 +169,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
     public func refactorCodeWithAI(
         _ code: String,
         refactoringGoal: RefactoringGoal,
-        language: String = "swift",
+        language: String = "swift"
     ) async throws -> AIRefactoringResult {
         currentAnalysisTask = "Refactoring code with AI..."
 
@@ -198,7 +199,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         let refactoredCode = try await callOllamaModel(
             model: "qwen3-coder:480b-cloud",
             prompt: refactoringPrompt,
-            temperature: 0.3,
+            temperature: 0.3
         )
 
         // Compare original vs refactored
@@ -212,7 +213,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
             benefits: extractBenefits(from: refactoredCode),
             potentialIssues: extractPotentialIssues(from: refactoredCode),
             codeComparison: comparison,
-            refactoringTimestamp: Date(),
+            refactoringTimestamp: Date()
         )
 
         self.analysisResults.append(
@@ -220,8 +221,8 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
                 id: UUID(),
                 type: .refactoring,
                 result: result,
-                timestamp: Date(),
-            ),
+                timestamp: Date()
+            )
         )
 
         logger.info("AI code refactoring completed for goal: \(refactoringGoal.description)")
@@ -232,7 +233,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
 
     public func generateDocumentationWithAI(
         _ code: String,
-        documentationType: DocumentationType = .comprehensive,
+        documentationType: DocumentationType = .comprehensive
     ) async throws -> AIDocumentationResult {
         currentAnalysisTask = "Generating documentation with AI..."
 
@@ -258,14 +259,14 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         let documentation = try await callOllamaModel(
             model: "gpt-oss:120b-cloud",
             prompt: docPrompt,
-            temperature: 0.4,
+            temperature: 0.4
         )
 
         let result = AIDocumentationResult(
             originalCode: code,
             generatedDocumentation: documentation,
             documentationType: documentationType,
-            generationTimestamp: Date(),
+            generationTimestamp: Date()
         )
 
         self.analysisResults.append(
@@ -273,8 +274,8 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
                 id: UUID(),
                 type: .documentation,
                 result: result,
-                timestamp: Date(),
-            ),
+                timestamp: Date()
+            )
         )
 
         logger.info("AI documentation generation completed")
@@ -309,7 +310,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         let generatedTests = try await callOllamaModel(
             model: "qwen3-coder:480b-cloud",
             prompt: testPrompt,
-            temperature: 0.2,
+            temperature: 0.2
         )
 
         let result = AITestGenerationResult(
@@ -317,7 +318,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
             generatedTests: generatedTests,
             testType: testType,
             estimatedCoverage: estimateTestCoverage(generatedTests),
-            generationTimestamp: Date(),
+            generationTimestamp: Date()
         )
 
         self.analysisResults.append(
@@ -325,12 +326,12 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
                 id: UUID(),
                 type: .testGeneration,
                 result: result,
-                timestamp: Date(),
-            ),
+                timestamp: Date()
+            )
         )
 
         logger.info(
-            "AI test generation completed with estimated coverage: \(result.estimatedCoverage)%",
+            "AI test generation completed with estimated coverage: \(result.estimatedCoverage)%"
         )
         return result
     }
@@ -374,7 +375,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
                 let reviewResponse = try await callOllamaModel(
                     model: "deepseek-v3.1:671b-cloud",
                     prompt: reviewPrompt,
-                    temperature: 0.3,
+                    temperature: 0.3
                 )
 
                 fileAnalyses.append(
@@ -384,8 +385,8 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
                         reviewComments: reviewResponse,
                         qualityRating: extractQualityRating(from: reviewResponse),
                         topImprovements: extractTopImprovements(from: reviewResponse),
-                        reviewTimestamp: Date(),
-                    ),
+                        reviewTimestamp: Date()
+                    )
                 )
             } catch {
                 logger.error("Failed to review file \(filePath): \(error.localizedDescription)")
@@ -413,7 +414,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         let overallSummary = try await callOllamaModel(
             model: "gpt-oss:120b-cloud",
             prompt: summaryPrompt,
-            temperature: 0.4,
+            temperature: 0.4
         )
 
         let result = AICodeReviewResult(
@@ -423,7 +424,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
             reviewType: reviewType,
             overallQualityScore: fileAnalyses.map(\.qualityRating).reduce(0, +)
                 / fileAnalyses.count,
-            reviewTimestamp: Date(),
+            reviewTimestamp: Date()
         )
 
         self.analysisResults.append(
@@ -431,8 +432,8 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
                 id: UUID(),
                 type: .codeReview,
                 result: result,
-                timestamp: Date(),
-            ),
+                timestamp: Date()
+            )
         )
 
         logger.info("AI code review completed for \(files.count) files")
@@ -451,11 +452,11 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
             return try await llmGenerate(mappedModel, prompt, temperature)
         }
 
-        // Use the actor-based service instead of CLI
-        return try await ollamaService.generate(
+        // Use the client from SharedKit
+        return try await ollamaClient.generate(
             model: mappedModel,
             prompt: prompt,
-            temperature: temperature,
+            temperature: temperature
         )
     }
 
@@ -489,7 +490,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         let suggestions = try await callOllamaModel(
             model: "qwen3-coder:480b-cloud",
             prompt: suggestionsPrompt,
-            temperature: 0.3,
+            temperature: 0.3
         )
 
         // Parse suggestions (simplified)
@@ -502,7 +503,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
                     currentCode: "",
                     improvedCode: "",
                     benefits: [],
-                    priority: .medium,
+                    priority: .medium
                 )
             }
             return nil
@@ -532,7 +533,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
         let comparison = try await callOllamaModel(
             model: "deepseek-v3.1:671b-cloud",
             prompt: comparisonPrompt,
-            temperature: 0.2,
+            temperature: 0.2
         )
 
         return CodeComparison(
@@ -541,7 +542,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
             complexityReduction: 0.0, // Would be calculated
             performanceImpact: comparison.contains("performance") ? .positive : .neutral,
             maintainabilityScore: 0.0, // Would be calculated
-            readabilityImprovement: comparison.contains("readable") || comparison.contains("clear"),
+            readabilityImprovement: comparison.contains("readable") || comparison.contains("clear")
         )
     }
 
@@ -593,7 +594,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
                     severity: line.lowercased().contains("critical")
                         || line.lowercased().contains("high") ? .high : .medium,
                     description: line,
-                    recommendation: "Address security concern",
+                    recommendation: "Address security concern"
                 )
             }
             return nil
@@ -612,7 +613,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
                     type: "Performance Concern",
                     impact: line.lowercased().contains("critical") ? .high : .medium,
                     description: line,
-                    suggestion: "Optimize for better performance",
+                    suggestion: "Optimize for better performance"
                 )
             }
             return nil
@@ -628,7 +629,7 @@ public class AIEnhancedCodeAnalysisService: ObservableObject {
                 return BestPracticeViolation(
                     rule: "Code Convention",
                     violation: line,
-                    suggestion: "Follow Swift best practices",
+                    suggestion: "Follow Swift best practices"
                 )
             }
             return nil

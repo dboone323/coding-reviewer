@@ -5,8 +5,8 @@
 //  Comprehensive test suite for Dependencies
 //
 
-import XCTest
 @testable import CodingReviewer
+import XCTest
 
 final class DependenciesTests: XCTestCase {
     // MARK: - Initialization Tests

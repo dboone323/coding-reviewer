@@ -153,13 +153,52 @@ public actor GitService {
     /// List all branches
     public func branches(in directory: URL) async throws -> [String] {
         let output = try await execute(["branch", "--list"], in: directory)
-        return
-            output
-                .components(separatedBy: .newlines)
-                .map {
-                    $0.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "* ", with: "")
-                }
-                .filter { !$0.isEmpty }
+        return output
+            .components(separatedBy: .newlines)
+            .map { $0.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "* ", with: "") }
+            .filter { !$0.isEmpty }
+    }
+
+    /// Create a new branch
+    public func createBranch(branch: String, in directory: URL) async throws {
+        _ = try await execute(["checkout", "-b", branch], in: directory)
+    }
+
+    /// Delete a branch
+    public func deleteBranch(branch: String, in directory: URL) async throws {
+        _ = try await execute(["branch", "-D", branch], in: directory)
+    }
+
+    /// Get commit history
+    public func commitHistory(in directory: URL) async throws -> [GitCommit] {
+        let output = try await execute(["log", "--pretty=format:%H|%an|%ad|%s", "--date=iso"], in: directory)
+        return output.components(separatedBy: .newlines).compactMap { line in
+            let parts = line.components(separatedBy: "|")
+            guard parts.count >= 4 else { return nil }
+
+            let formatter = ISO8601DateFormatter()
+            formatter.formatOptions = [
+                .withInternetDateTime,
+                .withSpaceBetweenDateAndTime,
+                .withDashSeparatorInDate,
+                .withColonSeparatorInTime,
+            ]
+            let date = formatter.date(from: parts[2]) ?? Date()
+
+            return GitCommit(id: parts[0], author: parts[1], date: date, message: parts[3])
+        }
+    }
+
+    /// Stash changes
+    public func stash(in directory: URL) async throws -> GitStash {
+        let name = "Stash \(Date())"
+        _ = try await execute(["stash", "push", "-m", name], in: directory)
+        return GitStash(id: UUID().uuidString, name: name, date: Date())
+    }
+
+    /// Pop stash
+    public func pop(stash: GitStash?, in directory: URL) async throws {
+        _ = try await execute(["stash", "pop"], in: directory)
     }
 
     /// Checkout a branch

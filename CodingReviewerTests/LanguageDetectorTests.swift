@@ -5,8 +5,8 @@
 //  Comprehensive test suite for LanguageDetector
 //
 
-import XCTest
 @testable import CodingReviewer
+import XCTest
 
 final class LanguageDetectorTests: XCTestCase {
     // MARK: - Initialization Tests

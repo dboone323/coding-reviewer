@@ -3,8 +3,8 @@
 // CodingReviewerTests
 //
 
-import XCTest
 @testable import CodingReviewer
+import XCTest
 
 @MainActor
 final class PDFReportExporterTests: XCTestCase {

@@ -54,7 +54,7 @@ struct AnalysisSummaryGenerator {
         issues: [CodeIssue],
         suggestions: [String],
         analysisType: AnalysisType,
-        language: String? = nil,
+        language: String? = nil
     ) -> String {
         if analysisType != .comprehensive {
             return generateSimpleSummary(issues: issues, suggestions: suggestions, analysisType: analysisType)
@@ -66,7 +66,7 @@ struct AnalysisSummaryGenerator {
     private func generateSimpleSummary(
         issues: [CodeIssue],
         suggestions: [String],
-        analysisType: AnalysisType,
+        analysisType: AnalysisType
     ) -> String {
         let issueCount = issues.count
         var summaryParts = ["Analysis completed for \(analysisType.rawValue) review.\n\n"]
@@ -97,7 +97,7 @@ struct AnalysisSummaryGenerator {
     private func generateComprehensiveSummary(
         issues: [CodeIssue],
         suggestions: [String],
-        language: String?,
+        language: String?
     ) -> String {
         var summaryParts = ["# Code Analysis Summary\n\n"]
 
@@ -194,7 +194,7 @@ struct AnalysisSummaryGenerator {
             fileIssues["FileA.swift"] = [issues[0], issues[1]]
             fileIssues["FileB.js"] = [issues[2]]
         } else if issues.count == 10 {
-            for i in 1...10 {
+            for i in 1 ... 10 {
                 fileIssues["File\(i).swift"] = [issues[i - 1]]
             }
         } else {

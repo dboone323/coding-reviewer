@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SharedKit
 import SwiftUI
 
 /// Chat modes
@@ -53,7 +54,7 @@ public final class ChatViewModel {
     public var errorMessage: String?
 
     // Services
-    private let ollamaService = OllamaService()
+    private let ollamaClient = OllamaClient()
     private var streamTask: Task<Void, Never>?
 
     // Settings keys
@@ -89,7 +90,7 @@ public final class ChatViewModel {
     // MARK: - Connection
 
     public func checkConnection() async {
-        isConnected = await ollamaService.isAvailable()
+        isConnected = await ollamaClient.isServerRunning()
         if isConnected {
             await loadModels()
         }
@@ -97,8 +98,8 @@ public final class ChatViewModel {
 
     public func loadModels() async {
         do {
-            let models = try await ollamaService.listModels()
-            availableModels = models.map(\.name)
+            let models = try await ollamaClient.listModels()
+            availableModels = models
             if !availableModels.contains(selectedModel), let first = availableModels.first {
                 selectedModel = first
             }
@@ -121,15 +122,15 @@ public final class ChatViewModel {
 
         // Build conversation
         let systemPrompt = buildSystemPrompt(context: context)
-        var ollamaMessages: [OllamaChatMessage] = [
-            OllamaChatMessage(role: "system", content: systemPrompt),
+        var ollamaMessages: [OllamaMessage] = [
+            OllamaMessage(role: "system", content: systemPrompt),
         ]
 
         // Add recent message history (last 20 messages for context)
         let recentMessages = messages.suffix(20)
         for msg in recentMessages {
             let role = msg.role == .user ? "user" : "assistant"
-            ollamaMessages.append(OllamaChatMessage(role: role, content: msg.content))
+            ollamaMessages.append(OllamaMessage(role: role, content: msg.content))
         }
 
         // Create assistant placeholder for streaming
@@ -141,10 +142,10 @@ public final class ChatViewModel {
 
         streamTask = Task {
             do {
-                let stream = await ollamaService.chatStream(
+                let stream = ollamaClient.chatStream(
                     model: selectedModel,
                     messages: ollamaMessages,
-                    temperature: temperature,
+                    temperature: temperature
                 )
 
                 for try await chunk in stream {

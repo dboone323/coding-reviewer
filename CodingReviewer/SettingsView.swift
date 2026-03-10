@@ -1,3 +1,4 @@
+import SharedKit
 import SwiftUI
 
 struct SettingsView: View {
@@ -16,8 +17,8 @@ struct SettingsView: View {
                         "Model",
                         selection: Binding(
                             get: { AIModelManager.shared.selectedModelId },
-                            set: { AIModelManager.shared.selectModel(id: $0) },
-                        ),
+                            set: { AIModelManager.shared.selectModel(id: $0) }
+                        )
                     ) {
                         ForEach(AIModelManager.shared.availableModels) { model in
                             Text(model.name).tag(model.id)
@@ -42,7 +43,7 @@ struct SettingsView: View {
                         .foregroundStyle(
                             ollamaStatus.contains("✓")
                                 ? .green
-                                : (ollamaStatus.contains("Checking") ? .secondary : .red),
+                                : (ollamaStatus.contains("Checking") ? .secondary : .red)
                         )
 
                     Spacer()
@@ -71,8 +72,8 @@ struct SettingsView: View {
 
     private func checkOllamaStatus() {
         Task {
-            let service = OllamaService()
-            let available = await service.isAvailable()
+            let client = OllamaClient()
+            let available = await client.isServerRunning()
             ollamaStatus = available ? "✓ Connected" : "⚠️ Not available"
         }
     }

@@ -70,13 +70,13 @@ struct CodeAnalysisEngine {
         issues: [CodeIssue],
         suggestions: [String],
         analysisType: AnalysisType,
-        language: String? = nil,
+        language: String? = nil
     ) -> String {
         self.summaryGenerator.generateAnalysisSummary(
             issues: issues,
             suggestions: suggestions,
             analysisType: analysisType,
-            language: language,
+            language: language
         )
     }
 
@@ -90,7 +90,7 @@ struct CodeAnalysisEngine {
         self.documentationGenerator.generateBasicDocumentation(
             code: code,
             language: language,
-            includeExamples: includeExamples,
+            includeExamples: includeExamples
         )
     }
 
@@ -138,7 +138,7 @@ struct CodeAnalysisEngine {
             issues: allIssues,
             suggestions: allSuggestions,
             analysisType: .comprehensive,
-            language: language,
+            language: language
         )
 
         return CodeAnalysisResult(
@@ -146,7 +146,7 @@ struct CodeAnalysisEngine {
             issues: allIssues,
             suggestions: allSuggestions,
             language: language,
-            analysisType: .comprehensive,
+            analysisType: .comprehensive
         )
     }
 }

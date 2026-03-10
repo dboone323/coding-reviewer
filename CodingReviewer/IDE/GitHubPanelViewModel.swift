@@ -116,7 +116,7 @@ public final class GitHubPanelViewModel {
                 owner: parts[0],
                 repo: parts[1],
                 title: title,
-                body: body,
+                body: body
             )
             issues.insert(newIssue, at: 0) // Add to top of list
         } catch {

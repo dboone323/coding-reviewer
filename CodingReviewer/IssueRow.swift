@@ -49,7 +49,7 @@ public struct IssueRow: View {
                             label: {
                                 Label("Fix", systemImage: "wand.and.stars")
                                     .font(.caption)
-                            },
+                            }
                         )
                         .buttonStyle(.borderedProminent)
                         .controlSize(.small)
@@ -62,7 +62,7 @@ public struct IssueRow: View {
         .background(
             issue.severity == .critical
                 ? Color.red.opacity(0.1)
-                : Color.clear,
+                : Color.clear
         )
         .cornerRadius(6)
         .overlay(
@@ -70,8 +70,8 @@ public struct IssueRow: View {
                 .stroke(
                     issue.severity == .critical
                         ? Color.red.opacity(0.3)
-                        : Color.clear, lineWidth: 1,
-                ),
+                        : Color.clear, lineWidth: 1
+                )
         )
     }
 }
@@ -95,23 +95,23 @@ struct IssueRowPresenter {
     private static let palette: [IssueSeverity: Palette] = [
         .low: Palette(
             iconName: "info.circle.fill", iconColor: .blue, severityColor: .blue,
-            colorIdentifier: "blue",
+            colorIdentifier: "blue"
         ),
         .medium: Palette(
             iconName: "exclamationmark.triangle.fill",
             iconColor: .orange,
             severityColor: .orange,
-            colorIdentifier: "orange",
+            colorIdentifier: "orange"
         ),
         .high: Palette(
             iconName: "exclamationmark.triangle.fill",
             iconColor: .red,
             severityColor: .red,
-            colorIdentifier: "red",
+            colorIdentifier: "red"
         ),
         .critical: Palette(
             iconName: "xmark.circle.fill", iconColor: .red, severityColor: .red,
-            colorIdentifier: "red",
+            colorIdentifier: "red"
         ),
     ]
 
@@ -135,7 +135,7 @@ struct IssueRowPresenter {
         Diagnostics(
             iconName: paletteForIssue.iconName,
             iconColorIdentifier: paletteForIssue.colorIdentifier,
-            severityColorIdentifier: paletteForIssue.colorIdentifier,
+            severityColorIdentifier: paletteForIssue.colorIdentifier
         )
     }
 }

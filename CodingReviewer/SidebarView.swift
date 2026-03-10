@@ -21,7 +21,7 @@ public struct SidebarView: View {
         showFilePicker: Binding<Bool>,
         selectedAnalysisType: Binding<AnalysisType>,
         currentView: Binding<ContentViewType>,
-        presenter: SidebarViewPresenter = SidebarViewPresenter(),
+        presenter: SidebarViewPresenter = SidebarViewPresenter()
     ) {
         _selectedFileURL = selectedFileURL
         _showFilePicker = showFilePicker
@@ -65,7 +65,7 @@ public struct SidebarView: View {
                 .accessibilityHint("Run code analysis on the selected file")
 
                 Button(
-                    action: presenter.setViewAction(binding: $currentView, target: .documentation),
+                    action: presenter.setViewAction(binding: $currentView, target: .documentation)
                 ) {
                     Label("Documentation", systemImage: "doc.text")
                 }
@@ -96,12 +96,15 @@ public struct SidebarView: View {
                 Button(action: presenter.preferencesAction()) {
                     Label("Preferences", systemImage: "gear")
                 }
-                .buttonStyle(.borderless)
+                .buttonStyle(.plain)
+                .foregroundStyle(.tint)
                 .accessibilityLabel("Preferences")
                 .accessibilityHint("Open application preferences")
             }
         }
         .listStyle(.sidebar)
+        .background(.ultraThinMaterial)
+        .tint(.accentColor)
         .frame(minWidth: 200)
         .sheet(isPresented: $showHistorySheet) {
             ReviewHistoryView()

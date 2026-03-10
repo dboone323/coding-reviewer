@@ -5,8 +5,8 @@
 //  Comprehensive test suite for AIEnhancedCodeAnalysisService
 //
 
-import XCTest
 @testable import CodingReviewer
+import XCTest
 
 @MainActor
 final class AIEnhancedCodeAnalysisServiceTests: XCTestCase {
@@ -82,13 +82,13 @@ final class AIEnhancedCodeAnalysisServiceTests: XCTestCase {
             recommendations: ["Consider adding error handling"],
             suggestedImprovements: [],
             technicalDebtEstimate: .low,
-            analysisTimestamp: Date(),
+            analysisTimestamp: Date()
         )
         service.analysisResults.append(AIAnalysisResult(
             id: UUID(),
             type: .codeAnalysis,
             result: dummyResult,
-            timestamp: Date(),
+            timestamp: Date()
         ))
         XCTAssertEqual(service.analysisResults.count, 1)
     }

@@ -7,21 +7,21 @@ import CodingReviewer
 struct LiveReviewTest {
     static func main() async {
         print(">>> [CodingReviewer Agent] Starting live review task...")
-        
+
         // Mock Agent for testing
         struct SecurityAgent: BaseAgent {
             let id = "security_agent_001"
             let name = "Security Audit Agent"
-            func execute(context: [String: Sendable]) async throws -> AgentResult {
+            func execute(context: [String: any Sendable]) async throws -> AgentResult {
                 let code = context["code"] as? String ?? ""
                 var success = true
                 var summary = "No security issues detected."
-                
+
                 if code.contains("print(\"password: \\(password)\")") {
                     success = false
                     summary = "Critical: Sensitive data leak in logs detected!"
                 }
-                
+
                 return AgentResult(
                     agentId: id,
                     success: success,
@@ -31,13 +31,13 @@ struct LiveReviewTest {
                 )
             }
         }
-        
+
         let orchestrator = ReviewOrchestrator(agents: [SecurityAgent()])
         let sampleCode = "let password = \"12345\"\nprint(\"password: \\(password)\")"
-        
+
         print(">>> [Task] Analysing sample code for security vulnerabilities...")
         let results = await orchestrator.runReview(code: sampleCode, language: "swift")
-        
+
         for result in results {
             print("\n--- Agent Result: \(result.agentId) ---")
             print("Status: \(result.success ? "SUCCESS" : "FAILURE")")
@@ -45,7 +45,7 @@ struct LiveReviewTest {
             print("Requires Approval: \(result.requiresApproval)")
             print("Timestamp: \(result.timestamp)")
         }
-        
+
         print("\n>>> [CodingReviewer Agent] Task completed.")
     }
 }

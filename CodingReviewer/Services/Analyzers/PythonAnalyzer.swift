@@ -18,7 +18,7 @@ struct PythonAnalyzer: LanguageAnalyzer {
                 description: "Use of exec() detected. This is a security risk.",
                 severity: .high,
                 line: match.line,
-                category: .security,
+                category: .security
             ))
         }
 
@@ -29,7 +29,7 @@ struct PythonAnalyzer: LanguageAnalyzer {
                 description: "subprocess call with shell=True can lead to shell injection.",
                 severity: .high,
                 line: match.line,
-                category: .security,
+                category: .security
             ))
         }
 

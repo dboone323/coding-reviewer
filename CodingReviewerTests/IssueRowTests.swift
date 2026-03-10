@@ -5,8 +5,8 @@
 //  Comprehensive test suite for IssueRow
 //
 
-import XCTest
 @testable import CodingReviewer
+import XCTest
 
 final class IssueRowTests: XCTestCase {
     // MARK: - Initialization Tests

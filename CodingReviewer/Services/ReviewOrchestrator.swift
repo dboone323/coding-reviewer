@@ -37,7 +37,7 @@ public final class ReviewOrchestrator {
                     success: result.success,
                     summary: result.summary,
                     detail: result.detail,
-                    requiresApproval: true,
+                    requiresApproval: true
                 )
             }
             return result

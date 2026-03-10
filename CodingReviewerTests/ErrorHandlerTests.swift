@@ -5,8 +5,8 @@
 //  Comprehensive test suite for ErrorHandler
 //
 
-import XCTest
 @testable import CodingReviewer
+import XCTest
 
 final class ErrorHandlerTests: XCTestCase {
     // MARK: - Initialization Tests

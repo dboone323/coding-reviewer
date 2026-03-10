@@ -83,7 +83,7 @@ import Foundation
                 description: "Force unwrapping detected. Use optional binding (if let/guard let).",
                 severity: .medium,
                 line: location.line,
-                category: .security,
+                category: .security
             ))
             return .visitChildren
         }
@@ -101,7 +101,7 @@ import Foundation
                     description: "Storing passwords in UserDefaults is insecure. Use Keychain.",
                     severity: .high,
                     line: location.line,
-                    category: .security,
+                    category: .security
                 ))
             }
             return .visitChildren
@@ -123,7 +123,7 @@ import Foundation
                     severity: .low,
                     line: location.line,
                     category: .style,
-                    suggestedFix: node.description.replacingOccurrences(of: "print(", with: "Logger.debug("),
+                    suggestedFix: node.description.replacingOccurrences(of: "print(", with: "Logger.debug(")
                 ))
             }
             return .visitChildren
@@ -147,7 +147,7 @@ import Foundation
                         description: "Strong self capture in closure may cause retain cycle. Use [weak self].",
                         severity: .medium,
                         line: location.line,
-                        category: .bug,
+                        category: .bug
                     ))
                 }
             }
@@ -167,7 +167,7 @@ import Foundation
                     description: "Empty catch block - errors should be handled or logged.",
                     severity: .high,
                     line: location.line,
-                    category: .bug,
+                    category: .bug
                 ))
             }
             return .visitChildren

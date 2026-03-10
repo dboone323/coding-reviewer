@@ -5,8 +5,8 @@
 //  Integration tests for CodeAnalysisEngine
 //
 
-import XCTest
 @testable import CodingReviewer
+import XCTest
 
 final class CodeAnalysisEngineIntegrationTests: XCTestCase {
     var analysisEngine: CodeAnalysisEngine!
@@ -56,7 +56,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
             analysisTypes: [
                 AnalysisType.bugs, AnalysisType.security, AnalysisType.performance,
                 AnalysisType.style,
-            ],
+            ]
         )
 
         // Then multiple issues should be detected
@@ -70,7 +70,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
         XCTAssertFalse(bugIssues.isEmpty, "Should detect bugs like TODO and force unwrap")
         XCTAssertFalse(
-            performanceIssues.isEmpty, "Should detect performance issues like forEach+append",
+            performanceIssues.isEmpty, "Should detect performance issues like forEach+append"
         )
         XCTAssertFalse(styleIssues.isEmpty, "Should detect style issues like long lines")
 
@@ -118,7 +118,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
             analysisTypes: [
                 AnalysisType.bugs, AnalysisType.security, AnalysisType.performance,
                 AnalysisType.style,
-            ],
+            ]
         )
 
         // Then multiple issues should be detected
@@ -150,7 +150,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
         // When analyzing only bugs
         let bugOnlyResult = analysisEngine.analyzeCode(
-            code: code, language: "JavaScript", analysisTypes: [AnalysisType.bugs],
+            code: code, language: "JavaScript", analysisTypes: [AnalysisType.bugs]
         )
 
         // Then only bug issues should be found
@@ -162,7 +162,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
         // When analyzing only security
         let securityOnlyResult = analysisEngine.analyzeCode(
-            code: code, language: "JavaScript", analysisTypes: [AnalysisType.security],
+            code: code, language: "JavaScript", analysisTypes: [AnalysisType.security]
         )
 
         // Then only security issues should be found
@@ -196,7 +196,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
         // When analyzing
         let result = analysisEngine.analyzeCode(
-            code: code, language: "Swift", analysisTypes: [AnalysisType.bugs],
+            code: code, language: "Swift", analysisTypes: [AnalysisType.bugs]
         )
 
         // Then result should have proper structure
@@ -217,7 +217,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
         // When analyzing
         let result = analysisEngine.analyzeCode(
-            code: code, language: "Swift", analysisTypes: [AnalysisType.bugs],
+            code: code, language: "Swift", analysisTypes: [AnalysisType.bugs]
         )
 
         // Then multiple issues should be detected for the same line
@@ -240,11 +240,11 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
                 language == "Swift"
                     ? "// Pending: Test"
                     : language == "JavaScript"
-                        ? "// Pending: Test"
-                        : language == "Python" ? "# Pending: Test" : "// Pending: Test"
+                    ? "// Pending: Test"
+                    : language == "Python" ? "# Pending: Test" : "// Pending: Test"
 
             let result = analysisEngine.analyzeCode(
-                code: code, language: language, analysisTypes: [AnalysisType.bugs],
+                code: code, language: language, analysisTypes: [AnalysisType.bugs]
             )
 
             // Should not crash and should generate some result
@@ -259,7 +259,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
         // When analyzing with unsupported language
         let result = analysisEngine.analyzeCode(
-            code: code, language: "UnsupportedLang", analysisTypes: [AnalysisType.bugs],
+            code: code, language: "UnsupportedLang", analysisTypes: [AnalysisType.bugs]
         )
 
         // Then should handle gracefully (may return empty results or basic analysis)
@@ -272,7 +272,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
     func testAnalyzeCode_LargeCodeFile() {
         // Given large code file (simulate with many lines)
         var codeParts: [String] = []
-        for codeIndex in 1...1000 {
+        for codeIndex in 1 ... 1000 {
             codeParts.append("// Pending: Item \(codeIndex)")
             codeParts.append("let value\(codeIndex) = \(codeIndex)!") // Force unwrap
         }
@@ -280,7 +280,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
         // When analyzing large file
         let result = analysisEngine.analyzeCode(
-            code: code, language: "Swift", analysisTypes: [AnalysisType.bugs],
+            code: code, language: "Swift", analysisTypes: [AnalysisType.bugs]
         )
 
         // Then should handle large files without crashing
@@ -300,7 +300,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
             analysisTypes: [
                 AnalysisType.bugs, AnalysisType.security, AnalysisType.performance,
                 AnalysisType.style,
-            ],
+            ]
         )
 
         // Then should return empty results
@@ -315,7 +315,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
         // When analyzing
         let result = analysisEngine.analyzeCode(
-            code: code, language: "Swift", analysisTypes: [AnalysisType.bugs],
+            code: code, language: "Swift", analysisTypes: [AnalysisType.bugs]
         )
 
         // Then should return empty results
@@ -369,16 +369,16 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
 
             // Debug: Test each analysis type individually
             let bugsIssuesDirect = analysisEngine.performBasicAnalysis(
-                code: code, language: "Swift", analysisType: .bugs,
+                code: code, language: "Swift", analysisType: .bugs
             )
             let securityIssuesDirect = analysisEngine.performBasicAnalysis(
-                code: code, language: "Swift", analysisType: .security,
+                code: code, language: "Swift", analysisType: .security
             )
             let performanceIssuesDirect = analysisEngine.performBasicAnalysis(
-                code: code, language: "Swift", analysisType: .performance,
+                code: code, language: "Swift", analysisType: .performance
             )
             let styleIssuesDirect = analysisEngine.performBasicAnalysis(
-                code: code, language: "Swift", analysisType: .style,
+                code: code, language: "Swift", analysisType: .style
             )
 
             print("DEBUG: Individual service results:")
@@ -394,12 +394,12 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
                 analysisTypes: [
                     AnalysisType.bugs, AnalysisType.security, AnalysisType.performance,
                     AnalysisType.style,
-                ],
+                ]
             )
 
             print("DEBUG: Analysis result: \(result.analysis)")
             print(
-                "DEBUG: Issues found: \(result.issues.map { "\($0.category): \($0.description)" })",
+                "DEBUG: Issues found: \(result.issues.map { "\($0.category): \($0.description)" })"
             )
             print("DEBUG: Total issues count: \(result.issues.count)")
             print("DEBUG: Result object: \(result)")
@@ -425,7 +425,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
             analysisTypes: [
                 AnalysisType.bugs, AnalysisType.security, AnalysisType.performance,
                 AnalysisType.style,
-            ],
+            ]
         )
 
         // Then should handle gracefully without crashing
@@ -448,7 +448,7 @@ final class CodeAnalysisEngineIntegrationTests: XCTestCase {
             analysisTypes: [
                 AnalysisType.bugs, AnalysisType.security, AnalysisType.performance,
                 AnalysisType.style,
-            ],
+            ]
         )
 
         // Then should still produce results

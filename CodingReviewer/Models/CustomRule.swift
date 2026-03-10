@@ -24,7 +24,7 @@ public struct CustomRule: Codable, Identifiable {
         language: String,
         severity: IssueSeverity,
         category: IssueCategory,
-        suggestion: String? = nil,
+        suggestion: String? = nil
     ) {
         self.id = id
         self.description = description

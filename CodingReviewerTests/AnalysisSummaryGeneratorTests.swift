@@ -5,8 +5,8 @@
 //  Unit tests for AnalysisSummaryGenerator
 //
 
-import XCTest
 @testable import CodingReviewer
+import XCTest
 
 final class AnalysisSummaryGeneratorTests: XCTestCase {
     var summaryGenerator: AnalysisSummaryGenerator!
@@ -31,7 +31,7 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
         let summary = summaryGenerator.generateAnalysisSummary(
             issues: issues,
             suggestions: [],
-            analysisType: .comprehensive,
+            analysisType: .comprehensive
         )
 
         // Then summary should indicate no issues found
@@ -46,7 +46,7 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
             description: "Force unwrap detected",
             severity: IssueSeverity.high,
             line: 10,
-            category: IssueCategory.bug,
+            category: IssueCategory.bug
         )
         let issues = [issue]
 
@@ -54,7 +54,7 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
         let summary = summaryGenerator.generateAnalysisSummary(
             issues: issues,
             suggestions: ["Use optional binding instead"],
-            analysisType: .bugs,
+            analysisType: .bugs
         )
 
         // Then summary should contain issue details
@@ -72,13 +72,13 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
                 description: "Eval usage",
                 severity: IssueSeverity.critical,
                 line: 20,
-                category: IssueCategory.security,
+                category: IssueCategory.security
             ),
             CodeIssue(
                 description: "Inefficient loop",
                 severity: IssueSeverity.medium,
                 line: 30,
-                category: IssueCategory.performance,
+                category: IssueCategory.performance
             ),
             CodeIssue(description: "Long line", severity: IssueSeverity.low, line: 40, category: IssueCategory.style),
         ]
@@ -87,7 +87,7 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
         let summary = summaryGenerator.generateAnalysisSummary(
             issues: issues,
             suggestions: [],
-            analysisType: .comprehensive,
+            analysisType: .comprehensive
         )
 
         // Then summary should contain all issue types and severities
@@ -111,7 +111,7 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
                 description: "Issue 3",
                 severity: IssueSeverity.medium,
                 line: 15,
-                category: IssueCategory.security,
+                category: IssueCategory.security
             ),
         ]
 
@@ -119,7 +119,7 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
         let summary = summaryGenerator.generateAnalysisSummary(
             issues: issues,
             suggestions: [],
-            analysisType: .comprehensive,
+            analysisType: .comprehensive
         )
 
         // Then summary should group issues by file
@@ -136,25 +136,25 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
                 description: "Critical bug",
                 severity: IssueSeverity.critical,
                 line: 1,
-                category: IssueCategory.bug,
+                category: IssueCategory.bug
             ),
             CodeIssue(
                 description: "Another critical",
                 severity: IssueSeverity.critical,
                 line: 2,
-                category: IssueCategory.bug,
+                category: IssueCategory.bug
             ),
             CodeIssue(
                 description: "High security",
                 severity: IssueSeverity.high,
                 line: 3,
-                category: IssueCategory.security,
+                category: IssueCategory.security
             ),
             CodeIssue(
                 description: "Medium perf",
                 severity: IssueSeverity.medium,
                 line: 4,
-                category: IssueCategory.performance,
+                category: IssueCategory.performance
             ),
             CodeIssue(description: "Low style", severity: IssueSeverity.low, line: 5, category: IssueCategory.style),
         ]
@@ -163,7 +163,7 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
         let summary = summaryGenerator.generateAnalysisSummary(
             issues: issues,
             suggestions: [],
-            analysisType: .comprehensive,
+            analysisType: .comprehensive
         )
 
         // Then severity counts should be correct
@@ -182,13 +182,13 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
                 description: "Security 1",
                 severity: IssueSeverity.high,
                 line: 3,
-                category: IssueCategory.security,
+                category: IssueCategory.security
             ),
             CodeIssue(
                 description: "Performance 1",
                 severity: IssueSeverity.high,
                 line: 4,
-                category: IssueCategory.performance,
+                category: IssueCategory.performance
             ),
             CodeIssue(description: "Style 1", severity: IssueSeverity.high, line: 5, category: IssueCategory.style),
         ]
@@ -197,7 +197,7 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
         let summary = summaryGenerator.generateAnalysisSummary(
             issues: issues,
             suggestions: [],
-            analysisType: .comprehensive,
+            analysisType: .comprehensive
         )
 
         // Then type counts should be correct
@@ -219,7 +219,7 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
         let summary = summaryGenerator.generateAnalysisSummary(
             issues: issues,
             suggestions: [],
-            analysisType: .comprehensive,
+            analysisType: .comprehensive
         )
 
         // Then summary should mention Swift
@@ -236,7 +236,7 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
         let summary = summaryGenerator.generateAnalysisSummary(
             issues: issues,
             suggestions: [],
-            analysisType: .comprehensive,
+            analysisType: .comprehensive
         )
 
         // Then summary should mention JavaScript
@@ -253,7 +253,7 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
                 description: "Eval usage",
                 severity: IssueSeverity.critical,
                 line: 20,
-                category: IssueCategory.security,
+                category: IssueCategory.security
             ),
         ]
 
@@ -261,7 +261,7 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
         let summary = summaryGenerator.generateAnalysisSummary(
             issues: issues,
             suggestions: ["Use optional binding", "Avoid eval for security"],
-            analysisType: .comprehensive,
+            analysisType: .comprehensive
         )
 
         // Then detailed issues section should contain all details
@@ -291,7 +291,7 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
         let summary = summaryGenerator.generateAnalysisSummary(
             issues: issues,
             suggestions: [],
-            analysisType: .comprehensive,
+            analysisType: .comprehensive
         )
 
         // Then summary should still include the issue but without suggestion section
@@ -312,7 +312,7 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
         let summary = summaryGenerator.generateAnalysisSummary(
             issues: issues,
             suggestions: [],
-            analysisType: .comprehensive,
+            analysisType: .comprehensive
         )
 
         // Then summary should handle long messages gracefully
@@ -326,7 +326,7 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
                 description: "Issue with <>&\"'",
                 severity: IssueSeverity.high,
                 line: 1,
-                category: IssueCategory.bug,
+                category: IssueCategory.bug
             ),
         ]
 
@@ -334,7 +334,7 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
         let summary = summaryGenerator.generateAnalysisSummary(
             issues: issues,
             suggestions: [],
-            analysisType: .comprehensive,
+            analysisType: .comprehensive
         )
 
         // Then special characters should be preserved
@@ -344,12 +344,12 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
     func testGenerateSummary_ManyFiles() {
         // Given issues across many files
         var issues: [CodeIssue] = []
-        for issueIndex in 1...10 {
+        for issueIndex in 1 ... 10 {
             issues.append(CodeIssue(
                 description: "Issue \(issueIndex)",
                 severity: IssueSeverity.high,
                 line: issueIndex,
-                category: IssueCategory.bug,
+                category: IssueCategory.bug
             ))
         }
 
@@ -357,11 +357,11 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
         let summary = summaryGenerator.generateAnalysisSummary(
             issues: issues,
             suggestions: [],
-            analysisType: .comprehensive,
+            analysisType: .comprehensive
         )
 
         // Then all files should be listed
-        for issueIndex in 1...10 {
+        for issueIndex in 1 ... 10 {
             XCTAssertTrue(summary.contains("File\(issueIndex).swift: 1 issue"))
         }
     }
@@ -378,7 +378,7 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
         let summary = summaryGenerator.generateAnalysisSummary(
             issues: issues,
             suggestions: [],
-            analysisType: .comprehensive,
+            analysisType: .comprehensive
         )
 
         // Then summary should have proper structure
@@ -398,7 +398,7 @@ final class AnalysisSummaryGeneratorTests: XCTestCase {
         let summary = summaryGenerator.generateAnalysisSummary(
             issues: issues,
             suggestions: [],
-            analysisType: .comprehensive,
+            analysisType: .comprehensive
         )
 
         // Then there should be no empty sections

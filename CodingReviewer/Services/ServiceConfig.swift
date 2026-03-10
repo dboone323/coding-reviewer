@@ -22,7 +22,7 @@ public struct ServiceConfig: Sendable {
         maxRetryAttempts: Int = 3,
         initialBackoff: TimeInterval = 1.0,
         maxBackoff: TimeInterval = 30.0,
-        verboseLogging: Bool = false,
+        verboseLogging: Bool = false
     ) {
         self.operationTimeout = operationTimeout
         self.maxRetryAttempts = maxRetryAttempts

@@ -164,7 +164,7 @@ struct ChangesList: View {
                             onSelect: {
                                 Task { await viewModel.selectFile(change.path, staged: true) }
                             },
-                            onToggle: { Task { await viewModel.unstageFile(change.path) } },
+                            onToggle: { Task { await viewModel.unstageFile(change.path) } }
                         )
                     }
                 }
@@ -184,7 +184,7 @@ struct ChangesList: View {
                             onSelect: {
                                 Task { await viewModel.selectFile(change.path, staged: false) }
                             },
-                            onToggle: { Task { await viewModel.stageFile(change.path) } },
+                            onToggle: { Task { await viewModel.stageFile(change.path) } }
                         )
                     }
                 }
@@ -320,8 +320,8 @@ struct CommitSection: View {
             TextEditor(
                 text: Binding(
                     get: { viewModel.commitMessage },
-                    set: { viewModel.commitMessage = $0 },
-                ),
+                    set: { viewModel.commitMessage = $0 }
+                )
             )
             .font(.system(size: 11))
             .frame(height: 60)
@@ -330,7 +330,7 @@ struct CommitSection: View {
             .clipShape(RoundedRectangle(cornerRadius: 6))
             .overlay(
                 RoundedRectangle(cornerRadius: 6)
-                    .stroke(Color(nsColor: .separatorColor), lineWidth: 1),
+                    .stroke(Color(nsColor: .separatorColor), lineWidth: 1)
             )
 
             // Commit button
@@ -347,7 +347,7 @@ struct CommitSection: View {
                 .controlSize(.small)
                 .disabled(
                     viewModel.commitMessage.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-                        || (viewModel.status?.staged.isEmpty ?? true),
+                        || (viewModel.status?.staged.isEmpty ?? true)
                 )
             }
         }

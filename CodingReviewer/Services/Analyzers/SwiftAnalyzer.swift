@@ -10,39 +10,21 @@ struct SwiftAnalyzer: LanguageAnalyzer {
 
     func detectSecurityIssues(code: String) -> [CodeIssue] {
         var issues: [CodeIssue] = []
-
-        // UserDefaults + Password (catch standard usage and common aliases)
-        let passwordMatches = PatternMatcher.findMatches(
-            pattern: "(UserDefaults|defaults|standard).*password", in: code,
-        )
-        for match in passwordMatches {
-            issues.append(
-                CodeIssue(
-                    description: "Storing passwords in UserDefaults is insecure. Use Keychain.",
-                    severity: .high,
-                    line: match.line,
-                    category: .security,
-                ),
-            )
-        }
-
-        // Force unwrapping: match `identifier!` but exclude comparison operators like `!=`.
-        let forceUnwrapMatches = PatternMatcher.findMatches(
-            pattern: "[a-zA-Z0-9_]+\\s*!(?!=)",
-            in: code,
-        )
-        for match in forceUnwrapMatches {
-            issues.append(
-                CodeIssue(
-                    description: "Force unwrapping found. Use optional binding (if let/guard let).",
-                    severity: .medium,
-                    line: match.line,
-                    category: .security, // Can cause crashes
-                ),
-            )
-        }
-
+        issues.append(contentsOf: detectUserDefaultsSecurity(in: code))
+        issues.append(contentsOf: detectForceUnwraps(in: code))
         return issues
+    }
+
+    private func detectUserDefaultsSecurity(in code: String) -> [CodeIssue] {
+        PatternMatcher.findMatches(pattern: "(UserDefaults|defaults|standard).*password", in: code).map { match in
+            CodeIssue(description: "Storing passwords in UserDefaults is insecure. Use Keychain.", severity: .high, line: match.line, category: .security)
+        }
+    }
+
+    private func detectForceUnwraps(in code: String) -> [CodeIssue] {
+        PatternMatcher.findMatches(pattern: "[a-zA-Z0-9_]+\\s*!(?!=)", in: code).map { match in
+            CodeIssue(description: "Force unwrapping found. Use optional binding (if let/guard let).", severity: .medium, line: match.line, category: .security)
+        }
     }
 
     func detectStyleIssues(code: String) -> [CodeIssue] {
@@ -61,8 +43,8 @@ struct SwiftAnalyzer: LanguageAnalyzer {
                         severity: .low,
                         line: index + 1,
                         category: .style,
-                        suggestedFix: fix,
-                    ),
+                        suggestedFix: fix
+                    )
                 )
             }
 
@@ -73,8 +55,8 @@ struct SwiftAnalyzer: LanguageAnalyzer {
                         description: "Resolve TODO item.",
                         severity: .low,
                         line: index + 1,
-                        category: .maintainability,
-                    ),
+                        category: .maintainability
+                    )
                 )
             }
         }
@@ -84,46 +66,23 @@ struct SwiftAnalyzer: LanguageAnalyzer {
 
     func detectBugs(code: String) -> [CodeIssue] {
         var issues: [CodeIssue] = []
-        let lines = code.components(separatedBy: .newlines)
-
-        // Detect empty catch blocks across lines, e.g.:
-        // catch {
-        // }
-        let emptyCatchMatches = PatternMatcher.findMatches(
-            pattern: "catch\\s*\\{\\s*\\}",
-            in: code,
-        )
-        for match in emptyCatchMatches {
-            issues.append(
-                CodeIssue(
-                    description: "Empty catch block - errors should be handled or logged",
-                    severity: .high,
-                    line: match.line,
-                    category: .bug,
-                ),
-            )
-        }
-
-        // Detect common Swift bugs
-        for (index, line) in lines.enumerated() {
-            let trimmed = line.trimmingCharacters(in: .whitespaces)
-            guard !trimmed.hasPrefix("//") else { continue }
-
-            // Detect potential retain cycles in closures
-            if trimmed.contains("[self]") && !trimmed.contains("[weak self]")
-                && !trimmed.contains("[unowned self]")
-            {
-                issues.append(
-                    CodeIssue(
-                        description: "Strong self capture in closure may cause retain cycle",
-                        severity: .medium,
-                        line: index + 1,
-                        category: .bug,
-                    ),
-                )
-            }
-        }
-
+        issues.append(contentsOf: detectEmptyCatchBlocks(in: code))
+        issues.append(contentsOf: detectRetainCycles(in: code))
         return issues
+    }
+
+    private func detectEmptyCatchBlocks(in code: String) -> [CodeIssue] {
+        PatternMatcher.findMatches(pattern: "catch\\s*\\{\\s*\\}", in: code).map { match in
+            CodeIssue(description: "Empty catch block - errors should be handled or logged", severity: .high, line: match.line, category: .bug)
+        }
+    }
+
+    private func detectRetainCycles(in code: String) -> [CodeIssue] {
+        let lines = code.components(separatedBy: .newlines)
+        return lines.enumerated().compactMap { index, line in
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+            guard !trimmed.hasPrefix("//"), trimmed.contains("[self]"), !trimmed.contains("[weak self]"), !trimmed.contains("[unowned self]") else { return nil }
+            return CodeIssue(description: "Strong self capture in closure may cause retain cycle", severity: .medium, line: index + 1, category: .bug)
+        }
     }
 }

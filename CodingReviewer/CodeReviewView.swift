@@ -42,7 +42,7 @@ public struct CodeReviewView: View {
                             action: { Task { await onAnalyze() } },
                             label: {
                                 Label("Analyze", systemImage: "play.fill")
-                            },
+                            }
                         )
                         .accessibilityLabel("Analyze Code")
                         .accessibilityHint("Run code analysis on this file")
@@ -53,7 +53,7 @@ public struct CodeReviewView: View {
                         action: { Task { await onGenerateDocumentation() } },
                         label: {
                             Label("Generate Docs", systemImage: "doc.text")
-                        },
+                        }
                     )
                     .accessibilityLabel("Generate Documentation")
                     .accessibilityHint("Generate documentation for this code")
@@ -63,7 +63,7 @@ public struct CodeReviewView: View {
                         action: { Task { await onGenerateTests() } },
                         label: {
                             Label("Generate Tests", systemImage: "testtube.2")
-                        },
+                        }
                     )
                     .accessibilityLabel("Generate Tests")
                     .accessibilityHint("Generate unit tests for this code")
@@ -99,7 +99,7 @@ public struct CodeReviewView: View {
                     testResult: testResult,
                     isAnalyzing: isAnalyzing,
                     onApplyFix: { issue in applyFix(issue) },
-                    onCancel: onCancel,
+                    onCancel: onCancel
                 )
                 .frame(minWidth: 300)
             }
@@ -163,7 +163,7 @@ public struct ResultsPanel: View {
                         if let result = analysisResult {
                             AnalysisResultsView(result: result, onApplyFix: onApplyFix)
                         } else if let message = presenter.emptyStateMessage(
-                            hasResult: analysisResult != nil,
+                            hasResult: analysisResult != nil
                         ) {
                             Text(message)
                                 .foregroundColor(.secondary)
@@ -173,7 +173,7 @@ public struct ResultsPanel: View {
                         if let result = documentationResult {
                             DocumentationResultsView(result: result)
                         } else if let message = presenter.emptyStateMessage(
-                            hasResult: documentationResult != nil,
+                            hasResult: documentationResult != nil
                         ) {
                             Text(message)
                                 .foregroundColor(.secondary)
@@ -183,7 +183,7 @@ public struct ResultsPanel: View {
                         if let result = testResult {
                             TestResultsView(result: result)
                         } else if let message = presenter.emptyStateMessage(
-                            hasResult: testResult != nil,
+                            hasResult: testResult != nil
                         ) {
                             Text(message)
                                 .foregroundColor(.secondary)

@@ -16,7 +16,7 @@ public class CodeReviewService: CodeReviewServiceProtocol {
     public let version = "1.0.1" // Updated for resilience features
 
     private let logger = Logger(
-        subsystem: "com.quantum.codingreviewer", category: "CodeReviewService",
+        subsystem: "com.quantum.codingreviewer", category: "CodeReviewService"
     )
     private let config: ServiceConfig
     private let circuitBreaker = CircuitBreaker(failureThreshold: 3, resetTimeout: 60.0)
@@ -82,7 +82,7 @@ public class CodeReviewService: CodeReviewServiceProtocol {
         }
 
         logger.info(
-            "Analyzing code - Language: \(language), Type: \(analysisType.rawValue), Size: \(code.count) chars",
+            "Analyzing code - Language: \(language), Type: \(analysisType.rawValue), Size: \(code.count) chars"
         )
 
         if isAIEnabled {
@@ -90,17 +90,17 @@ public class CodeReviewService: CodeReviewServiceProtocol {
             do {
                 return try await withRetry(operation: "analyzeCode") {
                     try await self.analyzeWithAI(
-                        code: code, language: language, analysisType: analysisType,
+                        code: code, language: language, analysisType: analysisType
                     )
                 }
             } catch let error as ServiceError {
                 logger.warning(
-                    "AI analysis failed: \(error.localizedDescription). Falling back to offline mode.",
+                    "AI analysis failed: \(error.localizedDescription). Falling back to offline mode."
                 )
                 // Fall through to offline analysis
             } catch {
                 logger.warning(
-                    "Unexpected AI error: \(error.localizedDescription). Falling back to offline mode.",
+                    "Unexpected AI error: \(error.localizedDescription). Falling back to offline mode."
                 )
                 // Fall through to offline analysis
             }
@@ -117,7 +117,7 @@ public class CodeReviewService: CodeReviewServiceProtocol {
         // Check circuit breaker
         guard await circuitBreaker.canAttempt() else {
             throw ServiceError.aiUnavailable(
-                reason: "Circuit breaker is open (too many recent failures)",
+                reason: "Circuit breaker is open (too many recent failures)"
             )
         }
 
@@ -151,8 +151,8 @@ public class CodeReviewService: CodeReviewServiceProtocol {
                         description: desc,
                         severity: .medium,
                         line: nil,
-                        category: category,
-                    ),
+                        category: category
+                    )
                 )
             }
         }
@@ -163,8 +163,8 @@ public class CodeReviewService: CodeReviewServiceProtocol {
                     description: secIssue.description,
                     severity: Self.mapSeverity(secIssue.severity),
                     line: nil,
-                    category: .security,
-                ),
+                    category: .security
+                )
             )
         }
 
@@ -176,8 +176,8 @@ public class CodeReviewService: CodeReviewServiceProtocol {
                     description: perfIssue.description,
                     severity: sev,
                     line: nil,
-                    category: .performance,
-                ),
+                    category: .performance
+                )
             )
         }
 
@@ -187,8 +187,8 @@ public class CodeReviewService: CodeReviewServiceProtocol {
                     description: bestPractice.violation,
                     severity: .medium,
                     line: nil,
-                    category: .style,
-                ),
+                    category: .style
+                )
             )
         }
 
@@ -203,7 +203,7 @@ public class CodeReviewService: CodeReviewServiceProtocol {
             issues: issues,
             suggestions: result.recommendations,
             language: language,
-            analysisType: analysisType,
+            analysisType: analysisType
         )
     }
 
@@ -216,11 +216,11 @@ public class CodeReviewService: CodeReviewServiceProtocol {
             ensureAIService()
             if let aiService {
                 let doc = try await aiService.generateDocumentationWithAI(
-                    code, documentationType: includeExamples ? .comprehensive : .inline,
+                    code, documentationType: includeExamples ? .comprehensive : .inline
                 )
                 return DocumentationResult(
                     documentation: doc.generatedDocumentation, language: language,
-                    includesExamples: includeExamples,
+                    includesExamples: includeExamples
                 )
             }
         }
@@ -229,10 +229,10 @@ public class CodeReviewService: CodeReviewServiceProtocol {
             let documentation = self.analysisEngine.generateBasicDocumentation(
                 code: code,
                 language: language,
-                includeExamples: includeExamples,
+                includeExamples: includeExamples
             )
             return DocumentationResult(
-                documentation: documentation, language: language, includesExamples: includeExamples,
+                documentation: documentation, language: language, includesExamples: includeExamples
             )
         }.value
     }
@@ -250,21 +250,21 @@ public class CodeReviewService: CodeReviewServiceProtocol {
                     testCode: aiTests.generatedTests,
                     language: language,
                     testFramework: testFramework,
-                    estimatedCoverage: Double(aiTests.estimatedCoverage),
+                    estimatedCoverage: Double(aiTests.estimatedCoverage)
                 )
             }
         }
 
         return await Task.detached(priority: .userInitiated) {
             let testCode = self.analysisEngine.generateBasicTests(
-                code: code, language: language, testFramework: testFramework,
+                code: code, language: language, testFramework: testFramework
             )
             let estimatedCoverage = self.analysisEngine.estimateTestCoverage(
-                code: code, testCode: testCode,
+                code: code, testCode: testCode
             )
             return TestGenerationResult(
                 testCode: testCode, language: language, testFramework: testFramework,
-                estimatedCoverage: estimatedCoverage,
+                estimatedCoverage: estimatedCoverage
             )
         }.value
     }
@@ -292,20 +292,20 @@ public class CodeReviewService: CodeReviewServiceProtocol {
         return try await withTimeout(seconds: config.operationTimeout) {
             await Task.detached(priority: .userInitiated) {
                 let issues = self.analysisEngine.performBasicAnalysis(
-                    code: code, language: language, analysisType: analysisType,
+                    code: code, language: language, analysisType: analysisType
                 )
                 let suggestions = self.analysisEngine.generateSuggestions(
-                    code: code, language: language, analysisType: analysisType,
+                    code: code, language: language, analysisType: analysisType
                 )
                 let analysis = self.analysisEngine.generateAnalysisSummary(
-                    issues: issues, suggestions: suggestions, analysisType: analysisType,
+                    issues: issues, suggestions: suggestions, analysisType: analysisType
                 )
                 return CodeAnalysisResult(
                     analysis: analysis,
                     issues: issues,
                     suggestions: suggestions,
                     language: language,
-                    analysisType: analysisType,
+                    analysisType: analysisType
                 )
             }.value
         }
@@ -314,12 +314,12 @@ public class CodeReviewService: CodeReviewServiceProtocol {
     // MARK: - Retry Logic with Exponential Backoff
 
     private func withRetry<T>(
-        operation: String, maxAttempts: Int? = nil, body: @escaping () async throws -> T,
+        operation: String, maxAttempts: Int? = nil, body: @escaping () async throws -> T
     ) async throws -> T {
         let attempts = maxAttempts ?? config.maxRetryAttempts
         var lastError: Error?
 
-        for attempt in 1...attempts {
+        for attempt in 1 ... attempts {
             // Check for cancellation
             if Task.isCancelled {
                 throw ServiceError.cancelled(operation: operation)
@@ -338,15 +338,15 @@ public class CodeReviewService: CodeReviewServiceProtocol {
                     // Calculate exponential backoff with jitter
                     let backoff = min(
                         config.initialBackoff * pow(2.0, Double(attempt - 1)),
-                        config.maxBackoff,
+                        config.maxBackoff
                     )
-                    let jitter = Double.random(in: 0...0.1) * backoff
+                    let jitter = Double.random(in: 0 ... 0.1) * backoff
                     let delay = backoff + jitter
 
                     let errMsg = error.localizedDescription
                     let delayStr = String(format: "%.1f", delay)
                     logger.warning(
-                        "'\(operation)' failed (\(attempt)/\(attempts)): \(errMsg). Retry \(delayStr)s",
+                        "'\(operation)' failed (\(attempt)/\(attempts)): \(errMsg). Retry \(delayStr)s"
                     )
 
                     try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
@@ -358,14 +358,14 @@ public class CodeReviewService: CodeReviewServiceProtocol {
 
         throw ServiceError.retryExhausted(
             operation: operation,
-            underlyingError: lastError ?? NSError(domain: "UnknownError", code: -1),
+            underlyingError: lastError ?? NSError(domain: "UnknownError", code: -1)
         )
     }
 
     // MARK: - Timeout Wrapper
 
     private func withTimeout<T: Sendable>(
-        seconds: TimeInterval, body: @escaping @Sendable () async throws -> T,
+        seconds: TimeInterval, body: @escaping @Sendable () async throws -> T
     ) async throws -> T {
         try await withThrowingTaskGroup(of: T.self) { group in
             group.addTask {

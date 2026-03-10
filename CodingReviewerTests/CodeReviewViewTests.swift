@@ -5,8 +5,8 @@
 //  Comprehensive test suite for CodeReviewView
 //
 
-import XCTest
 @testable import CodingReviewer
+import XCTest
 
 final class CodeReviewViewTests: XCTestCase {
     // MARK: - Initialization Tests
@@ -27,7 +27,7 @@ final class CodeReviewViewTests: XCTestCase {
     func testEmptyStateMessages() {
         let presenter = ResultsPanelPresenter(currentView: .analysis, isAnalyzing: false)
         XCTAssertEqual(
-            presenter.emptyStateMessage(hasResult: false), "Click Analyze to start code analysis",
+            presenter.emptyStateMessage(hasResult: false), "Click Analyze to start code analysis"
         )
         XCTAssertNil(presenter.emptyStateMessage(hasResult: true))
 

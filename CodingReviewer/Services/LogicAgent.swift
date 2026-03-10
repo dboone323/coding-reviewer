@@ -1,39 +1,19 @@
 import Foundation
-
-// Define the missing types that would normally be in SharedKit
-public protocol Agent {
-    var id: String { get }
-    var name: String { get }
-    func execute(context: [String: Any]) async throws -> AgentResult
-}
-
-public struct AgentResult {
-    public let agentId: String
-    public let success: Bool
-    public let summary: String
-    public let detail: [String: String]
-
-    public init(agentId: String, success: Bool, summary: String, detail: [String: String] = [:]) {
-        self.agentId = agentId
-        self.success = success
-        self.summary = summary
-        self.detail = detail
-    }
-}
+import SharedKit
 
 /// Agent specializing in detecting logical flaws and complexity issues.
-public final class LogicAgent: Agent {
+public final class LogicAgent: BaseAgent {
     public let id = "logic_agent_001"
     public let name = "Logic & Complexity Agent"
 
     public init() {}
 
-    public func execute(context: [String: Any]) async throws -> AgentResult {
+    public func execute(context: [String: any Sendable]) async throws -> AgentResult {
         guard let code = context["code"] as? String else {
             return AgentResult(
                 agentId: id,
                 success: false,
-                summary: "No code provided for analysis",
+                summary: "No code provided for analysis"
             )
         }
 
@@ -58,17 +38,17 @@ public final class LogicAgent: Agent {
 
         // Check for long methods
         let methodPattern = try? NSRegularExpression(pattern: "func\\s+\\w+\\s*\\([^)]*\\)\\s*\\{", options: [])
-        let range = NSRange(code.startIndex..<code.endIndex, in: code)
+        let range = NSRange(code.startIndex ..< code.endIndex, in: code)
         let methodMatches = methodPattern?.matches(in: code, options: [], range: range) ?? []
 
         for match in methodMatches {
             if let methodRange = Range(match.range, in: code) {
                 let methodStart = code.index(
                     methodRange.lowerBound,
-                    offsetBy: code.distance(from: code.startIndex, to: methodRange.lowerBound),
+                    offsetBy: code.distance(from: code.startIndex, to: methodRange.lowerBound)
                 )
-                if let methodEndRange = code.range(of: "}", range: methodStart..<code.endIndex) {
-                    let methodContent = String(code[methodRange.upperBound..<methodEndRange.lowerBound])
+                if let methodEndRange = code.range(of: "}", range: methodStart ..< code.endIndex) {
+                    let methodContent = String(code[methodRange.upperBound ..< methodEndRange.lowerBound])
                     let methodLines = methodContent.components(separatedBy: .newlines).count
 
                     if methodLines > 50 {
@@ -87,7 +67,7 @@ public final class LogicAgent: Agent {
     }
 }
 
-// Extension for additional utility methods
+/// Extension for additional utility methods
 extension LogicAgent {
     /// Calculates a simple complexity score based on various code metrics
     private func calculateComplexityScore(code: String) -> Int {

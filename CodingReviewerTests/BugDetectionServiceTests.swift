@@ -5,8 +5,8 @@
 //  Unit tests for BugDetectionService
 //
 
-import XCTest
 @testable import CodingReviewer
+import XCTest
 
 final class BugDetectionServiceTests: XCTestCase {
     var bugDetector: BugDetectionService!

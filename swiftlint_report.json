@@ -1,0 +1,146 @@
+[
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewerTests/CodingReviewerTests.swift",
+    "line" : 12,
+    "reason" : "Lines should not have trailing whitespace",
+    "rule_id" : "trailing_whitespace",
+    "severity" : "Warning",
+    "type" : "Trailing Whitespace"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewerTests/CodingReviewerTests.swift",
+    "line" : 12,
+    "reason" : "Don't include vertical whitespace (empty line) after opening braces",
+    "rule_id" : "vertical_whitespace_opening_braces",
+    "severity" : "Warning",
+    "type" : "Vertical Whitespace after Opening Braces"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/Tools/live_review_test.swift",
+    "line" : 10,
+    "reason" : "Lines should not have trailing whitespace",
+    "rule_id" : "trailing_whitespace",
+    "severity" : "Warning",
+    "type" : "Trailing Whitespace"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/Tools/live_review_test.swift",
+    "line" : 19,
+    "reason" : "Lines should not have trailing whitespace",
+    "rule_id" : "trailing_whitespace",
+    "severity" : "Warning",
+    "type" : "Trailing Whitespace"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/Tools/live_review_test.swift",
+    "line" : 24,
+    "reason" : "Lines should not have trailing whitespace",
+    "rule_id" : "trailing_whitespace",
+    "severity" : "Warning",
+    "type" : "Trailing Whitespace"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/Tools/live_review_test.swift",
+    "line" : 34,
+    "reason" : "Lines should not have trailing whitespace",
+    "rule_id" : "trailing_whitespace",
+    "severity" : "Warning",
+    "type" : "Trailing Whitespace"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/Tools/live_review_test.swift",
+    "line" : 37,
+    "reason" : "Lines should not have trailing whitespace",
+    "rule_id" : "trailing_whitespace",
+    "severity" : "Warning",
+    "type" : "Trailing Whitespace"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/Tools/live_review_test.swift",
+    "line" : 40,
+    "reason" : "Lines should not have trailing whitespace",
+    "rule_id" : "trailing_whitespace",
+    "severity" : "Warning",
+    "type" : "Trailing Whitespace"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/Tools/live_review_test.swift",
+    "line" : 48,
+    "reason" : "Lines should not have trailing whitespace",
+    "rule_id" : "trailing_whitespace",
+    "severity" : "Warning",
+    "type" : "Trailing Whitespace"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Models/GitTypes.swift",
+    "line" : 16,
+    "reason" : "Lines should not have trailing whitespace",
+    "rule_id" : "trailing_whitespace",
+    "severity" : "Warning",
+    "type" : "Trailing Whitespace"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Models/GitTypes.swift",
+    "line" : 30,
+    "reason" : "Lines should not have trailing whitespace",
+    "rule_id" : "trailing_whitespace",
+    "severity" : "Warning",
+    "type" : "Trailing Whitespace"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/GitService.swift",
+    "line" : 180,
+    "reason" : "Line should be 120 characters or less; currently it has 144 characters",
+    "rule_id" : "line_length",
+    "severity" : "Warning",
+    "type" : "Line Length"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/GitService.swift",
+    "line" : 178,
+    "reason" : "Lines should not have trailing whitespace",
+    "rule_id" : "trailing_whitespace",
+    "severity" : "Warning",
+    "type" : "Trailing Whitespace"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/GitService.swift",
+    "line" : 182,
+    "reason" : "Lines should not have trailing whitespace",
+    "rule_id" : "trailing_whitespace",
+    "severity" : "Warning",
+    "type" : "Trailing Whitespace"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/LogicAgent.swift",
+    "line" : 27,
+    "reason" : "Line should be 120 characters or less; currently it has 142 characters",
+    "rule_id" : "line_length",
+    "severity" : "Warning",
+    "type" : "Line Length"
+  },
+  {
+    "character" : 1,
+    "file" : "/Users/danielstevens/github-projects/coding-reviewer/CodingReviewer/Services/LogicAgent.swift",
+    "line" : 36,
+    "reason" : "Line should be 150 characters or less; currently it has 166 characters",
+    "rule_id" : "line_length",
+    "severity" : "Error",
+    "type" : "Line Length"
+  }
+]

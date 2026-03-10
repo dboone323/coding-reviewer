@@ -22,19 +22,19 @@ public class AIModelManager: ObservableObject {
     @Published public var availableModels: [ModelInfo] = [
         ModelInfo(
             id: "deepseek-v3.1:671b-cloud", name: "DeepSeek V3", version: "3.1",
-            capabilities: ["chat", "code"], isLocal: false,
+            capabilities: ["chat", "code"], isLocal: false
         ),
         ModelInfo(
             id: "qwen3-coder:480b-cloud", name: "Qwen 3 Coder", version: "3.0",
-            capabilities: ["code"], isLocal: false,
+            capabilities: ["code"], isLocal: false
         ),
         ModelInfo(
             id: "gpt-oss:120b-cloud", name: "GPT OSS", version: "1.0", capabilities: ["chat"],
-            isLocal: false,
+            isLocal: false
         ),
         ModelInfo(
             id: "llama3.1:8b", name: "Llama 3.1 Local", version: "3.1",
-            capabilities: ["chat", "code"], isLocal: true,
+            capabilities: ["chat", "code"], isLocal: true
         ),
     ]
 

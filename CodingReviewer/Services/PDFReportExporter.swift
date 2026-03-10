@@ -152,7 +152,7 @@ public final class PDFReportExporter {
             let pdfData = NSMutableData()
             UIGraphicsBeginPDFContextToData(pdfData, pageRect, nil)
 
-            for i in 0..<renderer.numberOfPages {
+            for i in 0 ..< renderer.numberOfPages {
                 UIGraphicsBeginPDFPage()
                 renderer.drawPage(at: i, in: UIGraphicsGetPDFContextBounds())
             }

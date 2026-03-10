@@ -5,8 +5,8 @@
 //  Comprehensive test suite for AnalysisResultsView
 //
 
-import XCTest
 @testable import CodingReviewer
+import XCTest
 
 final class AnalysisResultsViewTests: XCTestCase {
     // MARK: - Initialization Tests
@@ -18,7 +18,7 @@ final class AnalysisResultsViewTests: XCTestCase {
             issues: [],
             suggestions: [],
             language: "swift",
-            analysisType: .comprehensive,
+            analysisType: .comprehensive
         )
         let vm = AnalysisResultsViewModel(result: empty)
         XCTAssertTrue(vm.shouldShowEmptyState)
@@ -36,7 +36,7 @@ final class AnalysisResultsViewTests: XCTestCase {
             issues: [issue],
             suggestions: ["Remove unused var"],
             language: "swift",
-            analysisType: .style,
+            analysisType: .style
         )
         let vm = AnalysisResultsViewModel(result: result)
         XCTAssertFalse(vm.shouldShowEmptyState)
@@ -53,7 +53,7 @@ final class AnalysisResultsViewTests: XCTestCase {
             issues: [],
             suggestions: [],
             language: "swift",
-            analysisType: .comprehensive,
+            analysisType: .comprehensive
         )
         let view = AnalysisResultsView(result: empty)
         // Compile-time construction is sufficient here
@@ -64,7 +64,7 @@ final class AnalysisResultsViewTests: XCTestCase {
 
     func testEdgeCases() {
         // Large issues list should still reflect correctly in the VM
-        let manyIssues = (0..<50).map { idx in
+        let manyIssues = (0 ..< 50).map { idx in
             CodeIssue(description: "Issue #\(idx)", severity: .medium, line: idx + 1, category: .general)
         }
         let result = CodeAnalysisResult(
@@ -72,7 +72,7 @@ final class AnalysisResultsViewTests: XCTestCase {
             issues: manyIssues,
             suggestions: [],
             language: "swift",
-            analysisType: .comprehensive,
+            analysisType: .comprehensive
         )
         let vm = AnalysisResultsViewModel(result: result)
         XCTAssertEqual(vm.issues.count, 50)
@@ -96,7 +96,7 @@ final class AnalysisResultsViewTests: XCTestCase {
             issues: [],
             suggestions: ["Refactor function"],
             language: "swift",
-            analysisType: .maintainability,
+            analysisType: .maintainability
         )
         let vm = AnalysisResultsViewModel(result: result)
         XCTAssertTrue(vm.shouldShowEmptyState) // no issues

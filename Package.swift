@@ -14,7 +14,8 @@ let package = Package(
     name: "CodingReviewer",
     defaultLocalization: "en",
     platforms: [
-        .macOS(.v15)
+        .iOS("26.0"),
+        .macOS("26.0"),
     ],
     products: [
         .library(

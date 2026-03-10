@@ -264,7 +264,7 @@ public final class SourceControlViewModel {
     private func loadInitialState(for directory: URL) async {
         await refreshStatus()
         await fetchCommitHistory()
-        branches = try? await gitService.branches(in: directory)
+        branches = await (try? gitService.branches(in: directory)) ?? [currentBranch]
     }
 
     private func loadDiff(for file: String, staged: Bool) async {

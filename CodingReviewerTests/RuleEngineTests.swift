@@ -5,8 +5,8 @@
 // Tests for custom rule engine functionality
 //
 
-import XCTest
 @testable import CodingReviewer
+import XCTest
 
 final class RuleEngineTests: XCTestCase {
     var engine: RuleEngine!
@@ -24,12 +24,12 @@ final class RuleEngineTests: XCTestCase {
             pattern: "TODO:",
             language: "swift",
             severity: .medium,
-            category: .maintainability,
+            category: .maintainability
         )
 
         engine.addRule(rule)
         XCTAssertEqual(
-            engine.rules.count, 1, "Engine should contain exactly one rule after addition.",
+            engine.rules.count, 1, "Engine should contain exactly one rule after addition."
         )
     }
 
@@ -48,7 +48,7 @@ final class RuleEngineTests: XCTestCase {
             pattern: "// TODO:",
             language: "swift",
             severity: .low,
-            category: .maintainability,
+            category: .maintainability
         )
         engine.addRule(rule)
 
@@ -70,7 +70,7 @@ final class RuleEngineTests: XCTestCase {
             pattern: "var",
             language: "swift",
             severity: .medium,
-            category: .style,
+            category: .style
         )
         engine.addRule(swiftRule)
 
@@ -88,7 +88,7 @@ final class RuleEngineTests: XCTestCase {
             pattern: "FIXME",
             language: "*",
             severity: .medium,
-            category: .maintainability,
+            category: .maintainability
         )
         engine.addRule(universalRule)
 
