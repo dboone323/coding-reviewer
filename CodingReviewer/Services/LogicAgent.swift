@@ -5,8 +5,11 @@ import SharedKit
 public final class LogicAgent: BaseAgent {
     public let id = "logic_agent_001"
     public let name = "Logic & Complexity Agent"
+    private let ollamaClient: OllamaClient
 
-    public init() {}
+    public init(ollamaClient: OllamaClient = OllamaClient()) {
+        self.ollamaClient = ollamaClient
+    }
 
     public func execute(context: [String: any Sendable]) async throws -> AgentResult {
         guard let code = context["code"] as? String else {
@@ -19,43 +22,13 @@ public final class LogicAgent: BaseAgent {
 
         print("[\(name)] Analyzing logic and cognitive complexity...")
 
-        var issues: [String: String] = [:]
+        // 1. Heuristic Analysis
+        var issues = performHeuristicAnalysis(code: code)
 
-        // Heuristic analysis
-        let lines = code.components(separatedBy: .newlines)
-        if lines.count > 300 {
-            issues["complexity"] = "High cognitive complexity detected (file exceeds 300 lines). Suggest refactoring into smaller components."
-        }
-
-        // Check for nested control structures
-        let ifCount = code.components(separatedBy: "if").count - 1
-        let forCount = code.components(separatedBy: "for").count - 1
-        let whileCount = code.components(separatedBy: "while").count - 1
-
-        if ifCount > 5 || forCount > 3 || whileCount > 3 {
-            issues["nested_structures"] = "Multiple control structures detected (if: \(ifCount), for: \(forCount), while: \(whileCount)). Consider simplifying logic."
-        }
-
-        // Check for long methods
-        let methodPattern = try? NSRegularExpression(pattern: "func\\s+\\w+\\s*\\([^)]*\\)\\s*\\{", options: [])
-        let range = NSRange(code.startIndex ..< code.endIndex, in: code)
-        let methodMatches = methodPattern?.matches(in: code, options: [], range: range) ?? []
-
-        for match in methodMatches {
-            if let methodRange = Range(match.range, in: code) {
-                let methodStart = code.index(
-                    methodRange.lowerBound,
-                    offsetBy: code.distance(from: code.startIndex, to: methodRange.lowerBound)
-                )
-                if let methodEndRange = code.range(of: "}", range: methodStart ..< code.endIndex) {
-                    let methodContent = String(code[methodRange.upperBound ..< methodEndRange.lowerBound])
-                    let methodLines = methodContent.components(separatedBy: .newlines).count
-
-                    if methodLines > 50 {
-                        issues["long_method"] = "Method exceeds 50 lines. Consider breaking it into smaller functions."
-                        break
-                    }
-                }
+        // 2. AI-Assisted Deep Logic Review
+        if let aiIssues = await performAILogicReview(code: code) {
+            for (key, value) in aiIssues {
+                issues["ai_\(key)"] = value
             }
         }
 
@@ -63,7 +36,67 @@ public final class LogicAgent: BaseAgent {
             ? "Code logic appears sound and well-structured."
             : "Identified \(issues.count) logical/complexity improvement(s)."
 
-        return AgentResult(agentId: id, success: true, summary: summary, detail: issues)
+        return AgentResult(
+            agentId: id,
+            success: true,
+            summary: summary,
+            detail: issues,
+            requiresApproval: issues.count > 3
+        )
+    }
+
+    private func performAILogicReview(code: String) async -> [String: String]? {
+        let prompt = """
+        Review the following Swift code for:
+        1. Logical flaws or edge cases
+        2. Cognitive complexity and deep nesting
+        3. Potential efficiency improvements
+
+        Code:
+        \(code)
+
+        Return a JSON object where keys are issue categories and values are specific, concise descriptions.
+        """
+
+        return await MainActor.run {
+            Task {
+                do {
+                    let response = try await ollamaClient.generate(
+                        model: nil,
+                        prompt: prompt,
+                        temperature: 0.2,
+                        maxTokens: 1000,
+                        useCache: true
+                    )
+
+                    guard let data = response.data(using: .utf8),
+                          let json = try? JSONSerialization.jsonObject(with: data) as? [String: String]
+                    else {
+                        return nil
+                    }
+                    return json
+                } catch {
+                    return nil
+                }
+            }
+        }.value
+    }
+
+    private func performHeuristicAnalysis(code: String) -> [String: String] {
+        var issues: [String: String] = [:]
+        let lines = code.components(separatedBy: .newlines)
+
+        if lines.count > 300 {
+            issues["complexity"] = "File exceeds 300 lines. Suggest refactoring into smaller components."
+        }
+
+        let ifCount = code.components(separatedBy: "if").count - 1
+        let forCount = code.components(separatedBy: "for").count - 1
+        if ifCount > 5 || forCount > 3 {
+            issues["nested_structures"] = "Multiple control structures detected. Consider simplifying logic."
+        }
+
+        return issues
     }
 }
 
