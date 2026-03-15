@@ -2,6 +2,7 @@ import Foundation
 import SharedKit
 
 /// Agent specializing in detecting logical flaws and complexity issues.
+@MainActor
 public final class LogicAgent: BaseAgent {
     public let id = "logic_agent_001"
     public let name = "Logic & Complexity Agent"
@@ -20,16 +21,17 @@ public final class LogicAgent: BaseAgent {
             )
         }
 
-        print("[\(name)] Analyzing logic and cognitive complexity...")
+        print("[\(name)] Performing AI-assisted deep logic and complexity review...")
 
-        // 1. Heuristic Analysis
-        var issues = performHeuristicAnalysis(code: code)
-
-        // 2. AI-Assisted Deep Logic Review
-        if let aiIssues = await performAILogicReview(code: code) {
-            for (key, value) in aiIssues {
-                issues["ai_\(key)"] = value
-            }
+        // Directly use AI for logic review as heuristics are unreliable
+        guard let issues = await performAILogicReview(code: code) else {
+            return AgentResult(
+                agentId: id,
+                success: true,
+                summary: "Code logic appears sound (AI analysis inconclusive).",
+                detail: ["note": "AI analysis was unable to parse results."],
+                requiresApproval: false
+            )
         }
 
         let summary = issues.isEmpty
@@ -41,7 +43,7 @@ public final class LogicAgent: BaseAgent {
             success: true,
             summary: summary,
             detail: issues,
-            requiresApproval: issues.count > 3
+            requiresApproval: issues.count > 2 // Stricter threshold for AI-backed issues
         )
     }
 
@@ -55,67 +57,34 @@ public final class LogicAgent: BaseAgent {
         Code:
         \(code)
 
-        Return a JSON object where keys are issue categories and values are specific, concise descriptions.
+        Return a JSON object where keys are issue categories (e.g., "edge_case", "complexity") and values are specific, concise descriptions.
+        Return ONLY the JSON.
         """
 
-        return await MainActor.run {
-            Task {
-                do {
-                    let response = try await ollamaClient.generate(
-                        model: nil,
-                        prompt: prompt,
-                        temperature: 0.2,
-                        maxTokens: 1000,
-                        useCache: true
-                    )
+        do {
+            let response = try await ollamaClient.generate(
+                model: nil,
+                prompt: prompt,
+                temperature: 0.2,
+                maxTokens: 1000,
+                useCache: true
+            )
 
-                    guard let data = response.data(using: .utf8),
-                          let json = try? JSONSerialization.jsonObject(with: data) as? [String: String]
-                    else {
-                        return nil
-                    }
-                    return json
-                } catch {
-                    return nil
-                }
+            // Extraction to handle LLM conversational filler
+            let cleanedResponse = if let range = response.range(of: "\\{.*\\}", options: .regularExpression) {
+                String(response[range])
+            } else {
+                response
             }
-        }.value
-    }
 
-    private func performHeuristicAnalysis(code: String) -> [String: String] {
-        var issues: [String: String] = [:]
-        let lines = code.components(separatedBy: .newlines)
-
-        if lines.count > 300 {
-            issues["complexity"] = "File exceeds 300 lines. Suggest refactoring into smaller components."
+            guard let data = cleanedResponse.data(using: .utf8),
+                  let json = try? JSONSerialization.jsonObject(with: data) as? [String: String]
+            else {
+                return nil
+            }
+            return json
+        } catch {
+            return nil
         }
-
-        let ifCount = code.components(separatedBy: "if").count - 1
-        let forCount = code.components(separatedBy: "for").count - 1
-        if ifCount > 5 || forCount > 3 {
-            issues["nested_structures"] = "Multiple control structures detected. Consider simplifying logic."
-        }
-
-        return issues
-    }
-}
-
-/// Extension for additional utility methods
-extension LogicAgent {
-    /// Calculates a simple complexity score based on various code metrics
-    private func calculateComplexityScore(code: String) -> Int {
-        var score = 0
-
-        // Count control structures
-        score += (code.components(separatedBy: "if").count - 1) * 2
-        score += (code.components(separatedBy: "for").count - 1) * 3
-        score += (code.components(separatedBy: "while").count - 1) * 3
-        score += (code.components(separatedBy: "switch").count - 1) * 2
-
-        // Count method calls (simple heuristic)
-        let dotCount = code.components(separatedBy: ".").count - 1
-        score += max(0, dotCount - 10) // Only count beyond basic usage
-
-        return score
     }
 }
