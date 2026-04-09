@@ -1,0 +1,100 @@
+//
+//  CodingReviewer.swift
+//  CodingReviewer
+//
+//  Main SwiftUI application for CodingReviewer IDE
+//
+
+import AppIntents
+import os
+import SwiftUI
+
+#if os(macOS)
+    import AppKit
+#endif
+
+@main
+public struct CodingReviewer: App {
+    private let logger = Logger(
+        subsystem: "com.quantum.codingreviewer", category: "CodingReviewerApp"
+    )
+
+    @State private var showNewReviewSheet = false
+    @State private var showAboutWindow = false
+
+    public var body: some Scene {
+        WindowGroup {
+            IDELayoutView()
+                .frame(minWidth: 1000, minHeight: 650)
+                .codingReviewerAccessibilityDefaults()
+                .sheet(isPresented: $showNewReviewSheet) {
+                    NewReviewView()
+                        .environment(\.managedObjectContext, CoreDataStack.shared.context)
+                }
+        }
+        .windowStyle(.hiddenTitleBar)
+        .windowToolbarStyle(.unified)
+        .commands {
+            // File menu
+            CommandGroup(replacing: .newItem) {
+                Button("New Review") {
+                    showNewReviewSheet = true
+                }
+                .keyboardShortcut(CodingReviewerKeyboardShortcuts.analyze)
+            }
+
+            CommandGroup(replacing: .saveItem) {
+                Button("Save File") {
+                    saveCurrentReview()
+                }
+                .keyboardShortcut(CodingReviewerKeyboardShortcuts.documentation)
+            }
+
+            CommandGroup(replacing: CommandGroupPlacement.appInfo) {
+                Button("About CodingReviewer") {
+                    showAboutWindow = true
+                }
+            }
+        }
+
+        // About window
+        WindowGroup(id: "about") {
+            AboutView()
+        }
+        .windowStyle(.titleBar)
+        .windowResizability(.contentSize)
+        .defaultPosition(.center)
+
+        MenuBarExtra("CodingReviewer", systemImage: "doc.text.magnifyingglass") {
+            Button("New Review") {
+                showNewReviewSheet = true
+                NSApplication.shared.activate(ignoringOtherApps: true)
+            }
+            Button("About CodingReviewer") {
+                showAboutWindow = true
+                NSApplication.shared.activate(ignoringOtherApps: true)
+            }
+            Divider()
+            Button("Quit") {
+                NSApplication.shared.terminate(nil)
+            }
+        }
+
+        // Settings (Preferences)
+        Settings {
+            SettingsView()
+        }
+    }
+
+    public init() {
+        CodingReviewerLifecycleCoordinator.configureOnLaunch()
+        logger.info("CodingReviewer IDE initialized")
+    }
+
+    private func saveCurrentReview() {
+        logger.info("Save action triggered")
+        NotificationCenter.default.post(
+            name: Notification.Name("SaveReviewNotification"), object: nil
+        )
+    }
+}

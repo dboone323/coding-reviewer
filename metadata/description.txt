@@ -1,0 +1,3 @@
+App Name: CodingReviewer
+Description: Professional AI-powered code analysis and review tool. Analyze code quality, security, and performance using local and cloud AI models.
+Keywords: code, review, analysis, ai, programming, developer, swift, deepseek

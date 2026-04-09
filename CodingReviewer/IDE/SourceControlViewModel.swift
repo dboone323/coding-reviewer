@@ -1,0 +1,291 @@
+//
+//  SourceControlViewModel.swift
+//  CodingReviewer
+//
+//  View model managing git source control state
+//
+
+import Foundation
+import SwiftUI
+
+/// View model managing git source control state
+@MainActor
+@Observable
+public final class SourceControlViewModel {
+    // State
+    public var status: GitStatus?
+    public var selectedFile: String?
+    public var selectedFileDiff: String = ""
+    public var commitMessage: String = ""
+    public var currentBranch: String = "main"
+    public var isLoading: Bool = false
+    public var isLoadingDiff: Bool = false
+    public var errorMessage: String?
+    public var commitHistory: [GitCommit] = []
+    public var branches: [String] = ["main"]
+    private var stashedChanges: GitStash?
+
+    // Services
+    private let gitService = GitService()
+    private var projectDirectory: URL?
+
+    public init(projectDirectory: URL? = nil) {
+        self.projectDirectory = projectDirectory
+        if let directory = projectDirectory {
+            Task { await loadInitialState(for: directory) }
+        } else {
+            errorMessage = "Project directory cannot be initialized"
+        }
+    }
+
+    // MARK: - Public Methods
+
+    /// Set the project directory and load git state
+    public func setProjectDirectory(_ directory: URL) {
+        guard projectDirectory != directory else { return }
+        projectDirectory = directory
+        Task { await loadInitialState(for: directory) }
+    }
+
+    /// Refresh git status
+    public func refreshStatus() async {
+        guard let directory = projectDirectory else { return }
+        isLoading = true
+        errorMessage = nil
+
+        do {
+            // Get status
+            status = try await gitService.status(in: directory)
+
+            // Get current branch
+            currentBranch = try await gitService.currentBranch(in: directory)
+        } catch {
+            handleError(error, "Failed to refresh Git status")
+            status = nil
+        }
+
+        isLoading = false
+    }
+
+    /// Stage a file
+    public func stageFile(_ path: String) async {
+        guard let directory = projectDirectory else { return }
+
+        do {
+            try await gitService.add(paths: [path], in: directory)
+            await refreshStatus()
+
+            // Reload diff if this was the selected file
+            if selectedFile == path {
+                await loadDiff(for: path, staged: true)
+            }
+        } catch {
+            handleError(error, "Failed to stage file \(path)")
+        }
+    }
+
+    /// Unstage a file
+    public func unstageFile(_ path: String) async {
+        guard let directory = projectDirectory else { return }
+
+        do {
+            try await gitService.reset(paths: [path], in: directory)
+            await refreshStatus()
+
+            // Reload diff if this was the selected file
+            if selectedFile == path {
+                await loadDiff(for: path, staged: false)
+            }
+        } catch {
+            handleError(error, "Failed to unstage file \(path)")
+        }
+    }
+
+    /// Commit staged changes
+    public func commit() async {
+        guard let directory = projectDirectory else { return }
+        guard !commitMessage.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            errorMessage = "Commit message cannot be empty"
+            return
+        }
+
+        do {
+            try await gitService.commit(message: commitMessage, in: directory)
+            commitMessage = "" // Clear the message
+            selectedFile = nil
+            selectedFileDiff = ""
+            await refreshStatus()
+        } catch {
+            handleError(error, "Failed to commit changes")
+        }
+    }
+
+    /// Push to remote
+    public func push() async {
+        guard let directory = projectDirectory else { return }
+        isLoading = true
+
+        do {
+            let output = try await gitService.push(in: directory)
+            print("Push output: \(output)")
+            await refreshStatus()
+        } catch {
+            handleError(error, "Failed to push changes")
+        }
+
+        isLoading = false
+    }
+
+    /// Pull from remote
+    public func pull() async {
+        guard let directory = projectDirectory else { return }
+        isLoading = true
+
+        do {
+            let output = try await gitService.pull(in: directory)
+            print("Pull output: \(output)")
+            await refreshStatus()
+        } catch {
+            handleError(error, "Failed to pull changes")
+        }
+
+        isLoading = false
+    }
+
+    /// Select a file and load its diff
+    public func selectFile(_ path: String, staged: Bool) async {
+        selectedFile = path
+        await loadDiff(for: path, staged: staged)
+    }
+
+    /// Fetch commit history
+    public func fetchCommitHistory() async {
+        guard let directory = projectDirectory else { return }
+        isLoading = true
+
+        do {
+            commitHistory = try await gitService.commitHistory(in: directory)
+        } catch {
+            handleError(error, "Failed to fetch commit history")
+        }
+
+        isLoading = false
+    }
+
+    /// Select a specific commit for viewing or reverting
+    public func selectCommit(_ commit: GitCommit) async {
+        // Implement logic to view or revert the selected commit
+    }
+
+    /// Switch to a different branch
+    public func switchBranch(_ branchName: String) async {
+        guard let directory = projectDirectory else { return }
+        isLoading = true
+
+        do {
+            try await gitService.checkout(branch: branchName, in: directory)
+            currentBranch = branchName
+            await refreshStatus()
+        } catch {
+            handleError(error, "Failed to switch to branch \(branchName)")
+        }
+
+        isLoading = false
+    }
+
+    /// Create a new branch
+    public func createBranch(_ branchName: String) async {
+        guard let directory = projectDirectory else { return }
+        isLoading = true
+
+        do {
+            try await gitService.createBranch(branch: branchName, in: directory)
+            branches.append(branchName)
+            currentBranch = branchName
+            await refreshStatus()
+        } catch {
+            handleError(error, "Failed to create branch \(branchName)")
+        }
+
+        isLoading = false
+    }
+
+    /// Delete an existing branch
+    public func deleteBranch(_ branchName: String) async {
+        guard let directory = projectDirectory else { return }
+        isLoading = true
+
+        do {
+            try await gitService.deleteBranch(branch: branchName, in: directory)
+            branches.removeAll(where: { $0 == branchName })
+            if currentBranch == branchName {
+                currentBranch = "main"
+            }
+            await refreshStatus()
+        } catch {
+            handleError(error, "Failed to delete branch \(branchName)")
+        }
+
+        isLoading = false
+    }
+
+    /// Stash changes temporarily
+    public func stashChanges() async {
+        guard let directory = projectDirectory else { return }
+        isLoading = true
+
+        do {
+            stashedChanges = try await gitService.stash(in: directory)
+        } catch {
+            handleError(error, "Failed to stash changes")
+        }
+
+        isLoading = false
+    }
+
+    /// Pop stashed changes back into the working directory
+    public func popStashedChanges() async {
+        guard let directory = projectDirectory else { return }
+        isLoading = true
+
+        do {
+            try await gitService.pop(stash: stashedChanges, in: directory)
+            stashedChanges = nil
+            await refreshStatus()
+        } catch {
+            handleError(error, "Failed to pop stashed changes")
+        }
+
+        isLoading = false
+    }
+
+    // MARK: - Private Methods
+
+    private func loadInitialState(for directory: URL) async {
+        await refreshStatus()
+        await fetchCommitHistory()
+        branches = await (try? gitService.branches(in: directory)) ?? [currentBranch]
+    }
+
+    private func loadDiff(for file: String, staged: Bool) async {
+        guard let directory = projectDirectory else { return }
+        isLoadingDiff = true
+        selectedFileDiff = ""
+
+        do {
+            selectedFileDiff = try await gitService.diff(file: file, in: directory, staged: staged)
+        } catch {
+            handleError(error, "Failed to load diff for file \(file)")
+        }
+
+        isLoadingDiff = false
+    }
+
+    private func handleError(_ error: Error, _ message: String) {
+        if let gitError = error as? GitCommandError {
+            errorMessage = "\(message): \(gitError.localizedDescription)"
+        } else {
+            errorMessage = "\(message): \(error.localizedDescription)"
+        }
+    }
+}
