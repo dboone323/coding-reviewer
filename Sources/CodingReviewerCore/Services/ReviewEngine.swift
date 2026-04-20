@@ -49,21 +49,21 @@ public final class ReviewEngine: Sendable {
         let converter = SourceLocationConverter(fileName: "", tree: sourceFile)
         
         // 1. Insecure Storage (UserDefaults for passwords)
-        let insecureStorageVisitor = InsecureStorageVisitor(viewMode: .fixedUp)
+        let insecureStorageVisitor = CoreInsecureStorageVisitor(viewMode: .fixedUp)
         insecureStorageVisitor.walk(sourceFile)
         issues.append(contentsOf: insecureStorageVisitor.findings.map { 
             ReviewIssueData(message: $0.msg, severity: .high, lineNumber: $0.line(converter), category: "Security") 
         })
         
         // 2. Print Statements
-        let printVisitor = PrintVisitor(viewMode: .fixedUp)
+        let printVisitor = CorePrintVisitor(viewMode: .fixedUp)
         printVisitor.walk(sourceFile)
         issues.append(contentsOf: printVisitor.findings.map { 
             ReviewIssueData(message: $0.msg, severity: .low, lineNumber: $0.line(converter), category: "Style", suggestion: "Use Logger.debug(...)") 
         })
         
         // 3. Retain Cycles
-        let retainCycleVisitor = RetainCycleVisitor(viewMode: .fixedUp)
+        let retainCycleVisitor = CoreRetainCycleVisitor(viewMode: .fixedUp)
         retainCycleVisitor.walk(sourceFile)
         issues.append(contentsOf: retainCycleVisitor.findings.map { 
             ReviewIssueData(message: $0.msg, severity: .medium, lineNumber: $0.line(converter), category: "Bug", suggestion: "Use [weak self]") 
@@ -76,13 +76,8 @@ public final class ReviewEngine: Sendable {
 
     private func runJavaScriptAnalysis(code: String) -> [ReviewIssueData] {
         var issues: [ReviewIssueData] = []
-        
-        // Eval detection
         issues.append(contentsOf: match(pattern: "(?i)eval\\s*\\(", in: code, message: "Use of eval() detected. Major security risk.", severity: .high, category: "Security"))
-        
-        // innerHTML detection
         issues.append(contentsOf: match(pattern: "(?i)(?:\\.|\\b)innerHTML\\s*=", in: code, message: "Direct assignment to innerHTML can lead to XSS.", severity: .medium, category: "Security"))
-        
         return issues
     }
 
@@ -90,13 +85,8 @@ public final class ReviewEngine: Sendable {
 
     private func runPythonAnalysis(code: String) -> [ReviewIssueData] {
         var issues: [ReviewIssueData] = []
-        
-        // Exec detection
         issues.append(contentsOf: match(pattern: "exec\\(", in: code, message: "Use of exec() detected. Security risk.", severity: .high, category: "Security"))
-        
-        // Subprocess shell=True
         issues.append(contentsOf: match(pattern: "subprocess\\..*shell\\s*=\\s*True", in: code, message: "Subprocess with shell=True can lead to shell injection.", severity: .high, category: "Security"))
-        
         return issues
     }
 
@@ -109,7 +99,7 @@ public final class ReviewEngine: Sendable {
         }
         
         for rule in applicableRules {
-            findings.append(contentsOf: match(pattern: rule.pattern, in: code, message: rule.ruleDescription, severity: rule.severity, category: "Custom User Rule"))
+            findings.append(contentsOf: match(pattern: rule.pattern, in: code, message: rule.description, severity: rule.severity == IssueSeverity.critical ? .high : .medium, category: "Custom User Rule"))
         }
         
         return findings
@@ -136,7 +126,7 @@ public final class ReviewEngine: Sendable {
     }
 }
 
-// MARK: - SwiftSyntax Visitors
+// MARK: - Internal SwiftSyntax Visitors
 
 private struct Finding {
     let msg: String
@@ -146,7 +136,7 @@ private struct Finding {
     }
 }
 
-private final class InsecureStorageVisitor: SyntaxVisitor {
+private final class CoreInsecureStorageVisitor: SyntaxVisitor {
     var findings: [Finding] = []
     override func visit(_ node: FunctionCallExprSyntax) -> SyntaxVisitorContinueKind {
         let callText = node.description.lowercased()
@@ -157,7 +147,7 @@ private final class InsecureStorageVisitor: SyntaxVisitor {
     }
 }
 
-private final class PrintVisitor: SyntaxVisitor {
+private final class CorePrintVisitor: SyntaxVisitor {
     var findings: [Finding] = []
     override func visit(_ node: FunctionCallExprSyntax) -> SyntaxVisitorContinueKind {
         if let callee = node.calledExpression.as(DeclReferenceExprSyntax.self),
@@ -168,7 +158,7 @@ private final class PrintVisitor: SyntaxVisitor {
     }
 }
 
-private final class RetainCycleVisitor: SyntaxVisitor {
+private final class CoreRetainCycleVisitor: SyntaxVisitor {
     var findings: [Finding] = []
     override func visit(_ node: ClosureExprSyntax) -> SyntaxVisitorContinueKind {
         if let capture = node.signature?.capture {

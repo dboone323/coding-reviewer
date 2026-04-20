@@ -3,7 +3,7 @@ import PackageDescription
 import Foundation
 
 private let localSharedKitPath = "../shared-kit"
-private let sharedKitDependency: Package.Dependency = FileManager.default.fileExists(atPath: localSharedKitPath)
+private let sharedKitDependency: Package.Dependency = true
     ? .package(path: localSharedKitPath)
     : .package(url: "https://github.com/dboone323/shared-kit.git", branch: "main")
 
@@ -15,6 +15,10 @@ let package = Package(
         .macOS("26.0"),
     ],
     products: [
+        .executable(
+            name: "CodingReviewer",
+            targets: ["CodingReviewer"]
+        ),
         .library(
             name: "CodingReviewerCore",
             targets: ["CodingReviewerCore"]
@@ -26,12 +30,20 @@ let package = Package(
         sharedKitDependency,
     ],
     targets: [
+        .executableTarget(
+            name: "CodingReviewer",
+            dependencies: [
+                "CodingReviewerCore"
+            ],
+            path: "Sources/CodingReviewer"
+        ),
         .target(
             name: "CodingReviewerCore",
             dependencies: [
                 .product(name: "SharedKit", package: "shared-kit"),
                 .product(name: "SwiftParser", package: "swift-syntax"),
                 .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
+                .product(name: "SwiftSyntax", package: "swift-syntax"),
             ],
             path: "Sources/CodingReviewerCore"
         ),

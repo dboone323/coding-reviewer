@@ -29,7 +29,7 @@ public final class ReportingService: Sendable {
         summary += "## Statistics\n"
         summary += "- Total Issues: \(issues.count)\n"
         
-        let severityCounts = Dictionary(grouping: issues, by: \.severity)
+        let severityCounts = Dictionary(grouping: issues, by: { $0.severity })
         for severity in Severity.allCases {
             let count = severityCounts[severity]?.count ?? 0
             summary += "- \(severity.rawValue) Priority: \(count)\n"
@@ -38,7 +38,7 @@ public final class ReportingService: Sendable {
         
         // Detailed Findings
         summary += "## Detailed Findings\n"
-        let issuesByFile = Dictionary(grouping: issues, by: \.filePath)
+        let issuesByFile = Dictionary(grouping: issues, by: { $0.filePath })
         
         for (file, fileIssues) in issuesByFile.sorted(by: { $0.key < $1.key }) {
             summary += "### \(file.isEmpty ? "General" : file)\n"
@@ -64,7 +64,7 @@ public final class ReportingService: Sendable {
     public func generateDocumentation(code: String, language: String) async -> DocumentationResult {
         // In a real implementation, this might use an LLM or specialized parser.
         let summary = "## \(language.capitalized) API Documentation\n\nGenerated technical documentation for analyzed source."
-        return DocumentationResult(documentation: summary, timestamp: Date())
+        return DocumentationResult(documentation: summary, language: language, includeExamples: false)
     }
     
     // MARK: - Exporting (Placeholders for platform-specific logic)
@@ -73,11 +73,5 @@ public final class ReportingService: Sendable {
     public func exportToPDF(session: ReviewSession) async throws -> Data {
         let content = generateSummary(session: session)
         return content.data(using: .utf8) ?? Data()
-    }
-}
-
-extension Severity: CaseIterable {
-    public static var allCases: [Severity] {
-        [.low, .medium, .high, .critical]
     }
 }
