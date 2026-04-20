@@ -1,0 +1,84 @@
+import SharedKit
+import SwiftUI
+
+struct SettingsView: View {
+    @AppStorage("CR_USE_AI") private var useAI: Bool = false
+    @State private var ollamaStatus: String = "Checking..."
+
+    var body: some View {
+        Form {
+            Section("AI & Agents") {
+                Toggle("Use AI‑enhanced analysis (Ollama)", isOn: $useAI)
+                    .accessibilityLabel("Enable AI analysis")
+                    .accessibilityHint("Toggle to enable or disable AI-powered code analysis")
+
+                if useAI {
+                    Picker(
+                        "Model",
+                        selection: Binding(
+                            get: { AIModelManager.shared.selectedModelId },
+                            set: { AIModelManager.shared.selectModel(id: $0) }
+                        )
+                    ) {
+                        ForEach(AIModelManager.shared.availableModels) { model in
+                            Text(model.name).tag(model.id)
+                        }
+                    }
+                }
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Requires local Ollama with free models:")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                    Text("• llama3.1:8b  • qwen2.5-coder:7b  • mistral:7b")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
+
+                HStack {
+                    Text("Ollama Status:")
+                        .font(.footnote)
+                    Text(ollamaStatus)
+                        .font(.footnote)
+                        .foregroundStyle(
+                            ollamaStatus.contains("✓")
+                                ? .green
+                                : (ollamaStatus.contains("Checking") ? .secondary : .red)
+                        )
+
+                    Spacer()
+
+                    Button("Test Connection") {
+                        checkOllamaStatus()
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.small)
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Ollama status: \(ollamaStatus)")
+            }
+
+            Section("About") {
+                LabeledContent("Version", value: "1.0.0")
+                LabeledContent("AI Mode", value: useAI ? "Enabled" : "Disabled")
+            }
+        }
+        .padding(16)
+        .frame(minWidth: 480, minHeight: 300)
+        .onAppear {
+            checkOllamaStatus()
+        }
+    }
+
+    private func checkOllamaStatus() {
+        Task {
+            let client = OllamaClient()
+            let available = await client.isServerRunning()
+            ollamaStatus = available ? "✓ Connected" : "⚠️ Not available"
+        }
+    }
+}
+
+#Preview {
+    SettingsView()
+}

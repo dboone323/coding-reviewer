@@ -1,0 +1,134 @@
+//
+//  SidebarView.swift
+//  CodingReviewer
+//
+//  Sidebar with file browser and analysis tools
+//
+
+import SwiftUI
+
+public struct SidebarView: View {
+    @Binding var selectedFileURL: URL?
+    @Binding var showFilePicker: Bool
+    @Binding var selectedAnalysisType: AnalysisType
+    @Binding var currentView: ContentViewType
+    private let presenter: SidebarViewPresenter
+
+    @State private var showHistorySheet = false
+
+    init(
+        selectedFileURL: Binding<URL?>,
+        showFilePicker: Binding<Bool>,
+        selectedAnalysisType: Binding<AnalysisType>,
+        currentView: Binding<ContentViewType>,
+        presenter: SidebarViewPresenter = SidebarViewPresenter()
+    ) {
+        _selectedFileURL = selectedFileURL
+        _showFilePicker = showFilePicker
+        _selectedAnalysisType = selectedAnalysisType
+        _currentView = currentView
+        self.presenter = presenter
+    }
+
+    public var body: some View {
+        List {
+            Section("Files") {
+                Button(action: presenter.openFileAction(binding: $showFilePicker)) {
+                    Label("Open File", systemImage: "doc")
+                }
+                .buttonStyle(.borderless)
+                .accessibilityLabel("Open File")
+                .accessibilityHint("Select a code file to analyze")
+
+                if selectedFileURL != nil {
+                    Text(selectedFileURL!.lastPathComponent)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+            }
+
+            Section("Analysis Type") {
+                Picker("Type", selection: $selectedAnalysisType) {
+                    ForEach(AnalysisType.allCases, id: \.self) { type in
+                        Text(type.rawValue).tag(type)
+                    }
+                }
+                .pickerStyle(.menu)
+            }
+
+            Section("Tools") {
+                Button(action: presenter.setViewAction(binding: $currentView, target: .analysis)) {
+                    Label("Code Analysis", systemImage: "magnifyingglass")
+                }
+                .buttonStyle(.borderless)
+                .accessibilityLabel("Code Analysis")
+                .accessibilityHint("Run code analysis on the selected file")
+
+                Button(
+                    action: presenter.setViewAction(binding: $currentView, target: .documentation)
+                ) {
+                    Label("Documentation", systemImage: "doc.text")
+                }
+                .buttonStyle(.borderless)
+                .accessibilityLabel("Documentation")
+                .accessibilityHint("Generate documentation for the selected file")
+
+                Button(action: presenter.setViewAction(binding: $currentView, target: .tests)) {
+                    Label("Generate Tests", systemImage: "testtube.2")
+                }
+                .buttonStyle(.borderless)
+                .accessibilityLabel("Generate Tests")
+                .accessibilityHint("Generate unit tests for the selected file")
+            }
+
+            Section("History") {
+                Button {
+                    showHistorySheet = true
+                } label: {
+                    Label("Review History", systemImage: "clock.arrow.circlepath")
+                }
+                .buttonStyle(.borderless)
+                .accessibilityLabel("Review History")
+                .accessibilityHint("View past code reviews")
+            }
+
+            Section("Settings") {
+                Button(action: presenter.preferencesAction()) {
+                    Label("Preferences", systemImage: "gear")
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.tint)
+                .accessibilityLabel("Preferences")
+                .accessibilityHint("Open application preferences")
+            }
+        }
+        .listStyle(.sidebar)
+        .background(.ultraThinMaterial)
+        .tint(.accentColor)
+        .frame(minWidth: 200)
+        .sheet(isPresented: $showHistorySheet) {
+            ReviewHistoryView()
+                .environment(\.managedObjectContext, CoreDataStack.shared.context)
+        }
+    }
+}
+
+struct SidebarViewPresenter {
+    func openFileAction(binding: Binding<Bool>) -> () -> Void {
+        {
+            binding.wrappedValue = true
+        }
+    }
+
+    func setViewAction(binding: Binding<ContentViewType>, target: ContentViewType) -> () -> Void {
+        {
+            binding.wrappedValue = target
+        }
+    }
+
+    func preferencesAction() -> () -> Void {
+        {
+            // Placeholder for future preferences handling
+        }
+    }
+}
